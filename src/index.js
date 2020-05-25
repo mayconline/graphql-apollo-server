@@ -19,6 +19,7 @@ const typeDefs = gql`
     hello: String
     users: [User!]!
     getUserByEmail(email: String!): User!
+    posts: [Post!]!
   }
 
   type Mutation {
@@ -28,32 +29,60 @@ const typeDefs = gql`
 
 const users = [
   {
-    _id: String(Math.random()),
+    _id: '1',
     name: 'Maycon',
     email: 'mayconline.ti@gmail.com',
     active: true,
   },
   {
-    _id: String(Math.random()),
+    _id: '2',
     name: 'Joao',
     email: 'joaozinho@gmail.com',
     active: true,
   },
   {
-    _id: String(Math.random()),
+    _id: '3',
     name: 'Pedro',
     email: 'pedrao@gmail.com',
     active: true,
   },
 ];
 
+const posts = [
+  {
+    _id: String(Math.random()),
+    title: 'A Aventura nordica',
+    content: 'blablablalablbalbalblalba',
+    author: '1',
+  },
+  {
+    _id: String(Math.random()),
+    title: 'A Aventura nordica 2',
+    content: 'blablablalablbalbalblalba',
+    author: '1',
+  },
+  {
+    _id: String(Math.random()),
+    title: 'A Aventura nordica 3',
+    content: 'blablablalablbalbalblalba',
+    author: '3',
+  },
+];
+
 const resolvers = {
+  Post: {
+    author: (posts) => {
+      return users.find((user) => user._id === posts.author);
+    },
+  },
+
   Query: {
     hello: () => 'hello word',
     users: () => users,
     getUserByEmail: (_, args) => {
       return users.find((user) => user.email === args.email);
     },
+    posts: () => posts,
   },
 
   Mutation: {
