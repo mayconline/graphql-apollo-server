@@ -1,78 +1,116 @@
 const { ApolloServer, gql } = require('apollo-server');
+const { getFinance } = require('./services/finance');
+
+//getFinance('HGLG11').then((data) => console.log(data));
 
 const typeDefs = gql`
-  type User {
+  type Ticket {
     _id: ID!
-    name: String!
-    email: String!
-    active: Boolean!
+    symbol: String!
+    quantity: Float!
+    averagePrice: Float!
+    grade: Int!
   }
 
-  type Post {
+  type Wallet {
     _id: ID!
-    title: String!
-    content: String!
-    author: User!
+    user: User!
+    ticket: [Ticket]
+  }
+
+  type User {
+    _id: ID!
+    email: String!
+    password: String!
+    active: Boolean!
+    checkTerms: Boolean!
   }
 
   type Query {
     hello: String
     users: [User!]!
     getUserByEmail(email: String!): User!
-    posts: [Post!]!
-  }
-
-  type Mutation {
-    createUser(name: String!, email: String!): User!
+    tickets: [Ticket!]
+    wallets: [Wallet]
+    getWalletByUser(userID: ID!): [Wallet]
   }
 `;
 
 const users = [
   {
-    _id: '1',
-    name: 'Maycon',
-    email: 'mayconline.ti@gmail.com',
+    _id: 1,
+    email: 'teste@teste.com.br',
+    password: 123,
     active: true,
+    checkTerms: true,
   },
   {
-    _id: '2',
-    name: 'Joao',
-    email: 'joaozinho@gmail.com',
+    _id: 2,
+    email: 'digding@dig.com.br',
+    password: 123,
     active: true,
-  },
-  {
-    _id: '3',
-    name: 'Pedro',
-    email: 'pedrao@gmail.com',
-    active: true,
+    checkTerms: true,
   },
 ];
 
-const posts = [
+const wallets = [
   {
-    _id: String(Math.random()),
-    title: 'A Aventura nordica',
-    content: 'blablablalablbalbalblalba',
-    author: '1',
+    _id: 'a',
+    user: 1,
+    ticket: [1, 2, 4],
   },
   {
-    _id: String(Math.random()),
-    title: 'A Aventura nordica 2',
-    content: 'blablablalablbalbalblalba',
-    author: '1',
+    _id: 'b',
+    user: 2,
+    ticket: [3],
   },
   {
-    _id: String(Math.random()),
-    title: 'A Aventura nordica 3',
-    content: 'blablablalablbalbalblalba',
-    author: '3',
+    _id: 'c',
+    user: 1,
+    ticket: [2],
+  },
+];
+
+const tickets = [
+  {
+    _id: 1,
+    symbol: 'wege3.sa',
+    quantity: 10,
+    averagePrice: 30.2,
+    grade: 10,
+  },
+  {
+    _id: 2,
+    symbol: 'itsa4.sa',
+    quantity: 5,
+    averagePrice: 8.2,
+    grade: 10,
+  },
+  {
+    _id: 3,
+    symbol: 'itsa4.sa',
+    quantity: 10,
+    averagePrice: 9,
+    grade: 10,
+  },
+  {
+    _id: 4,
+    symbol: 'itsa4.sa',
+    quantity: 1,
+    averagePrice: 9.5,
+    grade: 7,
   },
 ];
 
 const resolvers = {
-  Post: {
-    author: (posts) => {
-      return users.find((user) => user._id === posts.author);
+  Wallet: {
+    user: (wallets) => {
+      return users.find((user) => user._id === wallets.user);
+    },
+    ticket: (wallets) => {
+      return wallets.ticket.map((wallet) =>
+        tickets.find((ticket) => ticket._id === wallet)
+      );
     },
   },
 
@@ -82,10 +120,14 @@ const resolvers = {
     getUserByEmail: (_, args) => {
       return users.find((user) => user.email === args.email);
     },
-    posts: () => posts,
+    tickets: () => tickets,
+    wallets: () => wallets,
+    getWalletByUser: (_, args) => {
+      return wallets.filter((wallet) => wallet.user === parseInt(args.userID));
+    },
   },
 
-  Mutation: {
+  /*  Mutation: {
     createUser: (_, args) => {
       let newUser = {
         _id: String(Math.random()),
@@ -97,7 +139,7 @@ const resolvers = {
       users.push(newUser);
       return newUser;
     },
-  },
+  },*/
 };
 
 const server = new ApolloServer({ typeDefs, resolvers });
