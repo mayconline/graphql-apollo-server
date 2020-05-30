@@ -1,0 +1,10 @@
+type Wallet {
+  _id: ID!
+  user: User!
+  ticket: [Ticket]
+}
+
+type Query {
+  wallets: [Wallet]
+  getWalletByUser(userID: ID!): [Wallet]
+}
