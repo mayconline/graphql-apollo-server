@@ -6,6 +6,8 @@
 .pnp.js
 yarn.lock
 
+#test
+*.snap
 
 # misc
 .DS_Store
