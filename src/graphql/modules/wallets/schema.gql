@@ -1,10 +1,23 @@
 type Wallet {
   _id: ID!
   user: User!
+  description: String!
+  totalValue: Float!
   ticket: [Ticket]
+}
+
+input WalletInput {
+  userID: ID!
+  description: String!
 }
 
 type Query {
   wallets: [Wallet]
   getWalletByUser(userID: ID!): [Wallet]
+}
+
+type Mutation {
+  createWallet(input: WalletInput!): Wallet!
+  updateWallet(_id: ID!, input: WalletInput!): Wallet
+  deleteWallet(_id: ID!): Boolean!
 }

@@ -19,16 +19,22 @@ module.exports = {
     {
       _id: 'a',
       user: 1,
+      description: 'Carteira de Ações',
+      totalValue: 300.2,
       ticket: [1, 2, 4],
     },
     {
       _id: 'b',
       user: 2,
+      description: 'Carteira de Ações do Be',
+      totalValue: 150.1,
       ticket: [3],
     },
     {
       _id: 'c',
       user: 1,
+      description: 'Carteira de Ações Americanas',
+      totalValue: 400.45,
       ticket: [2],
     },
   ],
