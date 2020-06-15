@@ -1,13 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
-const { createTestClient } = require('apollo-server-testing');
-
-const typeDefs = require('../../typeDefs');
-
-const server = new ApolloServer({
-  typeDefs,
-  mocks: true,
-  mockEntireSchema: true,
-});
+const { server, createTestClient, gql } = require('../../utils/serverMock');
 
 describe('getUsers', () => {
   const { query } = createTestClient(server);
