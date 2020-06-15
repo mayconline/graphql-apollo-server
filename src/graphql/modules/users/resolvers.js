@@ -4,7 +4,7 @@ module.exports = {
   Query: {
     users: () => users,
     getUserByEmail: (_, args) => {
-      return users.find((user) => user.email === args.email);
+      return users.find(user => user.email === args.email);
     },
   },
 
@@ -22,7 +22,7 @@ module.exports = {
       return newUser;
     },
     updateUser: (_, args) => {
-      let user = users.find((user) => user._id === parseInt(args._id));
+      let user = users.find(user => user._id === parseInt(args._id));
       if (user) users.splice(users.indexOf(user), 1);
 
       user = {
@@ -38,7 +38,7 @@ module.exports = {
       return user;
     },
     deleteUser: (_, args) => {
-      let user = users.find((user) => user._id === parseInt(args._id));
+      let user = users.find(user => user._id === parseInt(args._id));
       if (user) users.splice(users.indexOf(user), 1);
       return !!user;
     },

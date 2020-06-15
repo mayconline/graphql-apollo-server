@@ -14,7 +14,7 @@ input UserInput {
 }
 
 type Query {
-  users: [User!]!
+  users: [User]
   getUserByEmail(email: String!): User!
 }
 
