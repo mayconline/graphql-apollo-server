@@ -6,6 +6,20 @@ type Ticket {
   grade: Int!
 }
 
+input TicketInput {
+  walletID: ID!
+  symbol: String!
+  quantity: Float!
+  averagePrice: Float!
+  grade: Int!
+}
+
 type Query {
   tickets: [Ticket!]
+}
+
+type Mutation {
+  createTicket(input: TicketInput!): Ticket!
+  updateTicket(_id: ID!, input: TicketInput!): Ticket
+  deleteTicket(_id: ID!, walletID: ID!): Boolean!
 }
