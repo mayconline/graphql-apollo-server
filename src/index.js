@@ -1,9 +1,7 @@
-const { ApolloServer, gql } = require('apollo-server');
-const { getFinance } = require('./services/finance');
+const { ApolloServer } = require('apollo-server');
+
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
-
-//getFinance('HGLG11').then((data) => console.log(data));
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
