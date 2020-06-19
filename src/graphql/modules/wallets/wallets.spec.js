@@ -8,7 +8,9 @@ describe('Query Test', () => {
       getWalletByUser(userID: $userID) {
         _id
         description
-        totalValue
+        sumCostWallet
+        sumAmountWallet
+        sumGradeWallet
         user {
           _id
           email
@@ -43,7 +45,9 @@ describe('Mutation Test', () => {
       createWallet(input: { userID: $userID, description: $description }) {
         _id
         description
-        totalValue
+        sumCostWallet
+        sumAmountWallet
+        sumGradeWallet
         ticket {
           _id
           symbol
@@ -67,7 +71,6 @@ describe('Mutation Test', () => {
       ) {
         _id
         description
-        totalValue
       }
     }
   `;

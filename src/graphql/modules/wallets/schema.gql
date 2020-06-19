@@ -2,7 +2,9 @@ type Wallet {
   _id: ID!
   user: User!
   description: String!
-  totalValue: Float!
+  sumCostWallet: Float!
+  sumAmountWallet: Float!
+  sumGradeWallet: Float!
   ticket: [Ticket]
 }
 

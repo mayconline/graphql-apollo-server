@@ -1,14 +1,37 @@
 const { users, tickets, wallets } = require('../../../mocks');
 
+const getTicketsArray = wallet =>
+  wallet.ticket.map(ticketID =>
+    tickets.find(ticket => ticket._id === ticketID),
+  );
+
 module.exports = {
   Wallet: {
     user: wallets => {
       return users.find(user => user._id === wallets.user);
     },
-    ticket: wallets => {
-      return wallets.ticket.map(wallet =>
-        tickets.find(ticket => ticket._id === wallet),
-      );
+    ticket: wallets => getTicketsArray(wallets),
+    sumGradeWallet: wallets => {
+      let ticketArray = getTicketsArray(wallets);
+
+      let sum = ticketArray.length
+        ? ticketArray
+            .map(ticket => ticket.grade)
+            .reduce((acc, cur) => acc + cur)
+        : 0;
+
+      return sum;
+    },
+    sumCostWallet: wallets => {
+      let ticketArray = getTicketsArray(wallets);
+
+      let sum = ticketArray.length
+        ? ticketArray
+            .map(ticket => ticket.quantity * ticket.averagePrice)
+            .reduce((acc, cur) => acc + cur)
+        : 0;
+
+      return sum;
     },
   },
   Query: {
@@ -23,7 +46,9 @@ module.exports = {
         _id: String(Math.random()),
         user: parseInt(args.input.userID),
         description: args.input.description,
-        totalValue: 0,
+        sumCostWallet: 0,
+        sumAmountWallet: 0,
+        sumGradeWallet: 0,
         ticket: [],
       };
       wallets.push(newWallet);
