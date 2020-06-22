@@ -7,32 +7,18 @@ const getTicketsArray = wallet =>
 
 module.exports = {
   Wallet: {
-    user: wallets => {
-      return users.find(user => user._id === wallets.user);
-    },
+    user: wallets => users.find(user => user._id === wallets.user),
+
     ticket: wallets => getTicketsArray(wallets),
-    sumGradeWallet: wallets => {
-      let ticketArray = getTicketsArray(wallets);
 
-      let sum = ticketArray.length
-        ? ticketArray
-            .map(ticket => ticket.grade)
-            .reduce((acc, cur) => acc + cur)
-        : 0;
+    sumGradeWallet: wallets =>
+      getTicketsArray(wallets).reduce((acc, cur) => acc + cur.grade, 0),
 
-      return sum;
-    },
-    sumCostWallet: wallets => {
-      let ticketArray = getTicketsArray(wallets);
-
-      let sum = ticketArray.length
-        ? ticketArray
-            .map(ticket => ticket.quantity * ticket.averagePrice)
-            .reduce((acc, cur) => acc + cur)
-        : 0;
-
-      return sum;
-    },
+    sumCostWallet: wallets =>
+      getTicketsArray(wallets).reduce(
+        (acc, cur) => acc + cur.quantity * cur.averagePrice,
+        0,
+      ),
   },
   Query: {
     wallets: () => wallets,
