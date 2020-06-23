@@ -1,4 +1,5 @@
 const { users, tickets, wallets } = require('../../../mocks');
+const { getCurrentFinanceByTickets } = require('../../../services/finance');
 
 const getTicketsArray = wallet =>
   wallet.ticket.map(ticketID =>
@@ -19,6 +20,16 @@ module.exports = {
         (acc, cur) => acc + cur.quantity * cur.averagePrice,
         0,
       ),
+
+    sumAmountWallet: async wallets => {
+      const ticketArray = getTicketsArray(wallets);
+      const currentArray = await getCurrentFinanceByTickets(ticketArray);
+
+      return currentArray.reduce(
+        (acc, cur) => acc + cur.quantity * cur.regularMarketPrice,
+        0,
+      );
+    },
   },
   Query: {
     wallets: () => wallets,

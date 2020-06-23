@@ -23,7 +23,7 @@ module.exports = {
       sumCostWallet: 0,
       sumAmountWallet: 0,
       sumGradeWallet: 0,
-      ticket: [1, 2, 4],
+      ticket: [1, 4],
     },
     {
       _id: 'b',
@@ -54,7 +54,7 @@ module.exports = {
     },
     {
       _id: 2,
-      symbol: 'itsa4.sa',
+      symbol: 'lren3.sa',
       quantity: 5,
       averagePrice: 8.2,
       grade: 10,
@@ -68,7 +68,7 @@ module.exports = {
     },
     {
       _id: 4,
-      symbol: 'itsa4.sa',
+      symbol: 'hglg11.sa',
       quantity: 1,
       averagePrice: 9.5,
       grade: 7,
