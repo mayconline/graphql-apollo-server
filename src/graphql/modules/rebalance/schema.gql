@@ -1,0 +1,16 @@
+type Rebalance {
+  _id: ID!
+  symbol: String!
+  longName: String!
+  status: String!
+  currentAmount: Float!
+  gradePercent: Float!
+  currentPercent: Float!
+  targetPercent: Float!
+  targetAmount: Float!
+  financialCurrency: String!
+}
+
+type Query {
+  rebalances(walletID: ID!): [Rebalance]
+}
