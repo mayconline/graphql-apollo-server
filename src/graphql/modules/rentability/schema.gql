@@ -1,0 +1,16 @@
+type Rentability {
+  _id: ID!
+  symbol: String!
+  longName: String!
+  sumCostWallet: Float
+  sumAmountWallet: Float
+  costAmount: Float
+  currentAmount: Float
+  variationAmount: Float
+  variationPercent: Float
+  financialCurrency: String!
+}
+
+type Query {
+  getRentability(walletID: ID!): [Rentability]
+}
