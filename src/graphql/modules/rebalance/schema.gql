@@ -1,8 +1,14 @@
+enum Status {
+  BUY
+  KEEP
+  ANALYZE
+}
+
 type Rebalance {
   _id: ID!
   symbol: String!
   longName: String!
-  status: String!
+  status: Status!
   currentAmount: Float!
   gradePercent: Float!
   currentPercent: Float!
