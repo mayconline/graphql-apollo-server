@@ -1,5 +1,4 @@
 const { tickets, wallets } = require('../../../mocks');
-const { getCurrentFinanceByTickets } = require('../../../services/finance');
 
 const getTicketsArray = wallet =>
   wallet.ticket.map(ticketID =>
@@ -13,10 +12,12 @@ const getStatus = percent => {
 
 module.exports = {
   Query: {
-    rebalances: async (_, args) => {
+    rebalances: async (_, args, { dataSources }) => {
       const wallet = wallets.find(wallet => wallet._id === args.walletID);
       const ticketArray = getTicketsArray(wallet);
-      const currentArray = await getCurrentFinanceByTickets(ticketArray);
+      const currentArray = await dataSources.getCurrentFinanceByTickets(
+        ticketArray,
+      );
 
       let sumGradeWallet = ticketArray.reduce((acc, cur) => acc + cur.grade, 0);
       let sumCostWallet = ticketArray.reduce(
