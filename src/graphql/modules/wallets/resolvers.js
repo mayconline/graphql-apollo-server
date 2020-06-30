@@ -31,7 +31,7 @@ module.exports = {
   Query: {
     wallets: () => wallets,
     getWalletByUser: (_, args) => {
-      return wallets.filter(wallet => wallet.user === parseInt(args.userID));
+      return wallets.filter(wallet => wallet.user === args.userID);
     },
   },
   Mutation: {

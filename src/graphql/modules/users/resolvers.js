@@ -22,8 +22,8 @@ module.exports = {
       return newUser;
     },
     updateUser: (_, args) => {
-      let user = users.find(user => user._id === parseInt(args._id));
-      if (user) users.splice(users.indexOf(user), 1);
+      let user = users.find(user => user._id === args._id);
+      if (!user) return null;
 
       user = {
         ...user,
@@ -33,12 +33,12 @@ module.exports = {
         checkTerms: args.input.checkTerms,
       };
 
-      users.push(user);
+      users.splice(users.indexOf(user), 1, user);
 
       return user;
     },
     deleteUser: (_, args) => {
-      let user = users.find(user => user._id === parseInt(args._id));
+      let user = users.find(user => user._id === args._id);
       if (user) users.splice(users.indexOf(user), 1);
       return !!user;
     },
