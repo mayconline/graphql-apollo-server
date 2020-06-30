@@ -1,9 +1,5 @@
-const { users, tickets, wallets } = require('../../../mocks');
-
-const getTicketsArray = wallet =>
-  wallet.ticket.map(ticketID =>
-    tickets.find(ticket => ticket._id === ticketID),
-  );
+const { users, wallets } = require('../../utils/mocks/dataMock');
+const { getTicketsArray } = require('../../utils/shareFunc');
 
 module.exports = {
   Wallet: {
@@ -22,7 +18,7 @@ module.exports = {
 
     sumAmountWallet: async (wallets, __, { dataSources }) => {
       const ticketArray = getTicketsArray(wallets);
-      const currentArray = await dataSources.getCurrentFinanceByTickets(
+      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
         ticketArray,
       );
 

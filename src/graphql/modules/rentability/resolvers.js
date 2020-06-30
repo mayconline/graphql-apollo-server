@@ -1,16 +1,12 @@
-const { tickets, wallets } = require('../../../mocks');
-
-const getTicketsArray = wallet =>
-  wallet.ticket.map(ticketID =>
-    tickets.find(ticket => ticket._id === ticketID),
-  );
+const { wallets } = require('../../utils/mocks/dataMock');
+const { getTicketsArray } = require('../../utils/shareFunc');
 
 module.exports = {
   Query: {
     getRentability: async (_, args, { dataSources }) => {
       const wallet = wallets.find(wallet => wallet._id === args.walletID);
       const ticketArray = getTicketsArray(wallet);
-      const currentArray = await dataSources.getCurrentFinanceByTickets(
+      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
         ticketArray,
       );
 

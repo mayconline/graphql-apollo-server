@@ -1,4 +1,5 @@
-const { tickets, wallets } = require('../../../mocks');
+const { tickets, wallets } = require('../../utils/mocks/dataMock');
+const { getTicketsArray } = require('../../utils/shareFunc');
 
 module.exports = {
   Query: {

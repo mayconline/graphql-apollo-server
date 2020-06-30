@@ -1,16 +1,12 @@
 const { ApolloServer } = require('apollo-server');
 
-const {
-  getCurrentFinanceByTickets,
-  getFinance,
-} = require('./services/finance');
+const finance = require('./services/finance');
 
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
 
 const dataSources = () => ({
-  getCurrentFinanceByTickets,
-  getFinance,
+  finance,
 });
 
 const server = new ApolloServer({

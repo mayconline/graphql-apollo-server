@@ -1,9 +1,5 @@
-const { tickets, wallets } = require('../../../mocks');
-
-const getTicketsArray = wallet =>
-  wallet.ticket.map(ticketID =>
-    tickets.find(ticket => ticket._id === ticketID),
-  );
+const { wallets } = require('../../utils/mocks/dataMock');
+const { getTicketsArray } = require('../../utils/shareFunc');
 
 const getStatus = percent => {
   if (percent === 0) return 'KEEP';
@@ -15,7 +11,7 @@ module.exports = {
     rebalances: async (_, args, { dataSources }) => {
       const wallet = wallets.find(wallet => wallet._id === args.walletID);
       const ticketArray = getTicketsArray(wallet);
-      const currentArray = await dataSources.getCurrentFinanceByTickets(
+      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
         ticketArray,
       );
 

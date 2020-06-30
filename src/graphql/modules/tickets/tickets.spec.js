@@ -1,4 +1,8 @@
-const { server, createTestClient, gql } = require('../../utils/serverMock');
+const {
+  server,
+  createTestClient,
+  gql,
+} = require('../../utils/mocks/serverMock');
 
 describe('Mutation Test', () => {
   const { mutate } = createTestClient(server);

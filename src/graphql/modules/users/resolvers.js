@@ -1,4 +1,4 @@
-const { users } = require('../../../mocks');
+const { users } = require('../../utils/mocks/dataMock');
 
 module.exports = {
   Query: {
