@@ -16,6 +16,7 @@ input TicketInput {
 
 type Query {
   tickets: [Ticket!]
+  getTicketsByWallet: [Ticket]
 }
 
 type Mutation {

@@ -1,46 +1,18 @@
-const { users } = require('../../utils/mocks/dataMock');
-
 module.exports = {
   Query: {
-    users: () => users,
-    getUserByEmail: (_, args) => {
-      return users.find(user => user.email === args.email);
-    },
+    users: (_, __, { dataSources }) => dataSources.UserController.index(),
+
+    getUserByEmail: (_, args, { dataSources }) =>
+      dataSources.UserController.show(args),
   },
-
   Mutation: {
-    createUser: (_, args) => {
-      let newUser = {
-        _id: String(Math.random()),
-        email: args.input.email,
-        password: args.input.password,
-        active: args.input.active,
-        checkTerms: args.input.checkTerms,
-      };
+    createUser: (_, args, { dataSources }) =>
+      dataSources.UserController.store(args),
 
-      users.push(newUser);
-      return newUser;
-    },
-    updateUser: (_, args) => {
-      let user = users.find(user => user._id === args._id);
-      if (!user) return null;
+    updateUser: (_, args, { dataSources }) =>
+      dataSources.UserController.update(args),
 
-      user = {
-        ...user,
-        email: args.input.email,
-        password: args.input.password,
-        active: args.input.active,
-        checkTerms: args.input.checkTerms,
-      };
-
-      users.splice(users.indexOf(user), 1, user);
-
-      return user;
-    },
-    deleteUser: (_, args) => {
-      let user = users.find(user => user._id === args._id);
-      if (user) users.splice(users.indexOf(user), 1);
-      return !!user;
-    },
+    deleteUser: (_, args, { dataSources }) =>
+      dataSources.UserController.destroy(args),
   },
 };

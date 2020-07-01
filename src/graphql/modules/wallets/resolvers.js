@@ -1,69 +1,53 @@
-const { users, wallets } = require('../../utils/mocks/dataMock');
-const { getTicketsArray } = require('../../utils/shareFunc');
+const {
+  getSumAmountWallet,
+  getSumCostWallet,
+  getSumGradeWallet,
+} = require('../../utils/shareFunc');
 
 module.exports = {
   Wallet: {
-    user: wallets => users.find(user => user._id === wallets.user),
-
-    ticket: wallets => getTicketsArray(wallets),
-
-    sumGradeWallet: wallets =>
-      getTicketsArray(wallets).reduce((acc, cur) => acc + cur.grade, 0),
-
-    sumCostWallet: wallets =>
-      getTicketsArray(wallets).reduce(
-        (acc, cur) => acc + cur.quantity * cur.averagePrice,
-        0,
+    user: (wallets, __, { dataSources }) =>
+      dataSources.UserController.index().find(
+        user => user._id === wallets.user,
       ),
 
+    ticket: (wallets, __, { dataSources }) =>
+      dataSources.TicketController.show(wallets),
+
+    sumGradeWallet: (wallets, __, { dataSources }) => {
+      const ticketArray = dataSources.TicketController.show(wallets);
+      return getSumGradeWallet(ticketArray);
+    },
+
+    sumCostWallet: (wallets, __, { dataSources }) => {
+      const ticketArray = dataSources.TicketController.show(wallets);
+      return getSumCostWallet(ticketArray);
+    },
+
     sumAmountWallet: async (wallets, __, { dataSources }) => {
-      const ticketArray = getTicketsArray(wallets);
+      const ticketArray = dataSources.TicketController.show(wallets);
+
       const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
         ticketArray,
       );
 
-      return currentArray.reduce(
-        (acc, cur) => acc + cur.quantity * cur.regularMarketPrice,
-        0,
-      );
+      return getSumAmountWallet(currentArray);
     },
   },
   Query: {
-    wallets: () => wallets,
-    getWalletByUser: (_, args) => {
-      return wallets.filter(wallet => wallet.user === args.userID);
-    },
+    wallets: (_, __, { dataSources }) => dataSources.WalletController.index(),
+
+    getWalletByUser: (_, args, { dataSources }) =>
+      dataSources.WalletController.show(args),
   },
   Mutation: {
-    createWallet: (_, args) => {
-      let newWallet = {
-        _id: String(Math.random()),
-        user: parseInt(args.input.userID),
-        description: args.input.description,
-        sumCostWallet: 0,
-        sumAmountWallet: 0,
-        sumGradeWallet: 0,
-        ticket: [],
-      };
-      wallets.push(newWallet);
-      return newWallet;
-    },
-    updateWallet: (_, args) => {
-      let wallet = wallets.find(wallet => wallet._id === args._id);
-      if (wallet) wallets.splice(wallets.indexOf(wallet), 1);
+    createWallet: (_, args, { dataSources }) =>
+      dataSources.WalletController.store(args),
 
-      wallet = {
-        ...wallet,
-        description: args.input.description,
-      };
+    updateWallet: (_, args, { dataSources }) =>
+      dataSources.WalletController.update(args),
 
-      wallets.push(wallet);
-      return wallet;
-    },
-    deleteWallet: (_, args) => {
-      let wallet = wallets.find(wallet => wallet._id === args._id);
-      if (wallet) wallets.splice(wallets.indexOf(wallet), 1);
-      return !!wallet;
-    },
+    deleteWallet: (_, args, { dataSources }) =>
+      dataSources.WalletController.destroy(args),
   },
 };
