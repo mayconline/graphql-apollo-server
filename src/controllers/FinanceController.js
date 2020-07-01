@@ -2,6 +2,7 @@ const {
   getSumAmountWallet,
   getSumCostWallet,
   getSumGradeWallet,
+  getArraySortByParams,
 } = require('../graphql/utils/shareFunc');
 
 const getStatus = percent => {
@@ -46,7 +47,7 @@ module.exports = {
     return res;
   },
 
-  rebalance: currentArray => {
+  rebalance: (currentArray, sort) => {
     let sumAmountWallet = getSumAmountWallet(currentArray);
     let sumGradeWallet = getSumGradeWallet(currentArray);
 
@@ -82,6 +83,6 @@ module.exports = {
       },
     );
 
-    return rebalanced;
+    return getArraySortByParams(rebalanced, sort);
   },
 };

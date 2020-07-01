@@ -8,8 +8,8 @@ describe('Query Test', () => {
   const { query } = createTestClient(server);
 
   const REBALANCES = gql`
-    query rebalances($walletID: ID!) {
-      rebalances(walletID: $walletID) {
+    query rebalances($walletID: ID!, $sort: SortRebalance!) {
+      rebalances(walletID: $walletID, sort: $sort) {
         _id
         symbol
         longName
@@ -27,7 +27,7 @@ describe('Query Test', () => {
   it('should return ticket rebalanced', async () => {
     const res = await query({
       query: REBALANCES,
-      variables: { walletID: 'a' },
+      variables: { walletID: 'a', sort: 'targetAmount' },
     });
     expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('rebalances');

@@ -4,6 +4,15 @@ enum Status {
   ANALYZE
 }
 
+enum SortRebalance {
+  symbol
+  status
+  currentAmount
+  targetAmount
+  currentPercent
+  targetPercent
+}
+
 type Rebalance {
   _id: ID!
   symbol: String!
@@ -18,5 +27,5 @@ type Rebalance {
 }
 
 type Query {
-  rebalances(walletID: ID!): [Rebalance]
+  rebalances(walletID: ID!, sort: SortRebalance!): [Rebalance]
 }

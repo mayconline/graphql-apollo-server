@@ -11,7 +11,10 @@ module.exports = {
         ticketArray,
       );
 
-      const rebalanced = dataSources.FinanceController.rebalance(currentArray);
+      const rebalanced = dataSources.FinanceController.rebalance(
+        currentArray,
+        args.sort,
+      );
 
       return rebalanced;
     },
