@@ -1,0 +1,13 @@
+{
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.tabSize": 2,
+  "editor.rulers": [80, 120],
+  "editor.renderLineHighlight": "all",
+  "prettier.singleQuote": true,
+  "todo-tree.tree.showScanModeButton": false,
+  "diffEditor.ignoreTrimWhitespace": false
+}
