@@ -11,7 +11,7 @@ const getStatus = percent => {
 };
 
 module.exports = {
-  rentability: currentArray => {
+  rentability: (currentArray, sort) => {
     let sumAmountWallet = getSumAmountWallet(currentArray);
     let sumCostWallet = getSumCostWallet(currentArray);
 
@@ -44,7 +44,7 @@ module.exports = {
         };
       },
     );
-    return res;
+    return getArraySortByParams(res, sort);
   },
 
   rebalance: (currentArray, sort) => {

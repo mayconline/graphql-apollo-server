@@ -13,6 +13,7 @@ module.exports = {
 
       const rentability = dataSources.FinanceController.rentability(
         currentArray,
+        args.sort,
       );
 
       return rentability;

@@ -11,6 +11,13 @@ type Rentability {
   financialCurrency: String!
 }
 
+enum SortRentability {
+  symbol
+  costAmount
+  currentAmount
+  variationPercent
+}
+
 type Query {
-  getRentability(walletID: ID!): [Rentability]
+  getRentability(walletID: ID!, sort: SortRentability!): [Rentability]
 }
