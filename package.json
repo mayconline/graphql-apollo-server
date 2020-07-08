@@ -14,8 +14,10 @@
     "apollo-server": "^2.13.1",
     "apollo-server-testing": "^2.14.1",
     "axios": "^0.19.2",
+    "bcrypt": "^5.0.0",
     "graphql": "^15.0.0",
-    "graphql-tools": "^6.0.4"
+    "graphql-tools": "^6.0.4",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "@types/jest": "^25.2.3",
