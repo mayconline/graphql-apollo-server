@@ -16,11 +16,11 @@ input UserInput {
 
 type Query {
   users: [User]
-  getUserByEmail(email: String!): User!
+  getUserByEmail(email: String!): User
 }
 
 type Mutation {
-  createUser(input: UserInput!): User!
+  createUser(input: UserInput!): User
   updateUser(_id: ID!, input: UserInput!): User
   deleteUser(_id: ID!): Boolean!
 }

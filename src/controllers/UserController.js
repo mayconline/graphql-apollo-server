@@ -5,15 +5,17 @@ const { setToken } = require('../graphql/utils/shareFunc');
 module.exports = {
   index: () => users,
   show: args => {
-    return users.find(user => user.email === args.email);
+    return users.find(user => user.email === args.email.toLowerCase());
   },
   store: async args => {
-    let user = users.find(user => user.email === args.input.email);
+    let user = users.find(
+      user => user.email === args.input.email.toLowerCase(),
+    );
     if (user) return null;
 
     let newUser = {
       _id: String(Math.random()),
-      email: args.input.email,
+      email: args.input.email.toLowerCase(),
       password: await bcrypt.hash(args.input.password, 10),
       active: args.input.active,
       checkTerms: args.input.checkTerms,
@@ -30,7 +32,7 @@ module.exports = {
 
     user = {
       ...user,
-      email: args.input.email,
+      email: args.input.email.toLowerCase(),
       password: await bcrypt.hash(args.input.password, 10),
       active: args.input.active,
       checkTerms: args.input.checkTerms,

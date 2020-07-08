@@ -4,7 +4,9 @@ const { setToken } = require('../graphql/utils/shareFunc');
 
 module.exports = {
   show: async args => {
-    let user = users.find(user => user.email === args.input.email);
+    let user = users.find(
+      user => user.email === args.input.email.toLowerCase(),
+    );
     if (!user) return null;
 
     let isValidPassword = await bcrypt.compare(
