@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 module.exports = {
   getSumGradeWallet: currentArray =>
     currentArray.reduce((acc, cur) => acc + cur.grade, 0),
@@ -24,4 +26,23 @@ module.exports = {
         return 0;
       }
     }),
+
+  setToken: _id =>
+    jwt.sign({ _id }, 'secret', {
+      expiresIn: '1d',
+    }),
+
+  getToken: headers => {
+    const { authorization } = headers;
+    if (!authorization) return null;
+
+    const token = authorization.replace('Bearer', '').trim();
+
+    try {
+      const decoded = jwt.verify(token, 'secret');
+      return decoded;
+    } catch {
+      return null;
+    }
+  },
 };
