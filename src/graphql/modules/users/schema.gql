@@ -4,6 +4,7 @@ type User {
   password: String!
   active: Boolean!
   checkTerms: Boolean!
+  token: String
 }
 
 input UserInput {

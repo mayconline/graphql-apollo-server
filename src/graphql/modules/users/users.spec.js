@@ -73,6 +73,7 @@ describe('create User', () => {
         email
         active
         checkTerms
+        password
       }
     }
   `;
