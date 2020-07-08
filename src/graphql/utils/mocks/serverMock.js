@@ -5,6 +5,7 @@ const { getCurrentFinanceByTickets, getFinance } = require('./dataMock');
 
 let finance = require('../../../services/finance');
 
+const AuthController = require('../../../controllers/AuthController');
 const UserController = require('../../../controllers/UserController');
 const WalletController = require('../../../controllers/WalletController');
 const TicketController = require('../../../controllers/TicketController');
@@ -15,6 +16,7 @@ const resolvers = require('../../resolvers');
 
 const dataSources = () => ({
   finance,
+  AuthController,
   UserController,
   WalletController,
   TicketController,

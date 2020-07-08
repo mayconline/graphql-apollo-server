@@ -1,0 +1,8 @@
+input AuthInput {
+  email: String!
+  password: String!
+}
+
+type Query {
+  login(input: AuthInput!): User
+}
