@@ -1,6 +1,7 @@
 module.exports = {
   Query: {
-    users: (_, __, { dataSources }) => dataSources.UserController.index(),
+    users: (_, __, { dataSources, isValidToken }) =>
+      !isValidToken ? null : dataSources.UserController.index(),
 
     getUserByEmail: (_, args, { dataSources }) =>
       dataSources.UserController.show(args),

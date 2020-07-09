@@ -9,6 +9,10 @@ module.exports = {
     switch (message) {
       case 'User or Password Invalid':
         return new AuthenticationError(message);
+      case 'Token Not Exists':
+        return new AuthenticationError(message);
+      case 'Token Invalid or Expired':
+        return new AuthenticationError(message);
       case 'User Exists':
         return new UserInputError(message, path);
       case 'User Not Exists':

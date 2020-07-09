@@ -32,9 +32,9 @@ module.exports = {
       expiresIn: '1d',
     }),
 
-  getToken: headers => {
+  getToken: ({ headers }) => {
     const { authorization } = headers;
-    if (!authorization) return null;
+    if (!authorization) throw new Error('Token Not Exists');
 
     const token = authorization.replace('Bearer', '').trim();
 
@@ -42,7 +42,7 @@ module.exports = {
       const decoded = jwt.verify(token, 'secret');
       return decoded;
     } catch {
-      return null;
+      throw new Error('Token Invalid or Expired');
     }
   },
 };

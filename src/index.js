@@ -1,5 +1,6 @@
 const { ApolloServer } = require('apollo-server');
 const { getErrorMessage } = require('./graphql/utils/errorHandler');
+const { getToken } = require('./graphql/utils/shareFunc');
 
 const finance = require('./services/finance');
 
@@ -25,6 +26,10 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources,
+  context: ({ req }) => {
+    const isValidToken = getToken(req);
+    return { isValidToken };
+  },
   formatError: err => getErrorMessage(err),
 });
 
