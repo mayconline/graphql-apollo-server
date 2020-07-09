@@ -18,7 +18,7 @@ module.exports = {
   },
   update: args => {
     let wallet = wallets.find(wallet => wallet._id === args._id);
-    if (!wallet) return null;
+    if (!wallet) throw new Error('Wallet Not Found');
 
     wallet = {
       ...wallet,
@@ -30,7 +30,9 @@ module.exports = {
   },
   destroy: args => {
     let wallet = wallets.find(wallet => wallet._id === args._id);
-    if (wallet) wallets.splice(wallets.indexOf(wallet), 1);
+    if (!wallet) throw new Error('Wallet Not Found');
+
+    wallets.splice(wallets.indexOf(wallet), 1);
     return !!wallet;
   },
 };

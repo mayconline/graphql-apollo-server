@@ -11,7 +11,7 @@ module.exports = {
     let user = users.find(
       user => user.email === args.input.email.toLowerCase(),
     );
-    if (user) return null;
+    if (user) throw new Error('User Exists');
 
     let newUser = {
       _id: String(Math.random()),
@@ -28,7 +28,7 @@ module.exports = {
   },
   update: async args => {
     let user = users.find(user => user._id === args._id);
-    if (!user) return null;
+    if (!user) throw new Error('User Not Exists');
 
     user = {
       ...user,
@@ -46,7 +46,9 @@ module.exports = {
   },
   destroy: args => {
     let user = users.find(user => user._id === args._id);
-    if (user) users.splice(users.indexOf(user), 1);
+    if (!user) throw new Error('User Not Exists');
+
+    users.splice(users.indexOf(user), 1);
     return !!user;
   },
 };

@@ -1,4 +1,5 @@
 const { ApolloServer } = require('apollo-server');
+const { getErrorMessage } = require('./graphql/utils/errorHandler');
 
 const finance = require('./services/finance');
 
@@ -24,6 +25,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources,
+  formatError: err => getErrorMessage(err),
 });
 
 server.listen().then(({ url }) => console.log(`server started at ${url}`));

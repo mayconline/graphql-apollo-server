@@ -1,5 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { createTestClient } = require('apollo-server-testing');
+const { getErrorMessage } = require('../errorHandler');
 
 const { getCurrentFinanceByTickets, getFinance } = require('./dataMock');
 
@@ -27,6 +28,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources,
+  formatError: err => getErrorMessage(err),
   mocks: true,
   mockEntireSchema: false,
 });

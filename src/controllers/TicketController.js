@@ -10,7 +10,7 @@ module.exports = {
 
   store: args => {
     let wallet = wallets.find(wallet => wallet._id === args.input.walletID);
-    if (!wallet) return null;
+    if (!wallet) throw new Error('Wallet Not Found');
 
     let ticket = {
       _id: String(Math.random()),
@@ -28,14 +28,15 @@ module.exports = {
 
   update: args => {
     let ticket = tickets.find(ticket => ticket._id === args._id);
-    if (ticket)
-      ticket = {
-        ...ticket,
-        symbol: args.input.symbol,
-        quantity: args.input.quantity,
-        averagePrice: args.input.averagePrice,
-        grade: args.input.grade,
-      };
+    if (!ticket) throw new Error('Ticket Not Found');
+
+    ticket = {
+      ...ticket,
+      symbol: args.input.symbol,
+      quantity: args.input.quantity,
+      averagePrice: args.input.averagePrice,
+      grade: args.input.grade,
+    };
 
     tickets.splice(tickets.indexOf(ticket), 1, ticket);
 
@@ -44,10 +45,13 @@ module.exports = {
 
   destroy: args => {
     let ticket = tickets.find(ticket => ticket._id === args._id);
-    let wallet = wallets.find(wallet => wallet._id === args.walletID);
+    if (!ticket) throw new Error('Ticket Not Found');
 
-    if (wallet) wallet.ticket.splice(wallet.ticket.indexOf(ticket._id), 1);
-    if (ticket) tickets.splice(tickets.indexOf(ticket), 1);
+    let wallet = wallets.find(wallet => wallet._id === args.walletID);
+    if (!wallet) throw new Error('Wallet Not Found');
+
+    wallet.ticket.splice(wallet.ticket.indexOf(ticket._id), 1);
+    tickets.splice(tickets.indexOf(ticket), 1);
     return !!ticket;
   },
 };
