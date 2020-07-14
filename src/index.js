@@ -26,10 +26,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources,
-  context: ({ req }) => {
-    const isValidToken = getToken(req);
-    return { isValidToken };
-  },
+  context: ({ req }) => ({
+    hasToken: getToken(req),
+  }),
   formatError: err => getErrorMessage(err),
 });
 

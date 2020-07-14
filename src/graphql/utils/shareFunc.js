@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { getErrorMessage } = require('./errorHandler');
 
 module.exports = {
   getSumGradeWallet: currentArray =>
@@ -34,7 +35,7 @@ module.exports = {
 
   getToken: ({ headers }) => {
     const { authorization } = headers;
-    if (!authorization) throw new Error('Token Not Exists');
+    if (!authorization) return null;
 
     const token = authorization.replace('Bearer', '').trim();
 

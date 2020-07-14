@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest -u",
-    "dev": "nodemon src/index.js -e js,gql"
+    "dev": "nodemon src/index.js -e js,gql",
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
