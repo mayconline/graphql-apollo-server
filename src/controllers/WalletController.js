@@ -6,7 +6,7 @@ module.exports = {
   store: args => {
     let newWallet = {
       _id: String(Math.random()),
-      user: parseInt(args.input.userID),
+      user: args.input.userID,
       description: args.input.description,
       sumCostWallet: 0,
       sumAmountWallet: 0,
