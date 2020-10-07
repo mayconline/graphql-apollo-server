@@ -16,7 +16,7 @@ input TicketInput {
 
 type Query {
   tickets: [Ticket!]
-  getTicketsByWallet: [Ticket]
+  getTicketsByWallet(walletID: ID!): [Ticket]
 }
 
 type Mutation {

@@ -3,10 +3,13 @@ const { tickets, wallets } = require('../graphql/utils/mocks/dataMock');
 module.exports = {
   index: () => tickets,
 
-  show: wallet =>
-    wallet.ticket.map(ticketID =>
+  show: args => {
+    let wallet = wallets.find(wallet => wallet._id === args.walletID);
+
+    return wallet.ticket.map(ticketID =>
       tickets.find(ticket => ticket._id === ticketID),
-    ),
+    );
+  },
 
   store: args => {
     let wallet = wallets.find(wallet => wallet._id === args.input.walletID);

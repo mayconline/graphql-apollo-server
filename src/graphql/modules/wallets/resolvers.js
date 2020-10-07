@@ -12,20 +12,26 @@ module.exports = {
       ),
 
     ticket: (wallets, __, { dataSources }) =>
-      dataSources.TicketController.show(wallets),
+      dataSources.TicketController.show({ walletID: wallets._id }),
 
     sumGradeWallet: (wallets, __, { dataSources }) => {
-      const ticketArray = dataSources.TicketController.show(wallets);
+      const ticketArray = dataSources.TicketController.show({
+        walletID: wallets._id,
+      });
       return getSumGradeWallet(ticketArray);
     },
 
     sumCostWallet: (wallets, __, { dataSources }) => {
-      const ticketArray = dataSources.TicketController.show(wallets);
+      const ticketArray = dataSources.TicketController.show({
+        walletID: wallets._id,
+      });
       return getSumCostWallet(ticketArray);
     },
 
     sumAmountWallet: async (wallets, __, { dataSources }) => {
-      const ticketArray = dataSources.TicketController.show(wallets);
+      const ticketArray = dataSources.TicketController.show({
+        walletID: wallets._id,
+      });
 
       const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
         ticketArray,
