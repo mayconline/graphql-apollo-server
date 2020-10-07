@@ -3,6 +3,7 @@ const {
   getSumCostWallet,
   getSumGradeWallet,
   getArraySortByParams,
+  getPercentVariation,
 } = require('../graphql/utils/shareFunc');
 
 const getStatus = percent => {
@@ -28,7 +29,7 @@ module.exports = {
         let costAmount = quantity * averagePrice;
         let currentAmount = quantity * regularMarketPrice;
         let variationAmount = currentAmount - costAmount;
-        let variationPercent = variationAmount / costAmount;
+        let variationPercent = getPercentVariation(costAmount, currentAmount);
 
         return {
           _id,
@@ -62,10 +63,10 @@ module.exports = {
         financialCurrency,
       }) => {
         let currentAmount = quantity * regularMarketPrice;
-        let gradePercent = grade / sumGradeWallet;
-        let currentPercent = currentAmount / sumAmountWallet;
+        let gradePercent = (grade / sumGradeWallet) * 100;
+        let currentPercent = (currentAmount / sumAmountWallet) * 100;
         let targetPercent = gradePercent - currentPercent;
-        let targetAmount = targetPercent * sumAmountWallet;
+        let targetAmount = (targetPercent * sumAmountWallet) / 100;
         let status = getStatus(targetPercent);
 
         return {

@@ -5,6 +5,7 @@ type Wallet {
   sumCostWallet: Float!
   sumAmountWallet: Float!
   sumGradeWallet: Float!
+  percentRentabilityWallet: Float!
   ticket: [Ticket]
 }
 
@@ -15,6 +16,7 @@ input WalletInput {
 
 type Query {
   wallets: [Wallet]
+  getWalletById(_id: ID!): Wallet
   getWalletByUser(userID: ID!): [Wallet]
 }
 

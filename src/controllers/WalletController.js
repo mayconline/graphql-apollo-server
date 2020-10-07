@@ -2,6 +2,7 @@ const { wallets } = require('../graphql/utils/mocks/dataMock');
 
 module.exports = {
   index: () => wallets,
+  showOne: args => wallets.find(wallet => wallet._id === args._id),
   show: args => wallets.filter(wallet => wallet.user === args.userID),
   store: args => {
     let newWallet = {

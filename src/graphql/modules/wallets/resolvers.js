@@ -2,6 +2,7 @@ const {
   getSumAmountWallet,
   getSumCostWallet,
   getSumGradeWallet,
+  getPercentVariation,
 } = require('../../utils/shareFunc');
 
 module.exports = {
@@ -39,9 +40,26 @@ module.exports = {
 
       return getSumAmountWallet(currentArray);
     },
+    percentRentabilityWallet: async (wallets, __, { dataSources }) => {
+      const ticketArray = dataSources.TicketController.show({
+        walletID: wallets._id,
+      });
+
+      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
+        ticketArray,
+      );
+
+      let SumAmount = getSumAmountWallet(currentArray);
+      let SumCost = getSumCostWallet(ticketArray);
+
+      return getPercentVariation(SumCost, SumAmount);
+    },
   },
   Query: {
     wallets: (_, __, { dataSources }) => dataSources.WalletController.index(),
+
+    getWalletById: (_, args, { dataSources }) =>
+      dataSources.WalletController.showOne(args),
 
     getWalletByUser: (_, args, { dataSources }) =>
       dataSources.WalletController.show(args),

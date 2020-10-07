@@ -14,6 +14,25 @@ module.exports = {
       0,
     ),
 
+  getPercentVariation: (SumCost, SumAmount) => {
+    let calcPercent = ((SumAmount - SumCost) / SumCost) * 100;
+
+    const percentVariation =
+      SumAmount === SumCost
+        ? 0
+        : SumCost < 0 && SumAmount === 0
+        ? 100
+        : SumCost === 0 && SumAmount < 0
+        ? -100
+        : SumCost === 0 && SumAmount > 0
+        ? 100
+        : SumCost > 0
+        ? calcPercent
+        : SumCost < 0 && calcPercent * -1;
+
+    return percentVariation;
+  },
+
   getArraySortByParams: (array, params) =>
     array.sort((a, b) => {
       let itema = a[params];
