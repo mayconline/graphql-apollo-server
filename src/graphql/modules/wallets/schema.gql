@@ -6,6 +6,8 @@ type Wallet {
   sumAmountWallet: Float!
   sumGradeWallet: Float!
   percentRentabilityWallet: Float!
+  percentPositionWallet: Float
+  sumAmountAllWallet: Float
   ticket: [Ticket]
 }
 

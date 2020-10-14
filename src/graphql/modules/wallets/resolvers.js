@@ -54,6 +54,22 @@ module.exports = {
 
       return getPercentVariation(SumCost, SumAmount);
     },
+    percentPositionWallet: async (wallets, __, { dataSources }) => {
+      const ticketArray = dataSources.TicketController.show({
+        walletID: wallets._id,
+      });
+
+      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
+        ticketArray,
+      );
+
+      let SumAmount = getSumAmountWallet(currentArray);
+      let sumAmountAllWallet = wallets.sumAmountAllWallet;
+
+      let percent = (SumAmount * 100) / sumAmountAllWallet || 0;
+
+      return percent;
+    },
   },
   Query: {
     wallets: (_, __, { dataSources }) => dataSources.WalletController.index(),
@@ -61,8 +77,28 @@ module.exports = {
     getWalletById: (_, args, { dataSources }) =>
       dataSources.WalletController.showOne(args),
 
-    getWalletByUser: (_, args, { dataSources }) =>
-      dataSources.WalletController.show(args),
+    getWalletByUser: async (_, args, { dataSources }) => {
+      let AllWallets = dataSources.WalletController.show(args);
+
+      let AllTickets = AllWallets.map(wallets =>
+        dataSources.TicketController.show({
+          walletID: wallets._id,
+        }),
+      );
+
+      let ticketArray = AllTickets.reduce((acc, cur) => [...acc, ...cur], []);
+
+      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
+        ticketArray,
+      );
+
+      let SumAllAmount = getSumAmountWallet(currentArray);
+
+      return AllWallets.map(wallet => ({
+        ...wallet,
+        sumAmountAllWallet: SumAllAmount,
+      }));
+    },
   },
   Mutation: {
     createWallet: (_, args, { dataSources }) =>
