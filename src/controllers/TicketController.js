@@ -18,6 +18,7 @@ module.exports = {
     let ticket = {
       _id: String(Math.random()),
       symbol: args.input.symbol,
+      name: args.input.name,
       quantity: args.input.quantity,
       averagePrice: args.input.averagePrice,
       grade: args.input.grade,
@@ -36,6 +37,7 @@ module.exports = {
     ticket = {
       ...ticket,
       symbol: args.input.symbol,
+      name: args.input.name,
       quantity: args.input.quantity,
       averagePrice: args.input.averagePrice,
       grade: args.input.grade,

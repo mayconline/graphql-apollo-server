@@ -11,6 +11,7 @@ describe('Mutation Test', () => {
     mutation createTicket(
       $walletID: ID!
       $symbol: String!
+      $name: String!
       $quantity: Float!
       $averagePrice: Float!
       $grade: Int!
@@ -19,6 +20,7 @@ describe('Mutation Test', () => {
         input: {
           walletID: $walletID
           symbol: $symbol
+          name: $name
           quantity: $quantity
           averagePrice: $averagePrice
           grade: $grade
@@ -29,6 +31,7 @@ describe('Mutation Test', () => {
         quantity
         averagePrice
         grade
+        name
       }
     }
   `;
@@ -38,6 +41,7 @@ describe('Mutation Test', () => {
       $id: ID!
       $walletID: ID!
       $symbol: String!
+      $name: String!
       $quantity: Float!
       $averagePrice: Float!
       $grade: Int!
@@ -47,6 +51,7 @@ describe('Mutation Test', () => {
         input: {
           walletID: $walletID
           symbol: $symbol
+          name: $name
           quantity: $quantity
           averagePrice: $averagePrice
           grade: $grade
@@ -57,6 +62,7 @@ describe('Mutation Test', () => {
         quantity
         averagePrice
         grade
+        name
       }
     }
   `;
@@ -73,6 +79,7 @@ describe('Mutation Test', () => {
       variables: {
         walletID: 'a',
         symbol: 'lren3.sa',
+        name: 'Lojas Renner SA',
         quantity: 90,
         averagePrice: 31.2,
         grade: 5,
@@ -90,6 +97,7 @@ describe('Mutation Test', () => {
         id: '2',
         walletID: 'a',
         symbol: 'lren3.sa',
+        name: 'Lojas Renner SA',
         quantity: 100,
         averagePrice: 40.2,
         grade: 10,
