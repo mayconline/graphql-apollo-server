@@ -7,10 +7,8 @@ const {
 
 module.exports = {
   Wallet: {
-    user: (wallets, __, { dataSources }) =>
-      dataSources.UserController.index().find(
-        user => user._id === wallets.user,
-      ),
+    user: (_, __, { dataSources, hasToken }) =>
+      dataSources.UserController.show(hasToken),
 
     ticket: (wallets, __, { dataSources }) =>
       dataSources.TicketController.show({ walletID: wallets._id }),

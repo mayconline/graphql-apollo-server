@@ -1,26 +1,34 @@
+enum Role {
+  USER
+  PREMIUM
+  ADM
+}
+
 type User {
   _id: ID!
   email: String!
   password: String!
   active: Boolean!
   checkTerms: Boolean!
+  role: Role!
   token: String
 }
 
 input UserInput {
   email: String!
   password: String!
-  active: Boolean!
+  active: Boolean! = true
   checkTerms: Boolean!
+  role: Role! = USER
 }
 
 type Query {
   users: [User]
-  getUserByEmail(email: String!): User
+  getUserByToken: User
 }
 
 type Mutation {
   createUser(input: UserInput!): User
-  updateUser(_id: ID!, input: UserInput!): User
-  deleteUser(_id: ID!): Boolean!
+  updateUser(input: UserInput!): User
+  deleteUser: Boolean!
 }

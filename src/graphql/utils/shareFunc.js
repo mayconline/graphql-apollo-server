@@ -47,8 +47,8 @@ module.exports = {
       }
     }),
 
-  setToken: _id =>
-    jwt.sign({ _id }, 'secret', {
+  setToken: (_id, role) =>
+    jwt.sign({ _id, role }, 'secret', {
       expiresIn: '1d',
     }),
 

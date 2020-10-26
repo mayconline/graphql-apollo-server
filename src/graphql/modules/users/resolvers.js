@@ -3,19 +3,25 @@ module.exports = {
     users: (_, __, { dataSources, hasToken }) =>
       !hasToken
         ? new Error('Token Not Exists')
-        : dataSources.UserController.index(),
+        : dataSources.UserController.index(hasToken),
 
-    getUserByEmail: (_, args, { dataSources }) =>
-      dataSources.UserController.show(args),
+    getUserByToken: (_, __, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.UserController.show(hasToken),
   },
   Mutation: {
     createUser: (_, args, { dataSources }) =>
       dataSources.UserController.store(args),
 
-    updateUser: (_, args, { dataSources }) =>
-      dataSources.UserController.update(args),
+    updateUser: (_, args, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.UserController.update(args, hasToken),
 
-    deleteUser: (_, args, { dataSources }) =>
-      dataSources.UserController.destroy(args),
+    deleteUser: (_, __, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.UserController.destroy(hasToken),
   },
 };

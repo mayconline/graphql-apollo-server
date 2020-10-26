@@ -15,7 +15,7 @@ module.exports = {
     );
     if (!isValidPassword) throw new Error('User or Password Invalid');
 
-    const token = setToken(user._id);
+    const token = setToken(user._id, user.role);
 
     return {
       ...user,

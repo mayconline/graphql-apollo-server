@@ -58,22 +58,18 @@ describe('create User', () => {
     mutation createUser(
       $email: String!
       $password: String!
-      $active: Boolean!
       $checkTerms: Boolean!
     ) {
       createUser(
-        input: {
-          email: $email
-          password: $password
-          active: $active
-          checkTerms: $checkTerms
-        }
+        input: { email: $email, password: $password, checkTerms: $checkTerms }
       ) {
         _id
         email
         active
         checkTerms
         password
+        token
+        role
       }
     }
   `;
@@ -84,7 +80,6 @@ describe('create User', () => {
       variables: {
         email: 'te@te.com.br',
         password: '123',
-        active: true,
         checkTerms: true,
       },
     });

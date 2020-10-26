@@ -28,6 +28,9 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   dataSources,
+  context: ({ req }) => ({
+    hasToken: true,
+  }),
   formatError: err => getErrorMessage(err),
   mocks: true,
   mockEntireSchema: false,
