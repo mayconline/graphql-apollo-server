@@ -4,6 +4,8 @@ module.exports = {
   },
   Mutation: {
     updateRole: (_, args, { dataSources, hasToken }) =>
-      dataSources.AuthController.update(args, hasToken),
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.AuthController.update(args, hasToken),
   },
 };
