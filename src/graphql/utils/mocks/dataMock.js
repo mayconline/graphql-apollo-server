@@ -88,6 +88,15 @@ module.exports = {
         '21',
       ],
     },
+    {
+      _id: 'e',
+      user: '4',
+      description: 'Carteira Americana',
+      sumCostWallet: 0,
+      sumAmountWallet: 0,
+      sumGradeWallet: 0,
+      ticket: ['22', '23'],
+    },
   ],
   tickets: [
     {
@@ -236,6 +245,22 @@ module.exports = {
       quantity: 6,
       averagePrice: 16.3,
       grade: 0,
+    },
+    {
+      _id: '22',
+      symbol: 'goog',
+      name: 'Google',
+      quantity: 10,
+      averagePrice: 9040.0,
+      grade: 5,
+    },
+    {
+      _id: '23',
+      symbol: 'amzn',
+      name: 'Amazon',
+      quantity: 10,
+      averagePrice: 17515.0,
+      grade: 5,
     },
   ],
   getFinance: {
