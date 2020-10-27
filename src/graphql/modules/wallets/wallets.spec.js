@@ -8,8 +8,8 @@ describe('Query Test', () => {
   const { query } = createTestClient(server);
 
   const GET_WALLETS_BY_USER = gql`
-    query getWalletByUser($userID: ID!) {
-      getWalletByUser(userID: $userID) {
+    query getWalletByUser {
+      getWalletByUser {
         _id
         description
         sumCostWallet
@@ -33,7 +33,6 @@ describe('Query Test', () => {
   it('should return wallets array', async () => {
     const res = await query({
       query: GET_WALLETS_BY_USER,
-      variables: { userID: '1' },
     });
     expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('getWalletByUser');
@@ -45,8 +44,8 @@ describe('Mutation Test', () => {
   const { mutate } = createTestClient(server);
 
   const CREATE_WALLET = gql`
-    mutation createWallet($userID: ID!, $description: String!) {
-      createWallet(input: { userID: $userID, description: $description }) {
+    mutation createWallet($description: String!) {
+      createWallet(input: { description: $description }) {
         _id
         description
         sumCostWallet
@@ -68,11 +67,8 @@ describe('Mutation Test', () => {
   `;
 
   const UPDATE_WALLET = gql`
-    mutation updateWallet($id: ID!, $userID: ID!, $description: String!) {
-      updateWallet(
-        _id: $id
-        input: { userID: $userID, description: $description }
-      ) {
+    mutation updateWallet($id: ID!, $description: String!) {
+      updateWallet(_id: $id, input: { description: $description }) {
         _id
         description
       }
@@ -89,7 +85,6 @@ describe('Mutation Test', () => {
     const res = await mutate({
       mutation: CREATE_WALLET,
       variables: {
-        userID: '1',
         description: 'Carteira Mock',
       },
     });
@@ -103,7 +98,6 @@ describe('Mutation Test', () => {
       mutation: UPDATE_WALLET,
       variables: {
         id: 'a',
-        userID: '1',
         description: 'Ações',
       },
     });

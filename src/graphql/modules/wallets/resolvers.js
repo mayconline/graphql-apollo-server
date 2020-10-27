@@ -7,8 +7,8 @@ const {
 
 module.exports = {
   Wallet: {
-    user: (_, __, { dataSources, hasToken }) =>
-      dataSources.UserController.show(hasToken),
+    user: (users, __, { dataSources }) =>
+      dataSources.UserController.show({ _id: users.user }),
 
     ticket: (wallets, __, { dataSources }) =>
       dataSources.TicketController.show({ walletID: wallets._id }),
@@ -70,13 +70,20 @@ module.exports = {
     },
   },
   Query: {
-    wallets: (_, __, { dataSources }) => dataSources.WalletController.index(),
+    wallets: (_, __, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.WalletController.index(hasToken),
 
-    getWalletById: (_, args, { dataSources }) =>
-      dataSources.WalletController.showOne(args),
+    getWalletById: (_, args, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.WalletController.showOne(args, hasToken),
 
-    getWalletByUser: async (_, args, { dataSources }) => {
-      let AllWallets = dataSources.WalletController.show(args);
+    getWalletByUser: async (_, __, { dataSources, hasToken }) => {
+      if (!hasToken) return new Error('Token Not Exists');
+
+      let AllWallets = dataSources.WalletController.show(hasToken);
 
       let AllTickets = AllWallets.map(wallets =>
         dataSources.TicketController.show({
@@ -99,13 +106,19 @@ module.exports = {
     },
   },
   Mutation: {
-    createWallet: (_, args, { dataSources }) =>
-      dataSources.WalletController.store(args),
+    createWallet: (_, args, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.WalletController.store(args, hasToken),
 
-    updateWallet: (_, args, { dataSources }) =>
-      dataSources.WalletController.update(args),
+    updateWallet: (_, args, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.WalletController.update(args, hasToken),
 
-    deleteWallet: (_, args, { dataSources }) =>
-      dataSources.WalletController.destroy(args),
+    deleteWallet: (_, args, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.WalletController.destroy(args, hasToken),
   },
 };
