@@ -1,6 +1,8 @@
 module.exports = {
   Query: {
-    rebalances: async (_, args, { dataSources }) => {
+    rebalances: async (_, args, { dataSources, hasToken }) => {
+      if (!hasToken) return new Error('Token Not Exists');
+
       const ticketArray = dataSources.TicketController.show({
         walletID: args.walletID,
       });

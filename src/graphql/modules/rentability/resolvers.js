@@ -1,6 +1,8 @@
 module.exports = {
   Query: {
-    getRentability: async (_, args, { dataSources }) => {
+    getRentability: async (_, args, { dataSources, hasToken }) => {
+      if (!hasToken) return new Error('Token Not Exists');
+
       const ticketArray = dataSources.TicketController.show({
         walletID: args.walletID,
       });
