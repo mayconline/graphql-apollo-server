@@ -22,7 +22,7 @@ module.exports = {
       password: await bcrypt.hash(args.input.password, 10),
       active: args.input.active,
       checkTerms: args.input.checkTerms,
-      role: args.input.role,
+      role: 'USER',
     };
 
     const token = setToken(newUser._id, newUser.role);
@@ -40,14 +40,13 @@ module.exports = {
       password: await bcrypt.hash(args.input.password, 10),
       active: args.input.active,
       checkTerms: args.input.checkTerms,
-      role: args.input.role,
     };
 
     const token = setToken(user._id, user.role);
 
     users.splice(users.indexOf(user), 1, updateUser);
 
-    return { ...user, token };
+    return { ...updateUser, token };
   },
   destroy: hasToken => {
     let user = users.find(user => user._id === hasToken._id);

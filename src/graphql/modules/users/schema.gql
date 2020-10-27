@@ -1,9 +1,3 @@
-enum Role {
-  USER
-  PREMIUM
-  ADM
-}
-
 type User {
   _id: ID!
   email: String!
@@ -19,7 +13,6 @@ input UserInput {
   password: String!
   active: Boolean! = true
   checkTerms: Boolean!
-  role: Role! = USER
 }
 
 type Query {

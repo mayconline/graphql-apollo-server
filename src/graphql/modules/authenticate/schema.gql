@@ -1,8 +1,22 @@
+enum Role {
+  USER
+  PREMIUM
+  ADM
+}
+
 input AuthInput {
   email: String!
   password: String!
 }
 
+input RoleInput {
+  role: Role! = USER
+}
+
 type Query {
   login(input: AuthInput!): User
+}
+
+type Mutation {
+  updateRole(input: RoleInput): User
 }

@@ -22,4 +22,19 @@ module.exports = {
       token,
     };
   },
+  update: async (args, hasToken) => {
+    let user = users.find(user => user._id === hasToken._id);
+    if (!user) throw new Error('User Not Exists');
+
+    let updateUser = {
+      ...user,
+      role: args.input.role,
+    };
+
+    const token = setToken(user._id, user.role);
+
+    users.splice(users.indexOf(user), 1, updateUser);
+
+    return { ...updateUser, token };
+  },
 };
