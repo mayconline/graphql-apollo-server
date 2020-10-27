@@ -14,24 +14,14 @@ const fetchApi = async ticket => {
   const { result } = await res.data.quoteResponse;
 
   const [
-    {
-      regularMarketPrice,
-      financialCurrency,
-      exchange,
-      market,
-      longName,
-      symbol,
-    },
+    { regularMarketPrice, currency, exchange, market, longName, symbol },
   ] = result;
 
-  const convertedAmount = await getConvertDollar(
-    regularMarketPrice,
-    financialCurrency,
-  );
+  const convertedAmount = await getConvertDollar(regularMarketPrice, currency);
 
   return {
     regularMarketPrice: convertedAmount,
-    financialCurrency,
+    financialCurrency: currency,
     exchange,
     market,
     longName,

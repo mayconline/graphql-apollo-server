@@ -95,7 +95,7 @@ module.exports = {
       sumCostWallet: 0,
       sumAmountWallet: 0,
       sumGradeWallet: 0,
-      ticket: ['22', '23'],
+      ticket: ['22', '23', '24'],
     },
   ],
   tickets: [
@@ -260,6 +260,14 @@ module.exports = {
       name: 'Amazon',
       quantity: 10,
       averagePrice: 17515.0,
+      grade: 5,
+    },
+    {
+      _id: '24',
+      symbol: 'disb34.sa',
+      name: 'Disney BDR',
+      quantity: 10,
+      averagePrice: 700.0,
       grade: 5,
     },
   ],
