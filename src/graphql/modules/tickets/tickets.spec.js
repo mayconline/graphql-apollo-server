@@ -17,8 +17,8 @@ describe('Mutation Test', () => {
       $grade: Int!
     ) {
       createTicket(
+        walletID: $walletID
         input: {
-          walletID: $walletID
           symbol: $symbol
           name: $name
           quantity: $quantity
@@ -38,8 +38,7 @@ describe('Mutation Test', () => {
 
   const UPDATE_TICKET = gql`
     mutation updateTicket(
-      $id: ID!
-      $walletID: ID!
+      $_id: ID!
       $symbol: String!
       $name: String!
       $quantity: Float!
@@ -47,9 +46,8 @@ describe('Mutation Test', () => {
       $grade: Int!
     ) {
       updateTicket(
-        _id: $id
+        _id: $_id
         input: {
-          walletID: $walletID
           symbol: $symbol
           name: $name
           quantity: $quantity
@@ -94,8 +92,7 @@ describe('Mutation Test', () => {
     const res = await mutate({
       mutation: UPDATE_TICKET,
       variables: {
-        id: '2',
-        walletID: 'a',
+        _id: '2',
         symbol: 'lren3.sa',
         name: 'Lojas Renner SA',
         quantity: 100,

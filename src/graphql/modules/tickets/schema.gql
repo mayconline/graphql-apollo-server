@@ -8,7 +8,6 @@ type Ticket {
 }
 
 input TicketInput {
-  walletID: ID!
   symbol: String!
   name: String!
   quantity: Float!
@@ -22,7 +21,7 @@ type Query {
 }
 
 type Mutation {
-  createTicket(input: TicketInput!): Ticket!
+  createTicket(walletID: ID!, input: TicketInput!): Ticket!
   updateTicket(_id: ID!, input: TicketInput!): Ticket
   deleteTicket(_id: ID!, walletID: ID!): Boolean!
 }
