@@ -21,16 +21,10 @@ describe('Authenticate', () => {
     mutation createUser(
       $email: String!
       $password: String!
-      $active: Boolean!
       $checkTerms: Boolean!
     ) {
       createUser(
-        input: {
-          email: $email
-          password: $password
-          active: $active
-          checkTerms: $checkTerms
-        }
+        input: { email: $email, password: $password, checkTerms: $checkTerms }
       ) {
         _id
         email
@@ -47,7 +41,6 @@ describe('Authenticate', () => {
       variables: {
         email: 'jox@gh.com.br',
         password: '123',
-        active: true,
         checkTerms: true,
       },
     });

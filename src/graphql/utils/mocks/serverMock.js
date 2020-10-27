@@ -5,6 +5,7 @@ const { getErrorMessage } = require('../errorHandler');
 const { getCurrentFinanceByTickets, getFinance } = require('./dataMock');
 
 let finance = require('../../../services/finance');
+let shareFunc = require('../shareFunc');
 
 const AuthController = require('../../../controllers/AuthController');
 const UserController = require('../../../controllers/UserController');
@@ -29,13 +30,19 @@ const server = new ApolloServer({
   resolvers,
   dataSources,
   context: ({ req }) => ({
-    hasToken: true,
+    hasToken: shareFunc.getToken(req),
   }),
   formatError: err => getErrorMessage(err),
   mocks: true,
   mockEntireSchema: false,
 });
 
+shareFunc.getToken = jest.fn(() => ({
+  _id: '1',
+  role: 'ADM',
+  iat: 1603751302,
+  exp: 1603837702,
+}));
 finance.getCurrentFinanceByTickets = jest.fn(() => getCurrentFinanceByTickets);
 finance.getFinance = jest.fn(() => getFinance);
 

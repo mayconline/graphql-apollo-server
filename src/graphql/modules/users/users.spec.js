@@ -19,9 +19,9 @@ describe('getUsers', () => {
     }
   `;
 
-  const GET_USER_BY_EMAIL = gql`
-    query getUserByEmail($email: String!) {
-      getUserByEmail(email: $email) {
+  const GET_USER_BY_TOKEN = gql`
+    query getUserByToken {
+      getUserByToken {
         _id
         email
       }
@@ -35,19 +35,10 @@ describe('getUsers', () => {
 
   it('should return one user', async () => {
     const res = await query({
-      query: GET_USER_BY_EMAIL,
-      variables: { email: 'teste@te.com' },
+      query: GET_USER_BY_TOKEN,
     });
     expect(res).toMatchSnapshot();
-    expect(res.data).toHaveProperty('getUserByEmail');
-  });
-
-  it('should have one _id', async () => {
-    const res = await query({
-      query: GET_USER_BY_EMAIL,
-      variables: { email: 'digding@dig.com.br' },
-    });
-    expect(res.data.getUserByEmail).toHaveProperty('_id');
+    expect(res.data).toHaveProperty('getUserByToken');
   });
 });
 

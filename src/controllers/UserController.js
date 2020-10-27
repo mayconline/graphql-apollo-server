@@ -4,6 +4,7 @@ const { setToken } = require('../graphql/utils/shareFunc');
 
 module.exports = {
   index: hasToken => {
+    console.log(hasToken);
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
     return users;
   },
