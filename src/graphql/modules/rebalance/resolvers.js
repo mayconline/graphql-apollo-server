@@ -3,7 +3,7 @@ module.exports = {
     rebalances: async (_, args, { dataSources, hasToken }) => {
       if (!hasToken) return new Error('Token Not Exists');
 
-      const ticketArray = dataSources.TicketController.show({
+      const ticketArray = await dataSources.TicketController.show({
         walletID: args.walletID,
       });
 
@@ -11,7 +11,7 @@ module.exports = {
         ticketArray,
       );
 
-      const rebalanced = dataSources.FinanceController.rebalance(
+      const rebalanced = await dataSources.FinanceController.rebalance(
         currentArray,
         args.sort,
       );

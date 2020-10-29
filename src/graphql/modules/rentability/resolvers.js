@@ -3,7 +3,7 @@ module.exports = {
     getRentability: async (_, args, { dataSources, hasToken }) => {
       if (!hasToken) return new Error('Token Not Exists');
 
-      const ticketArray = dataSources.TicketController.show({
+      const ticketArray = await dataSources.TicketController.show({
         walletID: args.walletID,
       });
 
@@ -11,7 +11,7 @@ module.exports = {
         ticketArray,
       );
 
-      const rentability = dataSources.FinanceController.rentability(
+      const rentability = await dataSources.FinanceController.rentability(
         currentArray,
         args.sort,
       );
