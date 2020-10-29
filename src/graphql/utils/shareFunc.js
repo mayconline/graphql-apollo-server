@@ -47,7 +47,7 @@ module.exports = {
       }
     }),
 
-  setToken: (_id, role) =>
+  setToken: async (_id, role) =>
     jwt.sign({ _id, role }, process.env.JWT_TOKEN, {
       expiresIn: process.env.JWT_EXPIRE,
     }),

@@ -1,58 +1,62 @@
-const { users } = require('../graphql/utils/mocks/dataMock');
+const User = require('../models/User');
+
 const bcrypt = require('bcrypt');
 const { setToken } = require('../graphql/utils/shareFunc');
 
 module.exports = {
-  index: hasToken => {
+  index: async hasToken => {
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+
+    let users = await User.find().sort('-updatedAt').lean();
+
     return users;
   },
-  show: hasToken => {
-    return users.find(user => user._id === hasToken._id);
+  show: async hasToken => {
+    let user = await User.findById(hasToken._id).lean();
+    return user;
   },
   store: async args => {
-    let user = users.find(
-      user => user.email === args.input.email.toLowerCase(),
-    );
+    let user = await User.findOne({ email: args.input.email.toLowerCase() });
     if (user) throw new Error('User Exists');
 
-    let newUser = {
-      _id: String(Math.random()),
+    let newUser = await User.create({
       email: args.input.email.toLowerCase(),
       password: await bcrypt.hash(args.input.password, 10),
-      active: args.input.active,
       checkTerms: args.input.checkTerms,
-      role: 'USER',
+    });
+
+    const token = await setToken(newUser._id, newUser.role);
+
+    newUser = {
+      ...newUser._doc,
+      token,
+      password: null,
     };
 
-    const token = setToken(newUser._id, newUser.role);
-
-    users.push(newUser);
-    return { ...newUser, token };
+    return newUser;
   },
   update: async (args, hasToken) => {
-    let user = users.find(user => user._id === hasToken._id);
+    let user = await User.findById(hasToken._id).select('+password');
     if (!user) throw new Error('User Not Exists');
 
-    let updateUser = {
-      ...user,
+    await user.updateOne({
       email: args.input.email.toLowerCase(),
       password: await bcrypt.hash(args.input.password, 10),
       active: args.input.active,
       checkTerms: args.input.checkTerms,
-    };
+    });
 
-    const token = setToken(user._id, user.role);
+    user = await User.findById(hasToken._id).lean();
 
-    users.splice(users.indexOf(user), 1, updateUser);
+    const token = await setToken(user._id, user.role);
 
-    return { ...updateUser, token };
+    return { ...user, token };
   },
-  destroy: hasToken => {
-    let user = users.find(user => user._id === hasToken._id);
+  destroy: async hasToken => {
+    let user = await User.findById(hasToken._id);
     if (!user) throw new Error('User Not Exists');
 
-    users.splice(users.indexOf(user), 1);
+    await user.remove();
     return !!user;
   },
 };

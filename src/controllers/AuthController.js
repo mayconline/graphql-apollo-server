@@ -1,12 +1,16 @@
-const { users } = require('../graphql/utils/mocks/dataMock');
+const User = require('../models/User');
+
 const bcrypt = require('bcrypt');
 const { setToken } = require('../graphql/utils/shareFunc');
 
 module.exports = {
   show: async args => {
-    let user = users.find(
-      user => user.email === args.input.email.toLowerCase(),
-    );
+    let user = await User.findOne({
+      email: args.input.email.toLowerCase(),
+    })
+      .select('+password')
+      .lean();
+
     if (!user) throw new Error('User or Password Invalid');
 
     let isValidPassword = await bcrypt.compare(
@@ -15,7 +19,7 @@ module.exports = {
     );
     if (!isValidPassword) throw new Error('User or Password Invalid');
 
-    const token = setToken(user._id, user.role);
+    const token = await setToken(user._id, user.role);
 
     return {
       ...user,
@@ -23,18 +27,17 @@ module.exports = {
     };
   },
   update: async (args, hasToken) => {
-    let user = users.find(user => user._id === hasToken._id);
+    let user = await User.findById(hasToken._id);
     if (!user) throw new Error('User Not Exists');
 
-    let updateUser = {
-      ...user,
+    await user.updateOne({
       role: args.input.role,
-    };
+    });
 
-    const token = setToken(user._id, user.role);
+    user = await User.findById(hasToken._id).lean();
 
-    users.splice(users.indexOf(user), 1, updateUser);
+    const token = await setToken(user._id, user.role);
 
-    return { ...updateUser, token };
+    return { ...user, token };
   },
 };
