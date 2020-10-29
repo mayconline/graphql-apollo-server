@@ -13,6 +13,8 @@ module.exports = {
   },
   show: async hasToken => {
     let user = await User.findById(hasToken._id).lean();
+    if (!user) throw new Error('User Not Exists');
+
     return user;
   },
   store: async args => {

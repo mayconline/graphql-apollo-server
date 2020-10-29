@@ -10,10 +10,12 @@ const WalletSchema = new Schema(
       type: String,
       required: true,
     },
-    ticket: {
-      type: Schema.Types.ObjectId,
-      ref: 'Ticket',
-    },
+    ticket: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Ticket',
+      },
+    ],
   },
   { timestamps: true },
 );

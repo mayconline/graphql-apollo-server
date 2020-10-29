@@ -13,22 +13,22 @@ module.exports = {
     ticket: (wallets, __, { dataSources }) =>
       dataSources.TicketController.show({ walletID: wallets._id }),
 
-    sumGradeWallet: (wallets, __, { dataSources }) => {
-      const ticketArray = dataSources.TicketController.show({
+    sumGradeWallet: async (wallets, __, { dataSources }) => {
+      const ticketArray = await dataSources.TicketController.show({
         walletID: wallets._id,
       });
       return getSumGradeWallet(ticketArray);
     },
 
-    sumCostWallet: (wallets, __, { dataSources }) => {
-      const ticketArray = dataSources.TicketController.show({
+    sumCostWallet: async (wallets, __, { dataSources }) => {
+      const ticketArray = await dataSources.TicketController.show({
         walletID: wallets._id,
       });
       return getSumCostWallet(ticketArray);
     },
 
     sumAmountWallet: async (wallets, __, { dataSources }) => {
-      const ticketArray = dataSources.TicketController.show({
+      const ticketArray = await dataSources.TicketController.show({
         walletID: wallets._id,
       });
 
@@ -39,7 +39,7 @@ module.exports = {
       return getSumAmountWallet(currentArray);
     },
     percentRentabilityWallet: async (wallets, __, { dataSources }) => {
-      const ticketArray = dataSources.TicketController.show({
+      const ticketArray = await dataSources.TicketController.show({
         walletID: wallets._id,
       });
 
@@ -53,7 +53,7 @@ module.exports = {
       return getPercentVariation(SumCost, SumAmount);
     },
     percentPositionWallet: async (wallets, __, { dataSources }) => {
-      const ticketArray = dataSources.TicketController.show({
+      const ticketArray = await dataSources.TicketController.show({
         walletID: wallets._id,
       });
 
@@ -83,15 +83,14 @@ module.exports = {
     getWalletByUser: async (_, __, { dataSources, hasToken }) => {
       if (!hasToken) return new Error('Token Not Exists');
 
-      let AllWallets = dataSources.WalletController.show(hasToken);
+      let AllWallets = await dataSources.WalletController.show(hasToken);
 
-      let AllTickets = AllWallets.map(wallets =>
-        dataSources.TicketController.show({
-          walletID: wallets._id,
-        }),
+      let AllTickets = AllWallets.map(wallets => wallets.ticket);
+
+      let ticketArray = await AllTickets.reduce(
+        (acc, cur) => [...acc, ...cur],
+        [],
       );
-
-      let ticketArray = AllTickets.reduce((acc, cur) => [...acc, ...cur], []);
 
       const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
         ticketArray,
@@ -99,10 +98,12 @@ module.exports = {
 
       let SumAllAmount = getSumAmountWallet(currentArray);
 
-      return AllWallets.map(wallet => ({
-        ...wallet,
+      let res = AllWallets.map(wallet => ({
+        ...wallet._doc,
         sumAmountAllWallet: SumAllAmount,
       }));
+
+      return res;
     },
   },
   Mutation: {

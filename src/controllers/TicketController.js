@@ -1,69 +1,75 @@
-const { tickets, wallets } = require('../graphql/utils/mocks/dataMock');
+const Wallet = require('../models/Wallet');
+const Ticket = require('../models/Ticket');
 
 module.exports = {
-  index: hasToken => {
+  index: async hasToken => {
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+
+    let tickets = await Ticket.find().sort('-updatedAt').lean();
+
     return tickets;
   },
 
-  show: args => {
-    let wallet = wallets.find(wallet => wallet._id === args.walletID);
+  show: async args => {
+    let wallet = await Wallet.findById(args.walletID).populate('ticket');
+
     if (!wallet) throw new Error('Wallet Not Found');
 
-    return wallet.ticket.map(ticketID =>
-      tickets.find(ticket => ticket._id === ticketID),
-    );
+    return wallet.ticket;
   },
 
-  store: (args, hasToken) => {
-    let wallet = wallets.find(wallet => wallet._id === args.walletID);
+  store: async (args, hasToken) => {
+    let wallet = await Wallet.findById(args.walletID);
 
     if (!wallet) throw new Error('Wallet Not Found');
-    if (hasToken._id !== wallet.user) throw new Error('User Unauthorized');
 
-    let ticket = {
-      _id: String(Math.random()),
+    let isSameUser = hasToken._id == wallet.user;
+    if (!isSameUser) throw new Error('User Unauthorized');
+
+    let ticket = await Ticket.create({
       symbol: args.input.symbol,
       name: args.input.name,
       quantity: args.input.quantity,
       averagePrice: args.input.averagePrice,
       grade: args.input.grade,
-    };
+    });
 
-    tickets.push(ticket);
-    wallet.ticket.push(ticket._id);
+    await wallet.ticket.push(ticket._id);
+    await wallet.save();
 
     return ticket;
   },
 
-  update: args => {
-    let ticket = tickets.find(ticket => ticket._id === args._id);
+  update: async args => {
+    let ticket = await Ticket.findById(args._id);
     if (!ticket) throw new Error('Ticket Not Found');
 
-    updateTicket = {
-      ...ticket,
+    await ticket.updateOne({
       symbol: args.input.symbol,
       name: args.input.name,
       quantity: args.input.quantity,
       averagePrice: args.input.averagePrice,
       grade: args.input.grade,
-    };
+    });
 
-    tickets.splice(tickets.indexOf(ticket), 1, updateTicket);
-
-    return updateTicket;
+    return ticket;
   },
 
-  destroy: (args, hasToken) => {
-    let ticket = tickets.find(ticket => ticket._id === args._id);
+  destroy: async (args, hasToken) => {
+    let ticket = await Ticket.findById(args._id);
     if (!ticket) throw new Error('Ticket Not Found');
 
-    let wallet = wallets.find(wallet => wallet._id === args.walletID);
+    let wallet = await Wallet.findById(args.walletID);
     if (!wallet) throw new Error('Wallet Not Found');
-    if (hasToken._id !== wallet.user) throw new Error('User Unauthorized');
 
-    wallet.ticket.splice(wallet.ticket.indexOf(ticket._id), 1);
-    tickets.splice(tickets.indexOf(ticket), 1);
+    let isSameUser = hasToken._id == wallet.user;
+    if (!isSameUser) throw new Error('User Unauthorized');
+
+    await wallet.ticket.splice(wallet.ticket.indexOf(ticket._id), 1);
+    await wallet.save();
+
+    await ticket.remove();
+
     return !!ticket;
   },
 };

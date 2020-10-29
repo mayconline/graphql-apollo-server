@@ -1,52 +1,69 @@
-const { wallets } = require('../graphql/utils/mocks/dataMock');
+const Wallet = require('../models/Wallet');
 
 module.exports = {
-  index: hasToken => {
+  index: async hasToken => {
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+
+    let wallets = await Wallet.find().sort('-updatedAt').lean();
+
     return wallets;
   },
-  showOne: (args, hasToken) => {
-    let wallet = wallets.find(wallet => wallet._id === args._id);
-
+  showOne: async (args, hasToken) => {
+    let wallet = await Wallet.findById(args._id).lean();
     if (!wallet) throw new Error('Wallet Not Found');
-    if (hasToken._id !== wallet.user) throw new Error('User Unauthorized');
+
+    let isSameUser = hasToken._id == wallet.user;
+    if (!isSameUser) throw new Error('User Unauthorized');
 
     return wallet;
   },
-  show: hasToken => wallets.filter(wallet => wallet.user === hasToken._id),
-  store: (args, hasToken) => {
-    let newWallet = {
-      _id: String(Math.random()),
+  show: async hasToken => {
+    let wallet = await Wallet.find({ user: hasToken._id })
+      .populate('ticket')
+      .populate('user');
+
+    if (!wallet) throw new Error('Wallet Not Found');
+
+    return wallet;
+  },
+  store: async (args, hasToken) => {
+    let newWallet = await Wallet.create({
       user: hasToken._id,
       description: args.input.description,
+    });
+
+    newWallet = {
+      ...newWallet._doc,
       sumCostWallet: 0,
       sumAmountWallet: 0,
       sumGradeWallet: 0,
-      ticket: [],
     };
-    wallets.push(newWallet);
+
     return newWallet;
   },
-  update: (args, hasToken) => {
-    let wallet = wallets.find(wallet => wallet._id === args._id);
-
+  update: async (args, hasToken) => {
+    let wallet = await Wallet.findById(args._id);
     if (!wallet) throw new Error('Wallet Not Found');
-    if (hasToken._id !== wallet.user) throw new Error('User Unauthorized');
 
-    let updateWallet = {
-      ...wallet,
+    let isSameUser = hasToken._id == wallet.user;
+    if (!isSameUser) throw new Error('User Unauthorized');
+
+    await wallet.updateOne({
       description: args.input.description,
-    };
-    wallets.splice(wallets.indexOf(wallet), 1, updateWallet);
+    });
 
-    return updateWallet;
+    wallet = await Wallet.findById(args._id).lean();
+
+    return wallet;
   },
-  destroy: (args, hasToken) => {
-    let wallet = wallets.find(wallet => wallet._id === args._id);
+  destroy: async (args, hasToken) => {
+    let wallet = await Wallet.findById(args._id);
     if (!wallet) throw new Error('Wallet Not Found');
-    if (hasToken._id !== wallet.user) throw new Error('User Unauthorized');
 
-    wallets.splice(wallets.indexOf(wallet), 1);
+    let isSameUser = hasToken._id == wallet.user;
+    if (!isSameUser) throw new Error('User Unauthorized');
+
+    await wallet.remove();
     return !!wallet;
   },
 };
