@@ -19,7 +19,8 @@
     "dotenv": "^8.2.0",
     "graphql": "^15.0.0",
     "graphql-tools": "^6.0.4",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.11"
   },
   "devDependencies": {
     "@types/jest": "^25.2.3",
