@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { ApolloServer } = require('apollo-server');
 const { getErrorMessage } = require('./graphql/utils/errorHandler');
 const { getToken } = require('./graphql/utils/shareFunc');
@@ -32,4 +33,6 @@ const server = new ApolloServer({
   formatError: err => getErrorMessage(err),
 });
 
-server.listen().then(({ url }) => console.log(`server started at ${url}`));
+server
+  .listen(process.env.PORT)
+  .then(({ url }) => console.log(`server started at ${url}`));

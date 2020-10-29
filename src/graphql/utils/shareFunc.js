@@ -48,8 +48,8 @@ module.exports = {
     }),
 
   setToken: (_id, role) =>
-    jwt.sign({ _id, role }, 'secret', {
-      expiresIn: '1d',
+    jwt.sign({ _id, role }, process.env.JWT_TOKEN, {
+      expiresIn: process.env.JWT_EXPIRE,
     }),
 
   getToken: ({ headers }) => {
@@ -59,7 +59,7 @@ module.exports = {
     const token = authorization.replace('Bearer', '').trim();
 
     try {
-      const decoded = jwt.verify(token, 'secret');
+      const decoded = jwt.verify(token, process.env.JWT_TOKEN);
       return decoded;
     } catch {
       throw new Error('Token Invalid or Expired');

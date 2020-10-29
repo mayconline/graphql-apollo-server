@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const apiDollar = axios.create({
-  baseURL: 'https://economia.awesomeapi.com.br/json/all/',
+  baseURL: process.env.API_DOLLAR,
 });
 
 module.exports = apiDollar;
