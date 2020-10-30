@@ -7,6 +7,11 @@ type Ticket {
   grade: Int!
 }
 
+enum SortTickets {
+  symbol
+  grade
+}
+
 input TicketInput {
   symbol: String!
   name: String!
@@ -17,7 +22,7 @@ input TicketInput {
 
 type Query {
   tickets: [Ticket!]
-  getTicketsByWallet(walletID: ID!): [Ticket]
+  getTicketsByWallet(walletID: ID!, sort: SortTickets! = grade): [Ticket]
 }
 
 type Mutation {

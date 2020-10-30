@@ -1,6 +1,8 @@
 const Wallet = require('../models/Wallet');
 const Ticket = require('../models/Ticket');
 
+const { getArraySortByParams } = require('../graphql/utils/shareFunc');
+
 module.exports = {
   index: async hasToken => {
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
@@ -15,7 +17,9 @@ module.exports = {
 
     if (!wallet) throw new Error('Wallet Not Found');
 
-    return wallet.ticket;
+    let sorted = await getArraySortByParams(wallet.ticket, args.sort);
+
+    return sorted;
   },
 
   store: async (args, hasToken) => {
@@ -51,6 +55,8 @@ module.exports = {
       averagePrice: args.input.averagePrice,
       grade: args.input.grade,
     });
+
+    ticket = await Ticket.findById(args._id);
 
     return ticket;
   },
