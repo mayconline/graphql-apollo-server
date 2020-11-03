@@ -11,6 +11,7 @@ enum SortRebalance {
   targetAmount
   currentPercent
   targetPercent
+  gradePercent
 }
 
 type Rebalance {
