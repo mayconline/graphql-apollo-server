@@ -15,6 +15,13 @@ input UserInput {
   checkTerms: Boolean!
 }
 
+input UserUpdateInput {
+  email: String
+  password: String
+  active: Boolean
+  checkTerms: Boolean
+}
+
 type Query {
   users: [User]
   getUserByToken: User
@@ -22,6 +29,6 @@ type Query {
 
 type Mutation {
   createUser(input: UserInput!): User
-  updateUser(input: UserInput!): User
+  updateUser(input: UserUpdateInput): User
   deleteUser: Boolean!
 }

@@ -41,12 +41,15 @@ module.exports = {
     let user = await User.findById(hasToken._id).select('+password');
     if (!user) throw new Error('User Not Exists');
 
-    await user.updateOne({
-      email: args.input.email.toLowerCase(),
-      password: await bcrypt.hash(args.input.password, 10),
-      active: args.input.active,
-      checkTerms: args.input.checkTerms,
-    });
+    const { email, password, ...rest } = await args.input;
+
+    let data = {
+      email: !email ? user.email : email.toLowerCase(),
+      password: !password ? user.password : await bcrypt.hash(password, 10),
+      ...rest,
+    };
+
+    await user.updateOne(data);
 
     user = await User.findById(hasToken._id).lean();
 
