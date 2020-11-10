@@ -20,6 +20,8 @@ module.exports = {
         return new UserInputError(message, path);
       case 'User Unauthorized':
         return new ForbiddenError(message);
+      case 'User Inactive':
+        return new ForbiddenError(message);
       case 'Wallet Not Found':
         return new UserInputError(message, path);
       case 'Ticket Not Found':

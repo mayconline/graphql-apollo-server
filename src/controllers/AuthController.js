@@ -19,6 +19,8 @@ module.exports = {
     );
     if (!isValidPassword) throw new Error('User or Password Invalid');
 
+    if (user.active === false) throw new Error('User Inactive');
+
     const token = await setToken(user._id, user.role);
 
     return {
