@@ -26,6 +26,12 @@ module.exports = {
         return new UserInputError(message, path);
       case 'Ticket Not Found':
         return new UserInputError(message, path);
+      case 'Ticket Exists':
+        return new UserInputError(message, path);
+      case 'Tickets limited to 16 items':
+        return new ForbiddenError(message);
+      case 'Wallet limited to 2 items':
+        return new ForbiddenError(message);
       case 'Failed Convert Dollar':
         return new ApolloError(message, path);
       case 'Failed Stock API':

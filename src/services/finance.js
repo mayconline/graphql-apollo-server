@@ -1,18 +1,35 @@
 const api = require('./axios');
 const apiDollar = require('./apiDollar');
+const apiDollar2 = require('./apiDollar2');
 
 const getConvertDollar = async amount => {
+  let dollarBid = 0;
+
   let currentDate = new Date().toLocaleDateString();
   const [day, month, year] = currentDate.split('/');
 
   let date = `${month}-${day}-${year}`;
-  let url = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$format=json`;
 
-  const getDollar = await apiDollar.get(url);
-  const [{ cotacaoCompra }] = getDollar?.data?.value;
-  if (!cotacaoCompra) throw new Error('Failed Convert Dollar');
+  let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$format=json`;
 
-  const converted = amount * cotacaoCompra;
+  const getDollar = await apiDollar.get(urlOne);
+  let hasData = !!getDollar?.data?.value?.length;
+  if (hasData) {
+    const [{ cotacaoCompra }] = getDollar?.data?.value;
+    dollarBid = cotacaoCompra;
+  }
+
+  if (!hasData) {
+    const getDollar2 = await apiDollar2.get('json/all/USD-BRL');
+    if (!getDollar2?.data) throw new Error('Failed Convert Dollar');
+
+    const { bid } = getDollar2?.data?.USD;
+    dollarBid = bid;
+  }
+
+  if (dollarBid <= 0) throw new Error('Failed Convert Dollar');
+
+  const converted = amount * dollarBid;
 
   return converted;
 };

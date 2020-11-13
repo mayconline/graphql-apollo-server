@@ -1,7 +1,10 @@
 const Wallet = require('../models/Wallet');
 const Ticket = require('../models/Ticket');
 
-const { getArraySortByParams } = require('../graphql/utils/shareFunc');
+const {
+  getArraySortByParams,
+  formatSymbol,
+} = require('../graphql/utils/shareFunc');
 
 module.exports = {
   index: async hasToken => {
@@ -23,12 +26,21 @@ module.exports = {
   },
 
   store: async (args, hasToken) => {
-    let wallet = await Wallet.findById(args.walletID);
-
+    let wallet = await Wallet.findById(args.walletID).populate('ticket');
     if (!wallet) throw new Error('Wallet Not Found');
 
     let isSameUser = hasToken._id == wallet.user;
     if (!isSameUser) throw new Error('User Unauthorized');
+
+    let sameSymbol = await wallet.ticket.find(
+      ({ symbol }) => formatSymbol(symbol) == formatSymbol(args.input.symbol),
+    );
+    if (!!sameSymbol) throw new Error('Ticket Exists');
+
+    let ticketLengthOnWallet = await wallet.ticket.length;
+
+    if (hasToken.role == 'USER' && ticketLengthOnWallet >= 16)
+      throw new Error('Tickets limited to 16 items');
 
     let ticket = await Ticket.create({
       symbol: args.input.symbol,

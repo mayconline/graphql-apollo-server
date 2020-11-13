@@ -65,4 +65,5 @@ module.exports = {
       throw new Error('Token Invalid or Expired');
     }
   },
+  formatSymbol: symbol => symbol.toLowerCase().replace('.sa', '').trim(),
 };

@@ -32,6 +32,9 @@ module.exports = {
     let user = await User.findById(hasToken._id);
     if (!user) throw new Error('User Not Exists');
 
+    if (args.input.role == 'ADM' && hasToken.role != 'ADM')
+      throw new Error('User Unauthorized');
+
     await user.updateOne({
       role: args.input.role,
     });

@@ -1,4 +1,5 @@
 const Wallet = require('../models/Wallet');
+const Ticket = require('../models/Ticket');
 
 module.exports = {
   index: async hasToken => {
@@ -27,6 +28,12 @@ module.exports = {
     return wallet;
   },
   store: async (args, hasToken) => {
+    let wallet = await Wallet.find({ user: hasToken._id });
+    let walletLengthOnUser = wallet.length;
+
+    if (hasToken.role == 'USER' && walletLengthOnUser >= 2)
+      throw new Error('Wallet limited to 2 items');
+
     let newWallet = await Wallet.create({
       user: hasToken._id,
       description: args.input.description,
@@ -62,6 +69,12 @@ module.exports = {
 
     let isSameUser = hasToken._id == wallet.user;
     if (!isSameUser) throw new Error('User Unauthorized');
+
+    await Ticket.deleteMany({
+      _id: {
+        $in: wallet?.ticket,
+      },
+    });
 
     await wallet.remove();
     return !!wallet;
