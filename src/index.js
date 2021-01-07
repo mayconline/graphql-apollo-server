@@ -1,8 +1,6 @@
 require('dotenv').config();
-const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
+const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
-const cors = require('cors');
 
 const { getErrorMessage } = require('./graphql/utils/errorHandler');
 const { getToken } = require('./graphql/utils/shareFunc');
@@ -55,10 +53,4 @@ const server = new ApolloServer({
   formatError: err => getErrorMessage(err),
 });
 
-const app = express();
-const path = '/graphql';
-app.use(cors());
-
-server.applyMiddleware({ app, path });
-
-app.listen({ port: process.env.PORT });
+server.listen({ port: process.env.PORT });
