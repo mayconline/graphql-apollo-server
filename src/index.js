@@ -51,10 +51,7 @@ const server = new ApolloServer({
     hasToken: getToken(req),
   }),
   formatError: err => getErrorMessage(err),
-  cors: {
-    credentials: true,
-    origin: '*',
-  },
+  cors: true,
 });
 
 server
