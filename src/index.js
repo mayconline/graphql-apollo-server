@@ -44,8 +44,6 @@ const dataSources = () => ({
 });
 
 const server = new ApolloServer({
-  introspection: true,
-  playground: true,
   typeDefs,
   resolvers,
   dataSources,
@@ -53,8 +51,12 @@ const server = new ApolloServer({
     hasToken: getToken(req),
   }),
   formatError: err => getErrorMessage(err),
+  cors: {
+    credentials: true,
+    origin: '*',
+  },
 });
 
 server
-  .listen({ port: process.env.PORT || 4000 })
+  .listen(process.env.PORT)
   .then(({ url }) => console.log(`server started at ${url}`));
