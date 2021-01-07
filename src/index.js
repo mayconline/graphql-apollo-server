@@ -1,5 +1,6 @@
 require('dotenv').config();
-const { ApolloServer } = require('apollo-server');
+const express = require('express');
+const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
 
 const { getErrorMessage } = require('./graphql/utils/errorHandler');
@@ -53,6 +54,9 @@ const server = new ApolloServer({
   formatError: err => getErrorMessage(err),
 });
 
-server
-  .listen(process.env.PORT)
-  .then(({ url }) => console.log(`server started at ${url}`));
+const app = express();
+const path = '/graphql';
+
+server.applyMiddleware({ app, path });
+
+app.listen({ port: process.env.PORT });
