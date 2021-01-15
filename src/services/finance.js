@@ -5,26 +5,33 @@ const apiDollar2 = require('./apiDollar2');
 const getConvertDollar = async amount => {
   let dollarBid = 0;
 
-  let currentDate = new Date().toLocaleDateString();
-  const [day, month, year] = currentDate.split('/');
+  const getDollar2 = await apiDollar2.get('json/all/USD-BRL');
+  let hasData = !!getDollar2?.data;
 
-  let date = `${month}-${day}-${year}`;
-
-  let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$format=json`;
-
-  const getDollar = await apiDollar.get(urlOne);
-  let hasData = !!getDollar?.data?.value?.length;
   if (hasData) {
-    const [{ cotacaoCompra }] = getDollar?.data?.value;
-    dollarBid = cotacaoCompra;
+    const { bid } = getDollar2?.data?.USD;
+    dollarBid = bid;
   }
 
   if (!hasData) {
-    const getDollar2 = await apiDollar2.get('json/all/USD-BRL');
-    if (!getDollar2?.data) throw new Error('Failed Convert Dollar');
+    console.warn('Failed Convert Dollar API 2');
 
-    const { bid } = getDollar2?.data?.USD;
-    dollarBid = bid;
+    let currentDate = new Date().toLocaleDateString();
+    const [day, month, year] = currentDate.split('/');
+
+    let date = `${month}-${day}-${year}`;
+
+    let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$format=json`;
+
+    const getDollar = await apiDollar.get(urlOne);
+
+    if (!getDollar?.data?.value.length) {
+      console.warn('Failed Convert Dollar API 1');
+      throw new Error('Failed Convert Dollar');
+    }
+
+    const [{ cotacaoCompra }] = getDollar?.data?.value;
+    dollarBid = cotacaoCompra;
   }
 
   if (dollarBid <= 0) throw new Error('Failed Convert Dollar');
