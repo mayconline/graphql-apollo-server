@@ -8,6 +8,7 @@ const { getToken } = require('./graphql/utils/shareFunc');
 const finance = require('./services/finance');
 
 const AuthController = require('./controllers/AuthController');
+const RecoveryPasswordController = require('./controllers/RecoveryPasswordController');
 const UserController = require('./controllers/UserController');
 const WalletController = require('./controllers/WalletController');
 const TicketController = require('./controllers/TicketController');
@@ -36,6 +37,7 @@ mongoose
 const dataSources = () => ({
   finance,
   AuthController,
+  RecoveryPasswordController,
   UserController,
   WalletController,
   TicketController,

@@ -18,6 +18,10 @@ module.exports = {
         return new UserInputError(message, path);
       case 'User Not Exists':
         return new UserInputError(message, path);
+      case 'Email Already Send':
+        return new UserInputError(message, path);
+      case 'Code Invalid or Expired':
+        return new UserInputError(message, path);
       case 'User Unauthorized':
         return new ForbiddenError(message);
       case 'User Inactive':
@@ -35,6 +39,8 @@ module.exports = {
       case 'Failed Convert Dollar':
         return new ApolloError(message, path);
       case 'Failed Stock API':
+        return new ApolloError(message, path);
+      case 'Failed SendGrid':
         return new ApolloError(message, path);
       default:
         return new Error(message);
