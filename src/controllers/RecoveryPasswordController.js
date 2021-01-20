@@ -1,5 +1,8 @@
 const User = require('../models/User');
 const RecoveryPassword = require('../models/RecoveryPassword');
+const {
+  recovery_password_template,
+} = require('../templates-email/RecoveryPasswordTemplate');
 const SendGrid = require('../services/sendgrid');
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
@@ -29,17 +32,12 @@ module.exports = {
     let cryptoBytes = crypto.randomBytes(3);
     cryptoBytes = cryptoBytes.toString('hex');
 
+    const { html } = await recovery_password_template(user.email, cryptoBytes);
+
     const hasSend = await SendGrid.send(
       user.email,
       'Código para redefinição de senha',
-      `
-      <p>Foi solicitado uma troca de senha para o email: ${user.email}</p>
-      <p>Favor insira o codigo: ${cryptoBytes} no aplicativo para efetuar a troca de senha</p>
-
-      <p> Este código expira em 5 minutos, Caso não tenha sido você, favor desconsiderar</p>
-
-      <Strong>Equipe Rebalanceei</Strong> 
-    `,
+      html,
     );
 
     if (!hasSend) throw new Error('Failed SendGrid');

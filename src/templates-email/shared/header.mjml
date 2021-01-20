@@ -1,0 +1,43 @@
+ <mj-breakpoint width="500px" />
+ <mj-style>
+   .container-title {
+     box-shadow: 0px 4px 8px rgba(67, 66, 93, 0.1);
+     border-radius: 20px;
+     background-color: #31ad2c;
+   }
+
+   .container-header {
+     border-radius: 20px 20px 0 0;
+     background-color: #fff;
+   
+   }
+
+   .container-content { 
+     background-color: #fff;  
+   }
+
+   
+
+   @media only screen and (max-width:500px) {
+     .container {
+       width: 85vw !important
+     }
+
+     .button {
+       cursor: none;
+       pointer-events: none;
+         
+     }
+
+     .button td a {
+       padding: 10px !important;
+    
+     }
+   }
+ </mj-style>
+ <mj-attributes>
+   <mj-text font-size="16px" color="#0D1F3C" line-height="22px" />
+   <mj-all font-family="Arial, Helvetica, sans-serif" />
+   <mj-column width="90%" vertical-align="middle" />
+   <mj-button text-transform="uppercase" css-class="button" font-size="20px" border="1px solid #5C8FE5" background-color="#347AF0" color="#fff" />
+ </mj-attributes>
