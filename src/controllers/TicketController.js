@@ -15,12 +15,23 @@ module.exports = {
     return tickets;
   },
 
-  show: async args => {
+  show: async (args, hasToken) => {
     let wallet = await Wallet.findById(args.walletID).populate('ticket');
 
     if (!wallet) throw new Error('Wallet Not Found');
 
+    let isSameUser = hasToken._id == wallet.user;
+    if (!isSameUser) throw new Error('User Unauthorized');
+
     let sorted = await getArraySortByParams(wallet.ticket, args.sort);
+
+    let ticketLengthOnWallet = await wallet.ticket.length;
+
+    if (hasToken.role == 'USER' && ticketLengthOnWallet >= 16) {
+      let showTickets = sorted.filter((ticket, index) => index <= 15);
+
+      return showTickets;
+    }
 
     return sorted;
   },

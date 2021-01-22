@@ -5,8 +5,8 @@ module.exports = {
         ? new Error('Token Not Exists')
         : dataSources.TicketController.index(hasToken),
 
-    getTicketsByWallet: (_, args, { dataSources }) =>
-      dataSources.TicketController.show(args),
+    getTicketsByWallet: (_, args, { dataSources, hasToken }) =>
+      dataSources.TicketController.show(args, hasToken),
   },
   Mutation: {
     createTicket: (_, args, { dataSources, hasToken }) =>
