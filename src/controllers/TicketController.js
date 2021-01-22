@@ -28,7 +28,7 @@ module.exports = {
     let ticketLengthOnWallet = await wallet.ticket.length;
 
     if (hasToken.role == 'USER' && ticketLengthOnWallet >= 16) {
-      let showTickets = sorted.filter((ticket, index) => index <= 15);
+      let showTickets = sorted.filter((_, index) => index <= 15);
 
       return showTickets;
     }

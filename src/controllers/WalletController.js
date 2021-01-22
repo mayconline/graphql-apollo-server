@@ -25,6 +25,14 @@ module.exports = {
 
     if (!wallet) throw new Error('Wallet Not Found');
 
+    let walletLengthOnUser = wallet.length;
+
+    if (hasToken.role == 'USER' && walletLengthOnUser >= 2) {
+      let showWallet = wallet.filter((_, index) => index <= 1);
+
+      return showWallet;
+    }
+
     return wallet;
   },
   store: async (args, hasToken) => {
