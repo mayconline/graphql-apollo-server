@@ -104,7 +104,18 @@ module.exports = {
 
       let AllWallets = await dataSources.WalletController.show(hasToken);
 
-      let AllTickets = AllWallets.map(wallets => wallets.ticket);
+      let AllWalletsIDS = await AllWallets.map(wallets => wallets._id);
+
+      let AllTickets = await Promise.all(
+        AllWalletsIDS.map(async walletID => {
+          let filteredTicket = await dataSources.TicketController.show(
+            { walletID },
+            hasToken,
+          );
+
+          return filteredTicket;
+        }),
+      );
 
       let ticketArray = await AllTickets.reduce(
         (acc, cur) => [...acc, ...cur],

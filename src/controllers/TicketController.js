@@ -23,7 +23,7 @@ module.exports = {
     let isSameUser = hasToken._id == wallet.user;
     if (!isSameUser) throw new Error('User Unauthorized');
 
-    let sorted = await getArraySortByParams(wallet.ticket, args.sort);
+    let sorted = await getArraySortByParams(wallet.ticket, 'grade');
 
     let ticketLengthOnWallet = await wallet.ticket.length;
 
