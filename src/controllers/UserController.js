@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const Wallet = require('../models/Wallet');
+const Ticket = require('../models/Ticket');
 
 const bcrypt = require('bcrypt');
 const { setToken } = require('../graphql/utils/shareFunc');
@@ -57,9 +59,31 @@ module.exports = {
 
     return { ...user, token };
   },
-  destroy: async hasToken => {
-    let user = await User.findById(hasToken._id);
+  destroy: async (args, hasToken) => {
+    if (hasToken.role != 'ADM') throw new Error('User Unauthorized');
+
+    let user = await User.findById(args._id);
     if (!user) throw new Error('User Not Exists');
+
+    let wallets = await Wallet.find({ user: args._id });
+
+    let ticketsIDs = wallets
+      .map(wallet => wallet.ticket)
+      .reduce((acc, cur) => [...acc, ...cur], []);
+
+    let walletsIDs = wallets.map(wallet => wallet._id);
+
+    await Ticket.deleteMany({
+      _id: {
+        $in: ticketsIDs,
+      },
+    });
+
+    await Wallet.deleteMany({
+      _id: {
+        $in: walletsIDs,
+      },
+    });
 
     await user.remove();
     return !!user;

@@ -19,9 +19,9 @@ module.exports = {
         ? new Error('Token Not Exists')
         : dataSources.UserController.update(args, hasToken),
 
-    deleteUser: (_, __, { dataSources, hasToken }) =>
+    deleteUser: (_, args, { dataSources, hasToken }) =>
       !hasToken
         ? new Error('Token Not Exists')
-        : dataSources.UserController.destroy(hasToken),
+        : dataSources.UserController.destroy(args, hasToken),
   },
 };
