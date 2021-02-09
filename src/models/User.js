@@ -31,7 +31,7 @@ const UserSchema = new Schema(
       default: 'USER',
     },
     plan: {
-      transactionDate: { type: String },
+      transactionDate: { type: Number },
       renewDate: { type: Number },
       description: { type: String },
       localizedPrice: { type: String },

@@ -1,5 +1,5 @@
 type Plan {
-  transactionDate: String
+  transactionDate: Float
   renewDate: Float
   description: String
   localizedPrice: String
