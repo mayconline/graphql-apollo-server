@@ -9,8 +9,20 @@ input AuthInput {
   password: String!
 }
 
+input AuthPlan {
+  transactionDate: Float
+  renewDate: Float
+  description: String
+  localizedPrice: String
+  productId: String
+  subscriptionPeriodAndroid: String
+  packageName: String
+  transactionId: String
+}
+
 input RoleInput {
   role: Role! = USER
+  plan: AuthPlan
 }
 
 type Mutation {

@@ -1,3 +1,14 @@
+type Plan {
+  transactionDate: String
+  renewDate: Float
+  description: String
+  localizedPrice: String
+  productId: String
+  subscriptionPeriodAndroid: String
+  packageName: String
+  transactionId: String
+}
+
 type User {
   _id: ID!
   email: String!
@@ -6,6 +17,7 @@ type User {
   checkTerms: Boolean!
   role: Role!
   token: String
+  plan: Plan
 }
 
 input UserInput {

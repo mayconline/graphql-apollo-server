@@ -37,6 +37,7 @@ module.exports = {
 
     await user.updateOne({
       role: args.input.role,
+      plan: args.input.plan,
     });
 
     user = await User.findById(hasToken._id).lean();

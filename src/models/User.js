@@ -30,6 +30,16 @@ const UserSchema = new Schema(
       enum: ['USER', 'PREMIUM', 'ADM'],
       default: 'USER',
     },
+    plan: {
+      transactionDate: { type: String },
+      renewDate: { type: Number },
+      description: { type: String },
+      localizedPrice: { type: String },
+      productId: { type: String },
+      subscriptionPeriodAndroid: { type: String },
+      packageName: { type: String },
+      transactionId: { type: String },
+    },
   },
   { timestamps: true },
 );
