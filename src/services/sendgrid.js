@@ -9,7 +9,7 @@ exports.send = async (to, subject, html) => {
 
   const msg = {
     to,
-    from: 'zuzucakes@yandex.com',
+    from: 'rebalanceeiapp@gmail.com',
     subject,
     html,
   };
