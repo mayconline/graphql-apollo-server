@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { getErrorMessage } = require('./errorHandler');
+const { isUnit, isETF } = require('./classSymbols');
 
 module.exports = {
   getSumGradeWallet: currentArray =>
@@ -66,4 +66,54 @@ module.exports = {
     }
   },
   formatSymbol: symbol => symbol.toLowerCase().replace('.sa', '').trim(),
+
+  getRandomDarkColor: () => {
+    var lum = -0.25;
+    var hex = String(
+      '#' + Math.random().toString(16).slice(2, 8).toUpperCase(),
+    ).replace(/[^0-9a-f]/gi, '');
+    if (hex.length < 6) {
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    }
+    var rgb = '#',
+      c,
+      i;
+    for (i = 0; i < 3; i++) {
+      c = parseInt(hex.substr(i * 2, 2), 16);
+      c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
+      rgb += ('00' + c).substr(c.length);
+    }
+    return rgb;
+  },
+  getClassTicket: ticket =>
+    ticket.slice(-2) === '34'
+      ? 'BDR'
+      : ticket.slice(-1) === '3' || ticket.slice(-1) === '4' || isUnit(ticket)
+      ? 'Ação'
+      : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)
+      ? 'FII'
+      : isETF(ticket)
+      ? 'ETF'
+      : 'Outros',
+
+  getPercentTicketPerClass: array => {
+    let unicClass = [];
+
+    array.map(item => {
+      if (!unicClass.includes(item.key)) {
+        return unicClass.push(item.key);
+      }
+    });
+
+    const percentTicketByClass = unicClass.map((unic, index) => ({
+      _id: unic,
+      key: unic,
+      value: array
+        .filter(item => item.key === unic)
+        .reduce((acc, cur) => acc + cur.value, 0),
+      color: array[index].color,
+    }));
+
+    return percentTicketByClass;
+  },
 };

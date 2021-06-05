@@ -1,0 +1,15 @@
+enum Type {
+  TICKET
+  CLASS
+}
+
+type Report {
+  _id: ID!
+  key: String!
+  value: Float!
+  color: String!
+}
+
+type Query {
+  getReportsByType(walletID: ID!, type: Type!): [Report]
+}

@@ -13,6 +13,7 @@ const WalletController = require('../../../controllers/WalletController');
 const TicketController = require('../../../controllers/TicketController');
 const FinanceController = require('../../../controllers/FinanceController');
 const QuestionController = require('../../../controllers/QuestionController');
+const ReportsController = require('../../../controllers/ReportsController');
 
 const typeDefs = require('../../typeDefs');
 const resolvers = require('../../resolvers');
@@ -25,6 +26,7 @@ const dataSources = () => ({
   TicketController,
   FinanceController,
   QuestionController,
+  ReportsController,
 });
 
 const server = new ApolloServer({
