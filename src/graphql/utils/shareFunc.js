@@ -123,7 +123,7 @@ module.exports = {
       Healthcare: 'Saúde',
       'Real Estate': 'Imobiliário',
       'Financial Services': 'Serviços Financeiros',
-      Utilities: 'Utilidades',
+      Utilities: 'Utilidades Pública',
       'Communication Services': 'Serviços de Comunicação',
       'Consumer Cyclical': 'Consumo Ciclico',
       'REIT - Industrial': 'FII Industrial',
