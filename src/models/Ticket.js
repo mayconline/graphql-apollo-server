@@ -25,6 +25,10 @@ const TicketSchema = new Schema(
       required: true,
       default: 0,
     },
+    classSymbol: {
+      type: String,
+      default: 'Outros',
+    },
   },
   { timestamps: true },
 );

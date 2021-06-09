@@ -2,8 +2,6 @@ const {
   getSumAmountWallet,
   getRandomDarkColor,
   getArraySortByParams,
-  getClassTicket,
-  formatSymbol,
   getPercentTicketPerClass,
 } = require('../graphql/utils/shareFunc');
 
@@ -33,13 +31,13 @@ module.exports = {
     let sumAmountWallet = getSumAmountWallet(currentArray);
 
     const chart = currentArray.map(
-      ({ _id, symbol, quantity, regularMarketPrice }) => {
+      ({ _id, quantity, regularMarketPrice, classSymbol }) => {
         let currentAmount = quantity * regularMarketPrice;
         let currentPercent = (currentAmount / sumAmountWallet) * 100;
 
         return {
           _id,
-          key: getClassTicket(formatSymbol(symbol)),
+          key: classSymbol,
           value: currentPercent,
           color: getRandomDarkColor(),
         };

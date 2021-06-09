@@ -105,7 +105,7 @@ module.exports = {
   getCurrentFinanceByTickets: async ticketArray => {
     return await Promise.all(
       ticketArray.map(
-        async ({ _id, symbol, quantity, averagePrice, grade }) => {
+        async ({ _id, symbol, quantity, averagePrice, grade, classSymbol }) => {
           const {
             regularMarketPrice,
             financialCurrency,
@@ -129,6 +129,7 @@ module.exports = {
             longName,
             industry,
             sector,
+            classSymbol,
           };
         },
       ),

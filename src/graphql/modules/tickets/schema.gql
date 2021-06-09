@@ -5,6 +5,7 @@ type Ticket {
   quantity: Float!
   averagePrice: Float!
   grade: Int!
+  classSymbol: String
 }
 
 enum SortTickets {

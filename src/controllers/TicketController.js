@@ -4,6 +4,7 @@ const Ticket = require('../models/Ticket');
 const {
   getArraySortByParams,
   formatSymbol,
+  getClassTicket,
 } = require('../graphql/utils/shareFunc');
 
 module.exports = {
@@ -23,7 +24,12 @@ module.exports = {
     let isSameUser = hasToken._id == wallet.user;
     if (!isSameUser) throw new Error('User Unauthorized');
 
-    let sorted = await getArraySortByParams(wallet.ticket, 'grade');
+    const addClassSymbol = wallet.ticket.map(ticket => ({
+      ...ticket._doc,
+      classSymbol: getClassTicket(formatSymbol(ticket.symbol)),
+    }));
+
+    let sorted = await getArraySortByParams(addClassSymbol, 'grade');
 
     let ticketLengthOnWallet = await wallet.ticket.length;
 
