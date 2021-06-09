@@ -52,4 +52,50 @@ module.exports = {
 
     return sortedArray;
   },
+  getEachSectorChart: currentArray => {
+    let sumAmountWallet = getSumAmountWallet(currentArray);
+
+    const chart = currentArray.map(
+      ({ _id, quantity, regularMarketPrice, sector }) => {
+        let currentAmount = quantity * regularMarketPrice;
+        let currentPercent = (currentAmount / sumAmountWallet) * 100;
+
+        return {
+          _id,
+          key: sector,
+          value: currentPercent,
+          color: getRandomDarkColor(),
+        };
+      },
+    );
+
+    const chartByClass = getPercentTicketPerClass(chart);
+
+    const sortedArray = getArraySortByParams(chartByClass, 'value');
+
+    return sortedArray;
+  },
+  getEachIndustryChart: currentArray => {
+    let sumAmountWallet = getSumAmountWallet(currentArray);
+
+    const chart = currentArray.map(
+      ({ _id, quantity, regularMarketPrice, industry }) => {
+        let currentAmount = quantity * regularMarketPrice;
+        let currentPercent = (currentAmount / sumAmountWallet) * 100;
+
+        return {
+          _id,
+          key: industry,
+          value: currentPercent,
+          color: getRandomDarkColor(),
+        };
+      },
+    );
+
+    const chartByClass = getPercentTicketPerClass(chart);
+
+    const sortedArray = getArraySortByParams(chartByClass, 'value');
+
+    return sortedArray;
+  },
 };

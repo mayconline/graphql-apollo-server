@@ -14,15 +14,26 @@ module.exports = {
         ticketArray,
       );
 
-      if (args.type === 'TICKET') {
-        return await dataSources.ReportsController.getEachTicketChart(
-          currentArray,
-        );
-      } else if (args.type === 'CLASS') {
-        return await dataSources.ReportsController.getEachClassChart(
-          currentArray,
-        );
-      } else return [];
+      switch (args.type) {
+        case 'TICKET':
+          return await dataSources.ReportsController.getEachTicketChart(
+            currentArray,
+          );
+        case 'CLASS':
+          return await dataSources.ReportsController.getEachClassChart(
+            currentArray,
+          );
+        case 'SECTOR':
+          return await dataSources.ReportsController.getEachSectorChart(
+            currentArray,
+          );
+        case 'INDUSTRY':
+          return await dataSources.ReportsController.getEachIndustryChart(
+            currentArray,
+          );
+        default:
+          return [];
+      }
     },
   },
 };

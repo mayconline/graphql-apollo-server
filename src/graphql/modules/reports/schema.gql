@@ -1,6 +1,8 @@
 enum Type {
   TICKET
   CLASS
+  SECTOR
+  INDUSTRY
 }
 
 type Report {

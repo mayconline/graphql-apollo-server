@@ -1,6 +1,7 @@
-const api = require('./axios');
+const { api, apiSummary } = require('./axios');
 const apiDollar = require('./apiDollar');
 const apiDollar2 = require('./apiDollar2');
+const { getTranslateSector } = require('../graphql/utils/shareFunc');
 
 const getConvertDollar = async amount => {
   let dollarBid = 0;
@@ -41,20 +42,51 @@ const getConvertDollar = async amount => {
   return converted;
 };
 
+const fetchSummaryApi = async ticket => {
+  const summary = await apiSummary.get(`quoteSummary/${ticket}`, {
+    params: {
+      modules: 'summaryProfile',
+    },
+  });
+
+  let profileStock = {
+    industry: 'OUTROS',
+    sector: 'OUTROS',
+  };
+
+  const { result: resultSummary } = await summary.data.quoteSummary;
+
+  if (!!resultSummary) {
+    const [{ summaryProfile }] = resultSummary;
+
+    if (
+      summaryProfile?.industry &&
+      summaryProfile?.sector &&
+      (summaryProfile?.industry || summaryProfile?.sector) !== ''
+    ) {
+      profileStock.industry = getTranslateSector(summaryProfile.industry);
+      profileStock.sector = getTranslateSector(summaryProfile.sector);
+    }
+  }
+
+  return profileStock;
+};
+
 const fetchApi = async ticket => {
   const res = await api.get(`quote?symbols=${ticket}`);
 
   const { result } = await res.data.quoteResponse;
   if (!result) throw new Error('Failed Stock API');
 
-  const [
-    { regularMarketPrice, currency, exchange, market, longName, symbol },
-  ] = result;
+  const [{ regularMarketPrice, currency, exchange, market, longName, symbol }] =
+    result;
 
   const convertedAmount =
     currency === 'USD'
       ? await getConvertDollar(regularMarketPrice)
       : regularMarketPrice;
+
+  const { industry, sector } = await fetchSummaryApi(ticket);
 
   return {
     regularMarketPrice: convertedAmount,
@@ -63,6 +95,8 @@ const fetchApi = async ticket => {
     market,
     longName,
     symbol,
+    industry,
+    sector,
   };
 };
 
@@ -78,7 +112,10 @@ module.exports = {
             exchange,
             market,
             longName,
+            industry,
+            sector,
           } = await fetchApi(symbol);
+
           return {
             _id,
             symbol,
@@ -90,6 +127,8 @@ module.exports = {
             exchange,
             market,
             longName,
+            industry,
+            sector,
           };
         },
       ),

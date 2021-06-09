@@ -4,4 +4,11 @@ const api = axios.create({
   baseURL: process.env.API_STOCK,
 });
 
-module.exports = api;
+const apiSummary = axios.create({
+  baseURL: process.env.API_SUMMARY,
+});
+
+module.exports = {
+  api,
+  apiSummary,
+};
