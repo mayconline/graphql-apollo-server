@@ -42,6 +42,7 @@ module.exports = {
     'NASD11',
     'TECK11',
     'SAET11',
+    'HTEK11',
   ],
   isUnit: symbol => module.exports.UnitsTickets.includes(symbol.toUpperCase()),
   isETF: symbol => module.exports.ETFTickets.includes(symbol.toUpperCase()),

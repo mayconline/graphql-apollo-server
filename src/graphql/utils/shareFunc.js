@@ -86,7 +86,7 @@ module.exports = {
     return rgb;
   },
   getClassTicket: ticket =>
-    ticket.slice(-2) === '34'
+    ticket.slice(-2) === '33' || ticket.slice(-2) === '34'
       ? 'BDR'
       : ticket.slice(-1) === '3' || ticket.slice(-1) === '4' || isUnit(ticket)
       ? 'Ação'
@@ -202,5 +202,7 @@ module.exports = {
       'Medical Care Facilities': 'Plano de Saúde',
       Restaurants: 'Alimentos',
       'Personal Services': 'Serviços Pessoais',
+      Gold: 'Mineração',
+      'Farm & Heavy Construction Machinery': 'Máquinas e Motores',
     }[sector]),
 };
