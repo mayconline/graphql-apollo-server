@@ -21,8 +21,9 @@ module.exports = {
 
     if (!wallet) throw new Error('Wallet Not Found');
 
-    let isSameUser = hasToken._id == wallet.user;
-    if (!isSameUser) throw new Error('User Unauthorized');
+    let isSameUserOrAdm =
+      hasToken._id == wallet.user || hasToken.role === 'ADM';
+    if (!isSameUserOrAdm) throw new Error('User Unauthorized');
 
     const addClassSymbol = wallet.ticket.map(ticket => ({
       ...ticket._doc,
