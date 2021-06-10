@@ -1,6 +1,5 @@
 module.exports = {
   UnitsTickets: [
-    'TIET11',
     'ALUP11',
     'BIDI11',
     'BPAC11',
@@ -12,6 +11,8 @@ module.exports = {
     'SANB11',
     'SULA11',
     'TAEE11',
+    'CPLE11',
+    'MODL11',
   ],
   ETFTickets: [
     'BBOV11',
