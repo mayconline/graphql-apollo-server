@@ -43,33 +43,39 @@ const getConvertDollar = async amount => {
 };
 
 const fetchSummaryApi = async ticket => {
-  const summary = await apiSummary.get(`quoteSummary/${ticket}`, {
-    params: {
-      modules: 'summaryProfile',
-    },
-  });
-
   let profileStock = {
-    industry: 'OUTROS',
-    sector: 'OUTROS',
+    industry: 'Outros',
+    sector: 'Outros',
   };
 
-  const { result: resultSummary } = await summary.data.quoteSummary;
+  try {
+    const summary = await apiSummary.get(`quoteSummary/${ticket}`, {
+      params: {
+        modules: 'summaryProfile',
+      },
+    });
 
-  if (!!resultSummary) {
-    const [{ summaryProfile }] = resultSummary;
+    if (!!summary) {
+      const { result: resultSummary } = await summary.data.quoteSummary;
 
-    if (
-      summaryProfile?.industry &&
-      summaryProfile?.sector &&
-      (summaryProfile?.industry || summaryProfile?.sector) !== ''
-    ) {
-      profileStock.industry = getTranslateSector(summaryProfile.industry);
-      profileStock.sector = getTranslateSector(summaryProfile.sector);
+      if (!!resultSummary) {
+        const [{ summaryProfile }] = resultSummary;
+
+        if (
+          summaryProfile?.industry &&
+          summaryProfile?.sector &&
+          (summaryProfile?.industry || summaryProfile?.sector) !== ''
+        ) {
+          profileStock.industry = getTranslateSector(summaryProfile.industry);
+          profileStock.sector = getTranslateSector(summaryProfile.sector);
+        }
+      }
     }
-  }
 
-  return profileStock;
+    return profileStock;
+  } catch (e) {
+    return profileStock;
+  }
 };
 
 const fetchApi = async ticket => {
