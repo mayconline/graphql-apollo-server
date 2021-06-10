@@ -201,5 +201,6 @@ module.exports = {
       'Marine Shipping': 'Portuário',
       'Medical Care Facilities': 'Plano de Saúde',
       Restaurants: 'Alimentos',
+      'Personal Services': 'Serviços Pessoais',
     }[sector]),
 };
