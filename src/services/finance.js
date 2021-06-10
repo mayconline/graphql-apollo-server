@@ -79,31 +79,45 @@ const fetchSummaryApi = async ticket => {
 };
 
 const fetchApi = async ticket => {
-  const res = await api.get(`quote?symbols=${ticket}`);
+  try {
+    const res = await api.get(`quote?symbols=${ticket}`);
 
-  const { result } = await res.data.quoteResponse;
-  if (!result) throw new Error('Failed Stock API');
+    const { result } = await res.data.quoteResponse;
+    if (!result) throw new Error('Failed Stock API');
 
-  const [{ regularMarketPrice, currency, exchange, market, longName, symbol }] =
-    result;
+    const [
+      { regularMarketPrice, currency, exchange, market, longName, symbol },
+    ] = result;
 
-  const convertedAmount =
-    currency === 'USD'
-      ? await getConvertDollar(regularMarketPrice)
-      : regularMarketPrice;
+    const convertedAmount =
+      currency === 'USD'
+        ? await getConvertDollar(regularMarketPrice)
+        : regularMarketPrice;
 
-  const { industry, sector } = await fetchSummaryApi(ticket);
+    const { industry, sector } = await fetchSummaryApi(ticket);
 
-  return {
-    regularMarketPrice: convertedAmount,
-    financialCurrency: currency,
-    exchange,
-    market,
-    longName,
-    symbol,
-    industry,
-    sector,
-  };
+    return {
+      regularMarketPrice: convertedAmount,
+      financialCurrency: currency,
+      exchange,
+      market,
+      longName,
+      symbol,
+      industry,
+      sector,
+    };
+  } catch (e) {
+    return {
+      regularMarketPrice: 0,
+      financialCurrency: 'BRL',
+      exchange: 'SAO',
+      market: 'br_market',
+      longName: 'ERROR',
+      symbol: 'ERROR',
+      industry: 'Outros',
+      sector: 'Outros',
+    };
+  }
 };
 
 module.exports = {
