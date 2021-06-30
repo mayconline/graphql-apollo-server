@@ -79,15 +79,24 @@ const fetchSummaryApi = async ticket => {
 };
 
 const fetchApi = async ticket => {
+  let formatedTicket = ticket;
+
+  if (
+    formatedTicket.slice(-5) === '3F.SA' ||
+    formatedTicket.slice(-5) === '4F.SA' ||
+    formatedTicket.slice(-6) === '11F.SA'
+  ) {
+    formatedTicket = formatedTicket.replace('F.SA', '.SA').trim();
+  }
+
   try {
-    const res = await api.get(`quote?symbols=${ticket}`);
+    const res = await api.get(`quote?symbols=${formatedTicket}`);
 
     const { result } = await res.data.quoteResponse;
     if (!result) throw new Error('Failed Stock API');
 
-    const [
-      { regularMarketPrice, currency, exchange, market, longName, symbol },
-    ] = result;
+    const [{ regularMarketPrice, currency, exchange, market, longName }] =
+      result;
 
     const convertedAmount =
       currency === 'USD'
@@ -102,7 +111,6 @@ const fetchApi = async ticket => {
       exchange,
       market,
       longName,
-      symbol,
       industry,
       sector,
     };
@@ -113,7 +121,6 @@ const fetchApi = async ticket => {
       exchange: 'SAO',
       market: 'br_market',
       longName: 'ERROR',
-      symbol: 'ERROR',
       industry: 'Outros',
       sector: 'Outros',
     };
