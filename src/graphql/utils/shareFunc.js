@@ -65,7 +65,7 @@ module.exports = {
       throw new Error('Token Invalid or Expired');
     }
   },
-  formatSymbol: symbol => symbol.toLowerCase().replace('.sa', '').trim(),
+  formatSymbol: symbol => symbol.toUpperCase().replace('.SA', '').trim(),
 
   getRandomDarkColor: () => {
     var lum = -0.25;
@@ -88,7 +88,12 @@ module.exports = {
   getClassTicket: ticket =>
     ticket.slice(-2) === '33' || ticket.slice(-2) === '34'
       ? 'BDR'
-      : ticket.slice(-1) === '3' || ticket.slice(-1) === '4' || isUnit(ticket)
+      : ticket.slice(-2) === '3F' ||
+        ticket.slice(-2) === '4F' ||
+        ticket.slice(-3) === '11F' ||
+        ticket.slice(-1) === '3' ||
+        ticket.slice(-1) === '4' ||
+        isUnit(ticket)
       ? 'Ação'
       : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)
       ? 'FII'
