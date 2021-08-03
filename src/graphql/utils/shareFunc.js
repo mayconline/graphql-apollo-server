@@ -86,13 +86,20 @@ module.exports = {
     return rgb;
   },
   getClassTicket: ticket =>
-    ticket.slice(-2) === '33' || ticket.slice(-2) === '34'
+    ticket.slice(-2) === '33' ||
+    ticket.slice(-2) === '34' ||
+    ticket.slice(-2) === '35' ||
+    ticket.slice(-2) === '39'
       ? 'BDR'
       : ticket.slice(-2) === '3F' ||
         ticket.slice(-2) === '4F' ||
+        ticket.slice(-2) === '5F' ||
+        ticket.slice(-2) === '6F' ||
         ticket.slice(-3) === '11F' ||
         ticket.slice(-1) === '3' ||
         ticket.slice(-1) === '4' ||
+        ticket.slice(-1) === '5' ||
+        ticket.slice(-1) === '6' ||
         isUnit(ticket)
       ? 'Ação'
       : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)

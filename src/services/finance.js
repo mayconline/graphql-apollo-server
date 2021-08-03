@@ -84,6 +84,8 @@ const fetchApi = async ticket => {
   if (
     formatedTicket.slice(-5) === '3F.SA' ||
     formatedTicket.slice(-5) === '4F.SA' ||
+    formatedTicket.slice(-5) === '5F.SA' ||
+    formatedTicket.slice(-5) === '6F.SA' ||
     formatedTicket.slice(-6) === '11F.SA'
   ) {
     formatedTicket = formatedTicket.replace('F.SA', '.SA').trim();
