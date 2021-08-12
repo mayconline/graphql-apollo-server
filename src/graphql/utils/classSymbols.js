@@ -57,6 +57,7 @@ module.exports = {
     'ASIA11',
     'EMEG11',
     'XMAL11',
+    'BITH11',
   ],
   isUnit: symbol => module.exports.UnitsTickets.includes(symbol.toUpperCase()),
   isETF: symbol => module.exports.ETFTickets.includes(symbol.toUpperCase()),
