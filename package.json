@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@graphql-tools/load-files": "^6.3.2",
     "@sendgrid/mail": "^7.4.2",
     "apollo-server": "^2.13.1",
     "apollo-server-testing": "^2.14.1",
@@ -22,7 +23,7 @@
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "graphql": "^15.0.0",
-    "graphql-tools": "^6.0.4",
+    "graphql-tools": "^8.1.0",
     "jsonwebtoken": "^8.5.1",
     "mjml": "^4.8.1",
     "mongoose": "^5.10.11"
