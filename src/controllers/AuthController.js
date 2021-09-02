@@ -46,4 +46,16 @@ module.exports = {
 
     return { ...user, token };
   },
+  reactivateUser: async (args, hasToken) => {
+    if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+
+    let user = await User.findById(args.input._id);
+    if (!user) throw new Error('User Not Exists');
+
+    await user.updateOne({
+      active: args.input.active,
+    });
+
+    return !!user;
+  },
 };

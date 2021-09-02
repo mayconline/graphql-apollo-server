@@ -25,7 +25,13 @@ input RoleInput {
   plan: AuthPlan
 }
 
+input ReactivateUser {
+  _id: ID!
+  active: Boolean!
+}
+
 type Mutation {
   login(input: AuthInput!): User
   updateRole(input: RoleInput): User
+  reactivateUser(input: ReactivateUser!): Boolean!
 }
