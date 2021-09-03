@@ -20,20 +20,14 @@ const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
 
 mongoose.Promise = global.Promise;
-mongoose
-  .connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  })
-  .then(
-    () => {
-      console.log('Successfully connected to db');
-    },
-    err => {
-      console.log('it was not possible to connect to the bd' + err);
-    },
-  );
+mongoose.connect(process.env.MONGO_URL).then(
+  () => {
+    console.log('Successfully connected to db');
+  },
+  err => {
+    console.log('it was not possible to connect to the bd' + err);
+  },
+);
 
 const dataSources = () => ({
   finance,
