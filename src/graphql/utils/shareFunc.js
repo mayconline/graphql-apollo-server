@@ -217,5 +217,22 @@ module.exports = {
       Gold: 'Mineração',
       'Farm & Heavy Construction Machinery': 'Máquinas e Motores',
       'Beverages—Non-Alcoholic': 'Bebidas',
+      'Agricultural Inputs': 'Agricultura',
+      'Auto Parts': 'Locação de Veículos',
     }[sector]),
+  formatTicketByFraction: ticket => {
+    let formatedTicket = ticket;
+
+    if (
+      formatedTicket.slice(-5) === '3F.SA' ||
+      formatedTicket.slice(-5) === '4F.SA' ||
+      formatedTicket.slice(-5) === '5F.SA' ||
+      formatedTicket.slice(-5) === '6F.SA' ||
+      formatedTicket.slice(-6) === '11F.SA'
+    ) {
+      formatedTicket = formatedTicket.replace('F.SA', '.SA').trim();
+    }
+
+    return formatedTicket;
+  },
 };

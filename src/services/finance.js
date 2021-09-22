@@ -1,7 +1,10 @@
 const { api, apiSummary } = require('./axios');
 const apiDollar = require('./apiDollar');
 const apiDollar2 = require('./apiDollar2');
-const { getTranslateSector } = require('../graphql/utils/shareFunc');
+const {
+  formatTicketByFraction,
+  getTranslateSector,
+} = require('../graphql/utils/shareFunc');
 
 const getConvertDollar = async amount => {
   let dollarBid = 0;
@@ -43,13 +46,15 @@ const getConvertDollar = async amount => {
 };
 
 const fetchSummaryApi = async ticket => {
+  const formatedTicket = formatTicketByFraction(ticket);
+
   let profileStock = {
     industry: 'Outros',
     sector: 'Outros',
   };
 
   try {
-    const summary = await apiSummary.get(`quoteSummary/${ticket}`, {
+    const summary = await apiSummary.get(`quoteSummary/${formatedTicket}`, {
       params: {
         modules: 'summaryProfile',
       },
@@ -79,17 +84,7 @@ const fetchSummaryApi = async ticket => {
 };
 
 const fetchApi = async ticket => {
-  let formatedTicket = ticket;
-
-  if (
-    formatedTicket.slice(-5) === '3F.SA' ||
-    formatedTicket.slice(-5) === '4F.SA' ||
-    formatedTicket.slice(-5) === '5F.SA' ||
-    formatedTicket.slice(-5) === '6F.SA' ||
-    formatedTicket.slice(-6) === '11F.SA'
-  ) {
-    formatedTicket = formatedTicket.replace('F.SA', '.SA').trim();
-  }
+  const formatedTicket = formatTicketByFraction(ticket);
 
   try {
     const res = await api.get(`quote?symbols=${formatedTicket}`);
