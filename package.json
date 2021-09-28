@@ -4,7 +4,7 @@
   "description": "graphql api",
   "main": "index.js",
   "engines": {
-    "node": "14.17.6"
+    "node": "14.18.0"
   },
   "scripts": {
     "test": "jest -u",
