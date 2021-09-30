@@ -92,8 +92,9 @@ const fetchApi = async ticket => {
     const { result } = await res.data.quoteResponse;
     if (!result) throw new Error('Failed Stock API');
 
-    const [{ regularMarketPrice, currency, exchange, market, longName }] =
-      result;
+    const [
+      { regularMarketPrice, currency, exchange, market, longName, shortName },
+    ] = result;
 
     const convertedAmount =
       currency === 'USD'
@@ -107,7 +108,7 @@ const fetchApi = async ticket => {
       financialCurrency: currency,
       exchange,
       market,
-      longName,
+      longName: longName ? longName : shortName,
       industry,
       sector,
     };
