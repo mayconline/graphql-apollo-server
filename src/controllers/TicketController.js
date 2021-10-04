@@ -62,7 +62,7 @@ module.exports = {
 
     let ticket = await Ticket.create({
       symbol: args.input.symbol,
-      name: args.input.name,
+      name: args.input.name ? args.input.name : args.input.symbol,
       quantity: args.input.quantity,
       averagePrice: args.input.averagePrice,
       grade: args.input.grade,
