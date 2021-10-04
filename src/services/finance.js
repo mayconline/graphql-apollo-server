@@ -5,6 +5,7 @@ const {
   formatTicketByFraction,
   getTranslateSector,
 } = require('../graphql/utils/shareFunc');
+const { isCripto } = require('../graphql/utils/classSymbols');
 
 const getConvertDollar = async amount => {
   let dollarBid = 0;
@@ -77,6 +78,11 @@ const fetchSummaryApi = async ticket => {
       }
     }
 
+    if (isCripto(formatedTicket)) {
+      profileStock.industry = 'Cripto';
+      profileStock.sector = 'Cripto';
+    }
+
     return profileStock;
   } catch (e) {
     return profileStock;
@@ -108,7 +114,7 @@ const fetchApi = async ticket => {
       financialCurrency: currency,
       exchange,
       market,
-      longName: longName ? longName : shortName,
+      longName: longName ? longName : shortName ? shortName : formatedTicket,
       industry,
       sector,
     };

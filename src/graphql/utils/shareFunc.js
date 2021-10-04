@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { isUnit, isETF } = require('./classSymbols');
+const { isUnit, isETF, isCripto } = require('./classSymbols');
 
 module.exports = {
   getSumGradeWallet: currentArray =>
@@ -86,6 +86,7 @@ module.exports = {
     return rgb;
   },
   getClassTicket: ticket =>
+    ticket.slice(-2) === '31' ||
     ticket.slice(-2) === '33' ||
     ticket.slice(-2) === '34' ||
     ticket.slice(-2) === '35' ||
@@ -106,6 +107,8 @@ module.exports = {
       ? 'FII'
       : isETF(ticket)
       ? 'ETF'
+      : isCripto(ticket)
+      ? 'Cripto'
       : 'Outros',
 
   getPercentTicketPerClass: array => {
