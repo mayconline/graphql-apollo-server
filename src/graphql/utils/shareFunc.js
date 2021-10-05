@@ -222,6 +222,7 @@ module.exports = {
       'Beverages—Non-Alcoholic': 'Bebidas',
       'Agricultural Inputs': 'Agricultura',
       'Auto Parts': 'Locação de Veículos',
+      'Building Products & Equipment': 'Material de Construção',
     }[sector]),
   formatTicketByFraction: ticket => {
     let formatedTicket = ticket;
