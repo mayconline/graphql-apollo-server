@@ -58,6 +58,7 @@ module.exports = {
     'EMEG11',
     'XMAL11',
     'BITH11',
+    'TECB11',
   ],
   CriptoTickets: [
     'BTC-USD',
