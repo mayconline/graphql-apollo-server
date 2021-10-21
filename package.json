@@ -26,7 +26,7 @@
     "graphql-tools": "^8.1.0",
     "jsonwebtoken": "^8.5.1",
     "mjml": "^4.8.1",
-    "mongoose": "6.0.11"
+    "mongoose": "6.0.12"
   },
   "devDependencies": {
     "@types/jest": "27.0.2",
