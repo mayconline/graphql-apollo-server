@@ -59,6 +59,7 @@ module.exports = {
     'XMAL11',
     'BITH11',
     'TECB11',
+    'ALUG11',
   ],
   CriptoTickets: [
     'BTC-USD',
