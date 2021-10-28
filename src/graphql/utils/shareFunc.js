@@ -223,6 +223,7 @@ module.exports = {
       'Agricultural Inputs': 'Agricultura',
       'Auto Parts': 'Locação de Veículos',
       'Building Products & Equipment': 'Material de Construção',
+      Railroads: 'Ferroviário',
     }[sector]),
   formatTicketByFraction: ticket => {
     let formatedTicket = ticket;
