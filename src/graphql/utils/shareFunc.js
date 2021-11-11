@@ -209,7 +209,7 @@ module.exports = {
       'Paper & Paper Products': 'Papel e Celulose',
       'Packaging & Containers': 'Papel e Celulose',
       'Drug Manufacturers—Specialty & Generic': 'Produtos Farmacêuticos',
-      'Aerospace & Defense': 'Armas e Munições',
+      'Aerospace & Defense': 'Material Aéreo e de Defesa',
       'Capital Markets': 'Corretoras',
       'Auto Manufacturers': 'Material Rodoviário',
       'Beverages—Brewers': 'Bebidas',
