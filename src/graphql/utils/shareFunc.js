@@ -230,6 +230,7 @@ module.exports = {
       'Infrastructure Operations': 'Transporte',
       Trucking: 'Transporte',
       'Waste Management': 'Gestão de Resíduos',
+      'Textile Manufacturing': 'Vestuário',
     }[sector]),
   formatTicketByFraction: ticket => {
     let formatedTicket = ticket;
