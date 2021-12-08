@@ -15,6 +15,7 @@ const TicketController = require('./controllers/TicketController');
 const FinanceController = require('./controllers/FinanceController');
 const QuestionController = require('./controllers/QuestionController');
 const ReportsController = require('./controllers/ReportsController');
+const EarningController = require('./controllers/EarningController');
 
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers');
@@ -39,6 +40,7 @@ const dataSources = () => ({
   FinanceController,
   QuestionController,
   ReportsController,
+  EarningController,
 });
 
 const server = new ApolloServer({

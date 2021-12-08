@@ -1,0 +1,20 @@
+type Earning {
+  _id: ID!
+  year: Int!
+  month: Int!
+  amount: Float!
+}
+
+input EarningInput {
+  year: Int!
+  month: Int!
+  amount: Float!
+}
+
+type Query {
+  getEarningByWallet(walletID: ID!, year: Int!): [Earning!]!
+}
+
+type Mutation {
+  updateEarning(_id: ID, walletID: ID!, input: EarningInput!): Earning
+}

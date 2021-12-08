@@ -30,7 +30,11 @@ module.exports = {
         return new UserInputError(message, path);
       case 'Ticket Not Found':
         return new UserInputError(message, path);
+      case 'Earning Not Found':
+        return new UserInputError(message, path);
       case 'Ticket Exists':
+        return new UserInputError(message, path);
+      case 'Earning Exists':
         return new UserInputError(message, path);
       case 'Tickets limited to 16 items':
         return new ForbiddenError(message);

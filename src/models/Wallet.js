@@ -16,6 +16,12 @@ const WalletSchema = new Schema(
         ref: 'Ticket',
       },
     ],
+    earning: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Earning',
+      },
+    ],
   },
   { timestamps: true },
 );
