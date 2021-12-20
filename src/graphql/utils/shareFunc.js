@@ -232,6 +232,10 @@ module.exports = {
       'Waste Management': 'Gestão de Resíduos',
       'Textile Manufacturing': 'Vestuário',
       'Furnishings, Fixtures & Appliances': 'Eletrodomésticos',
+      'Lumber & Wood Production': 'Produção de Madeiras',
+      'Grocery Stores': 'Alimentos',
+      'REIT—Specialty': 'Imobiliário',
+      Tobacco: 'Tabaco',
     }[sector]),
   formatTicketByFraction: ticket => {
     let formatedTicket = ticket;
