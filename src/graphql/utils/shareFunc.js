@@ -14,6 +14,9 @@ module.exports = {
       0,
     ),
 
+  getSumAmountEarning: currentArray =>
+    currentArray.reduce((acc, cur) => acc + cur.amount, 0),
+
   getPercentVariation: (SumCost, SumAmount) => {
     let calcPercent = ((SumAmount - SumCost) / SumCost) * 100;
 

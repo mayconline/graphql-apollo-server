@@ -5,6 +5,11 @@ type Earning {
   amount: Float!
 }
 
+type SumEarning {
+  sumCurrentYear: Float!
+  sumOldYear: Float!
+}
+
 input EarningInput {
   year: Int!
   month: Int!
@@ -13,6 +18,7 @@ input EarningInput {
 
 type Query {
   getEarningByWallet(walletID: ID!, year: Int!): [Earning!]!
+  getSumEarning(walletID: ID!, year: Int!): SumEarning!
 }
 
 type Mutation {

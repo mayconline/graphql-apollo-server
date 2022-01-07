@@ -1,7 +1,10 @@
 const Wallet = require('../models/Wallet');
 const Earning = require('../models/Earning');
 
-const { getArraySortByParams } = require('../graphql/utils/shareFunc');
+const {
+  getArraySortByParams,
+  getSumAmountEarning,
+} = require('../graphql/utils/shareFunc');
 
 module.exports = {
   show: async (args, hasToken) => {
@@ -93,5 +96,25 @@ module.exports = {
     earning = await Earning.findById(args._id);
 
     return earning;
+  },
+
+  count: async (args, hasToken) => {
+    const currentYearArray = await module.exports.show(
+      { ...args, year: Number(args.year) },
+      hasToken,
+    );
+
+    const oldYearArray = await module.exports.show(
+      { ...args, year: Number(args.year) - 1 },
+      hasToken,
+    );
+
+    const sumCurrentYear = await getSumAmountEarning(currentYearArray);
+    const sumOldYear = await getSumAmountEarning(oldYearArray);
+
+    return {
+      sumCurrentYear,
+      sumOldYear,
+    };
   },
 };
