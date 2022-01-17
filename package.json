@@ -21,7 +21,7 @@
     "apollo-server-testing": "^2.14.1",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.0",
-    "dotenv": "^11.0.0",
+    "dotenv": "^14.0.0",
     "graphql": "^15.0.0",
     "graphql-tools": "^8.1.0",
     "jsonwebtoken": "^8.5.1",
