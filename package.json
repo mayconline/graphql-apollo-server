@@ -7,7 +7,7 @@
     "node": "16.14.2"
   },
   "scripts": {
-    "test": "jest -u",
+    "test": "jest",
     "dev": "nodemon src/index.js -e js,gql",
     "start": "node src/index.js"
   },

@@ -29,7 +29,7 @@ describe('Query Test', () => {
       query: GET_RENTABILITY,
       variables: { walletID: 'a', sort: 'variationPercent' },
     });
-    expect(res).toMatchSnapshot();
+
     expect(res.data).toHaveProperty('getRentability');
     expect(res.data.getRentability[0]).toHaveProperty('_id');
     expect(res.data.getRentability[0]).toHaveProperty('symbol');

@@ -4,6 +4,7 @@ module.exports = {
       !hasToken
         ? new Error('Token Not Exists')
         : await dataSources.AuthController.update(args, hasToken),
+
     login: async (_, args, { dataSources }) =>
       await dataSources.AuthController.show(args),
 

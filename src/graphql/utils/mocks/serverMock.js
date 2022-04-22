@@ -38,7 +38,7 @@ const server = new ApolloServer({
   }),
   formatError: err => getErrorMessage(err),
   mocks: true,
-  mockEntireSchema: false,
+  mockEntireSchema: true,
 });
 
 shareFunc.getToken = jest.fn(() => ({

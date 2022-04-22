@@ -29,7 +29,7 @@ describe('Query Test', () => {
       query: REBALANCES,
       variables: { walletID: 'a', sort: 'targetAmount' },
     });
-    expect(res).toMatchSnapshot();
+
     expect(res.data).toHaveProperty('rebalances');
     expect(res.data.rebalances[0]).toHaveProperty('_id');
     expect(res.data.rebalances[0]).toHaveProperty('symbol');

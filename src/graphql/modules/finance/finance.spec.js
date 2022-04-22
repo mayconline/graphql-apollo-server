@@ -25,7 +25,7 @@ describe('Query Test', () => {
       query: GET_API_FINANCE,
       variables: { symbol: 'mglu3.sa' },
     });
-    expect(res).toMatchSnapshot();
+
     expect(res.data).toHaveProperty('getApiFinance');
     expect(res.data.getApiFinance).toHaveProperty('regularMarketPrice');
     expect(res.data.getApiFinance).toHaveProperty('financialCurrency');
