@@ -34,7 +34,7 @@ describe('Query Test', () => {
     const res = await query({
       query: GET_WALLETS_BY_USER,
     });
-    expect(res).toMatchSnapshot();
+
     expect(res.data).toHaveProperty('getWalletByUser');
     expect(res.data.getWalletByUser[0]).toHaveProperty('_id');
   });
@@ -89,7 +89,6 @@ describe('Mutation Test', () => {
       },
     });
 
-    expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('createWallet');
   });
 
@@ -102,7 +101,6 @@ describe('Mutation Test', () => {
       },
     });
 
-    expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('updateWallet');
   });
 
@@ -114,7 +112,6 @@ describe('Mutation Test', () => {
       },
     });
 
-    expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('deleteWallet');
   });
 });

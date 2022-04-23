@@ -5,47 +5,22 @@ const {
 } = require('../../utils/mocks/serverMock');
 
 describe('Authenticate', () => {
-  const { query, mutate } = createTestClient(server);
+  const { mutate } = createTestClient(server);
 
   const LOGIN = gql`
-    query login($email: String!, $password: String!) {
+    mutation login($email: String!, $password: String!) {
       login(input: { email: $email, password: $password }) {
         _id
         email
         token
-      }
-    }
-  `;
-
-  const CREATE_USER = gql`
-    mutation createUser(
-      $email: String!
-      $password: String!
-      $checkTerms: Boolean!
-    ) {
-      createUser(
-        input: { email: $email, password: $password, checkTerms: $checkTerms }
-      ) {
-        _id
-        email
         active
-        checkTerms
-        password
+        role
       }
     }
   `;
 
   it('should return authenticate user', async () => {
-    const user = await mutate({
-      mutation: CREATE_USER,
-      variables: {
-        email: 'jox@gh.com.br',
-        password: '123',
-        checkTerms: true,
-      },
-    });
-
-    const userAuth = await query({
+    const userAuth = await mutate({
       query: LOGIN,
       variables: {
         email: 'jox@gh.com.br',
@@ -53,8 +28,11 @@ describe('Authenticate', () => {
       },
     });
 
-    expect(userAuth).toMatchSnapshot();
     expect(userAuth.data).toHaveProperty('login');
+    expect(userAuth.data.login).toHaveProperty('_id');
+    expect(userAuth.data.login).toHaveProperty('email');
     expect(userAuth.data.login).toHaveProperty('token');
+    expect(userAuth.data.login).toHaveProperty('active');
+    expect(userAuth.data.login).toHaveProperty('role');
   });
 });

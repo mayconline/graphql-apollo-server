@@ -30,14 +30,13 @@ describe('getUsers', () => {
 
   it('should return users array', async () => {
     const res = await query({ query: GET_USERS });
-    expect(res).toMatchSnapshot();
   });
 
   it('should return one user', async () => {
     const res = await query({
       query: GET_USER_BY_TOKEN,
     });
-    expect(res).toMatchSnapshot();
+
     expect(res.data).toHaveProperty('getUserByToken');
   });
 });
@@ -75,7 +74,6 @@ describe('create User', () => {
       },
     });
 
-    expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('createUser');
   });
 });

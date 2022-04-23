@@ -23,11 +23,61 @@ describe('Query Test', () => {
       query: GET_REPORTS_BY_TYPE,
       variables: { walletID: 'a', type: 'CLASS' },
     });
-    expect(res).toMatchSnapshot();
+
     expect(res.data).toHaveProperty('getReportsByType');
-    expect(res.data.getReportsByType).toHaveProperty('_id');
-    expect(res.data.getReportsByType).toHaveProperty('key');
-    expect(res.data.getReportsByType).toHaveProperty('value');
-    expect(res.data.getReportsByType).toHaveProperty('color');
+    expect(res.data.getReportsByType[0]).toHaveProperty('_id');
+    expect(res.data.getReportsByType[0]).toHaveProperty('key');
+    expect(res.data.getReportsByType[0]).toHaveProperty('value');
+    expect(res.data.getReportsByType[0]).toHaveProperty('color');
+  });
+
+  it('should return reports by ticket', async () => {
+    const res = await query({
+      query: GET_REPORTS_BY_TYPE,
+      variables: { walletID: 'a', type: 'TICKET' },
+    });
+
+    expect(res.data).toHaveProperty('getReportsByType');
+    expect(res.data.getReportsByType[0]).toHaveProperty('_id');
+    expect(res.data.getReportsByType[0]).toHaveProperty('key');
+    expect(res.data.getReportsByType[0]).toHaveProperty('value');
+    expect(res.data.getReportsByType[0]).toHaveProperty('color');
+  });
+
+  it('should return reports by sector', async () => {
+    const res = await query({
+      query: GET_REPORTS_BY_TYPE,
+      variables: { walletID: 'a', type: 'SECTOR' },
+    });
+
+    expect(res.data).toHaveProperty('getReportsByType');
+    expect(res.data.getReportsByType[0]).toHaveProperty('_id');
+    expect(res.data.getReportsByType[0]).toHaveProperty('key');
+    expect(res.data.getReportsByType[0]).toHaveProperty('value');
+    expect(res.data.getReportsByType[0]).toHaveProperty('color');
+  });
+
+  it('should return reports by industry', async () => {
+    const res = await query({
+      query: GET_REPORTS_BY_TYPE,
+      variables: { walletID: 'a', type: 'INDUSTRY' },
+    });
+
+    expect(res.data).toHaveProperty('getReportsByType');
+    expect(res.data.getReportsByType[0]).toHaveProperty('_id');
+    expect(res.data.getReportsByType[0]).toHaveProperty('key');
+    expect(res.data.getReportsByType[0]).toHaveProperty('value');
+    expect(res.data.getReportsByType[0]).toHaveProperty('color');
+  });
+
+  it('should return error if not exist enum', async () => {
+    const res = await query({
+      query: GET_REPORTS_BY_TYPE,
+      variables: { walletID: 'a', type: 'NOT_EXIST' },
+    });
+
+    expect(res.errors[0].message).toBe(
+      'Variable "$type" got invalid value "NOT_EXIST"; Value "NOT_EXIST" does not exist in "Type" enum.',
+    );
   });
 });

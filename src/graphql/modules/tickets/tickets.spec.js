@@ -84,7 +84,6 @@ describe('Mutation Test', () => {
       },
     });
 
-    expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('createTicket');
   });
 
@@ -101,7 +100,6 @@ describe('Mutation Test', () => {
       },
     });
 
-    expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('updateTicket');
   });
 
@@ -114,7 +112,6 @@ describe('Mutation Test', () => {
       },
     });
 
-    expect(res).toMatchSnapshot();
     expect(res.data).toHaveProperty('deleteTicket');
   });
 });
