@@ -3,19 +3,22 @@ const { isUnit, isETF, isCripto } = require('./classSymbols');
 
 module.exports = {
   getSumGradeWallet: currentArray =>
-    currentArray.reduce((acc, cur) => acc + cur.grade, 0),
+    currentArray.reduce((acc, cur) => acc + cur.grade, 0) || 1,
 
   getSumCostWallet: currentArray =>
-    currentArray.reduce((acc, cur) => acc + cur.quantity * cur.averagePrice, 0),
+    currentArray.reduce(
+      (acc, cur) => acc + cur.quantity * cur.averagePrice,
+      0,
+    ) || 1,
 
   getSumAmountWallet: currentArray =>
     currentArray.reduce(
       (acc, cur) => acc + cur.quantity * cur.regularMarketPrice,
       0,
-    ),
+    ) || 1,
 
   getSumAmountEarning: currentArray =>
-    currentArray.reduce((acc, cur) => acc + cur.amount, 0),
+    currentArray.reduce((acc, cur) => acc + cur.amount, 0) || 1,
 
   getPercentVariation: (SumCost, SumAmount) => {
     let calcPercent = ((SumAmount - SumCost) / SumCost) * 100;
