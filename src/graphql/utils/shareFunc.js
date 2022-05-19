@@ -242,6 +242,7 @@ module.exports = {
       'Grocery Stores': 'Alimentos',
       'REIT—Specialty': 'Imobiliário',
       Tobacco: 'Tabaco',
+      'Utilities—Independent Power Producers': 'Elétrico',
     }[sector]),
   formatTicketByFraction: ticket => {
     let formatedTicket = ticket;

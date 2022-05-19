@@ -24,7 +24,7 @@ const getConvertDollar = async amount => {
     let currentDate = new Date().toLocaleDateString();
     const [day, month, year] = currentDate.split('/');
 
-    let date = `${month}-${day}-${year}`;
+    let date = `${month}-${Number(day - 1)}-${year}`;
 
     let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$format=json`;
 
