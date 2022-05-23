@@ -7,6 +7,19 @@ const {
 } = require('../graphql/utils/shareFunc');
 const { isCripto } = require('../graphql/utils/classSymbols');
 
+const getURLDollar1 = (olderDays = 1) => {
+  let currentDate = new Date().toLocaleDateString();
+  const [day, month, year] = currentDate.split('/');
+
+  let date = `${month}-${Number(Number(day) - Number(olderDays))}-${year}`;
+
+  let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$format=json`;
+
+  return {
+    urlOne,
+  };
+};
+
 const getConvertDollar = async amount => {
   let dollarBid = 0;
 
@@ -19,29 +32,30 @@ const getConvertDollar = async amount => {
   }
 
   if (!hasData) {
-    console.warn('Failed Convert Dollar API 2');
-
-    let currentDate = new Date().toLocaleDateString();
-    const [day, month, year] = currentDate.split('/');
-
-    let date = `${month}-${Number(day - 1)}-${year}`;
-
-    let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$format=json`;
+    const { urlOne } = getURLDollar1();
 
     const getDollar = await apiDollar.get(urlOne);
 
-    if (!getDollar?.data?.value.length) {
-      console.warn('Failed Convert Dollar API 1');
-      throw new Error('Failed Convert Dollar');
+    if (!!getDollar?.data?.value.length) {
+      const [{ cotacaoCompra }] = getDollar?.data?.value;
+      dollarBid = cotacaoCompra;
     }
 
-    const [{ cotacaoCompra }] = getDollar?.data?.value;
-    dollarBid = cotacaoCompra;
+    if (!getDollar?.data?.value.length) {
+      const { urlOne } = getURLDollar1(3);
+
+      const getOlderDollar = await apiDollar.get(urlOne);
+
+      if (!!getOlderDollar?.data?.value.length) {
+        const [{ cotacaoCompra }] = getOlderDollar?.data?.value;
+        dollarBid = cotacaoCompra;
+      }
+    }
   }
 
-  if (dollarBid <= 0) throw new Error('Failed Convert Dollar');
+  if (Number(dollarBid) <= 0) throw new Error('Failed Convert Dollar');
 
-  const converted = amount * dollarBid;
+  const converted = Number(amount) * Number(dollarBid);
 
   return converted;
 };
