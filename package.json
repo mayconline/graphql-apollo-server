@@ -7,7 +7,7 @@
     "node": "16.15.1"
   },
   "scripts": {
-    "test": "jest",
+    "test": "jest --maxWorkers=50%",
     "dev": "nodemon src/index.js -e js,gql",
     "start": "node src/index.js"
   },
@@ -18,7 +18,6 @@
     "@graphql-tools/load-files": "6.5.3",
     "@sendgrid/mail": "7.7.0",
     "apollo-server": "3.8.1",
-    "apollo-server-testing": "2.25.3",
     "axios": "0.27.2",
     "bcrypt": "5.0.1",
     "dotenv": "16.0.1",
@@ -31,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "28.1.0",
     "jest": "28.1.0",
-    "nodemon": "2.0.16"
+    "nodemon": "2.0.16",
+    "apollo-server-testing": "2.25.3"
   }
 }
