@@ -15,17 +15,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@graphql-tools/load-files": "6.5.3",
+    "@graphql-tools/load-files": "6.5.4",
     "@sendgrid/mail": "7.7.0",
-    "apollo-server": "3.8.1",
+    "apollo-server": "3.9.0",
     "axios": "0.27.2",
     "bcrypt": "5.0.1",
     "dotenv": "16.0.1",
     "graphql": "15.8.0",
-    "graphql-tools": "8.2.11",
+    "graphql-tools": "8.2.12",
     "jsonwebtoken": "8.5.1",
     "mjml": "4.12.0",
-    "mongoose": "6.3.5"
+    "mongoose": "6.4.0"
   },
   "devDependencies": {
     "@types/jest": "28.1.0",
