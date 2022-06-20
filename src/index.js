@@ -51,6 +51,7 @@ const server = new ApolloServer({
     hasToken: getToken(req),
   }),
   formatError: err => getErrorMessage(err),
+  cache: 'bounded',
 });
 
 server.listen({ port: process.env.PORT });
