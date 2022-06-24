@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/jest": "28.1.2",
     "jest": "28.1.1",
-    "nodemon": "2.0.16",
+    "nodemon": "2.0.17",
     "apollo-server-testing": "2.25.3"
   }
 }
