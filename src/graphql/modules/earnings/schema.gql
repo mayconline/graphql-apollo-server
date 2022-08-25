@@ -8,6 +8,8 @@ type Earning {
 type SumEarning {
   sumCurrentYear: Float!
   sumOldYear: Float!
+  sumTotalEarnings: Float!
+  yieldOnCost: Float!
 }
 
 input EarningInput {

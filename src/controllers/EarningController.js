@@ -4,6 +4,7 @@ const Earning = require('../models/Earning');
 const {
   getArraySortByParams,
   getSumAmountEarning,
+  getSumCostWallet,
 } = require('../graphql/utils/shareFunc');
 
 module.exports = {
@@ -109,12 +110,23 @@ module.exports = {
       hasToken,
     );
 
+    let wallet = await Wallet.findById(args.walletID)
+      .populate('earning')
+      .populate('ticket');
+    if (!wallet) throw new Error('Wallet Not Found');
+
     const sumCurrentYear = await getSumAmountEarning(currentYearArray);
     const sumOldYear = await getSumAmountEarning(oldYearArray);
+    const sumTotalEarnings = await getSumAmountEarning(wallet.earning);
+    const sumCostWallet = (await getSumCostWallet(wallet.ticket)) || 1;
+
+    const yieldOnCost = (sumTotalEarnings / sumCostWallet) * 100;
 
     return {
       sumCurrentYear,
       sumOldYear,
+      sumTotalEarnings,
+      yieldOnCost,
     };
   },
 };
