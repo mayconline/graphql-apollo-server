@@ -7,12 +7,12 @@ const {
 
 module.exports = {
   getEachTicketChart: currentArray => {
-    let sumAmountWallet = getSumAmountWallet(currentArray);
+    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
     const chart = currentArray.map(
       ({ _id, symbol, quantity, regularMarketPrice }) => {
         let currentAmount = quantity * regularMarketPrice;
-        let currentPercent = (currentAmount / sumAmountWallet || 1) * 100;
+        let currentPercent = (currentAmount / sumAmountWallet) * 100;
 
         return {
           _id,
@@ -28,12 +28,12 @@ module.exports = {
     return sortedArray;
   },
   getEachClassChart: currentArray => {
-    let sumAmountWallet = getSumAmountWallet(currentArray);
+    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
     const chart = currentArray.map(
       ({ _id, quantity, regularMarketPrice, classSymbol }) => {
         let currentAmount = quantity * regularMarketPrice;
-        let currentPercent = (currentAmount / sumAmountWallet || 1) * 100;
+        let currentPercent = (currentAmount / sumAmountWallet) * 100;
 
         return {
           _id,
@@ -51,12 +51,12 @@ module.exports = {
     return sortedArray;
   },
   getEachSectorChart: currentArray => {
-    let sumAmountWallet = getSumAmountWallet(currentArray);
+    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
     const chart = currentArray.map(
       ({ _id, quantity, regularMarketPrice, sector }) => {
         let currentAmount = quantity * regularMarketPrice;
-        let currentPercent = (currentAmount / sumAmountWallet || 1) * 100;
+        let currentPercent = (currentAmount / sumAmountWallet) * 100;
 
         return {
           _id,
@@ -74,12 +74,12 @@ module.exports = {
     return sortedArray;
   },
   getEachIndustryChart: currentArray => {
-    let sumAmountWallet = getSumAmountWallet(currentArray);
+    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
     const chart = currentArray.map(
       ({ _id, quantity, regularMarketPrice, industry }) => {
         let currentAmount = quantity * regularMarketPrice;
-        let currentPercent = (currentAmount / sumAmountWallet || 1) * 100;
+        let currentPercent = (currentAmount / sumAmountWallet) * 100;
 
         return {
           _id,
