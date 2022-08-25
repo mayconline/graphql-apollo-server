@@ -49,8 +49,8 @@ module.exports = {
   },
 
   rebalance: (currentArray, sort) => {
-    let sumAmountWallet = getSumAmountWallet(currentArray);
-    let sumGradeWallet = getSumGradeWallet(currentArray);
+    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
+    let sumGradeWallet = getSumGradeWallet(currentArray) || 1;
 
     const rebalanced = currentArray.map(
       ({
