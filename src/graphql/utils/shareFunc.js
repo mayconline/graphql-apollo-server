@@ -174,6 +174,7 @@ module.exports = {
       'Pharmaceutical Retailers': 'Produtos Farmacêuticos',
       'Telecom Services': 'Serviços de Comunicação',
       'Banks—Regional': 'Bancário',
+      'Banks—Diversified': 'Bancário',
       'Rental & Leasing Services': 'Locação de Veículos',
       Industrials: 'Industrial',
       'Packaged Foods': 'Alimentos',
