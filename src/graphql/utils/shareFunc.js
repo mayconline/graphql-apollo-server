@@ -114,25 +114,25 @@ module.exports = {
       ? 'Cripto'
       : 'Outros',
 
-  getPercentTicketPerClass: array => {
-    let unicClass = [];
+  getSumByUnicProp: (array, key, value) => {
+    let unicProps = [];
 
     array.map(item => {
-      if (!unicClass.includes(item.key)) {
-        return unicClass.push(item.key);
+      if (!unicProps.includes(item[key]) && !!item[value]) {
+        return unicProps.push(item[key]);
       }
     });
 
-    const percentTicketByClass = unicClass.map((unic, index) => ({
+    const sumByProp = unicProps.map((unic, index) => ({
       _id: unic,
-      key: unic,
-      value: array
-        .filter(item => item.key === unic)
-        .reduce((acc, cur) => acc + cur.value, 0),
+      [key]: unic,
+      [value]: array
+        .filter(item => item[key] === unic)
+        .reduce((acc, cur) => acc + cur[value], 0),
       color: array[index].color,
     }));
 
-    return percentTicketByClass;
+    return sumByProp;
   },
   getTranslateSector: sector =>
     ({
