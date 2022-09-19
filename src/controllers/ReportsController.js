@@ -2,7 +2,7 @@ const {
   getSumAmountWallet,
   getRandomDarkColor,
   getArraySortByParams,
-  getPercentTicketPerClass,
+  getSumByUnicProp,
 } = require('../graphql/utils/shareFunc');
 
 module.exports = {
@@ -23,7 +23,9 @@ module.exports = {
       },
     );
 
-    const sortedArray = getArraySortByParams(chart, 'value');
+    const chartByClass = getSumByUnicProp(chart, 'key', 'value');
+
+    const sortedArray = getArraySortByParams(chartByClass, 'value');
 
     return sortedArray;
   },
@@ -44,7 +46,7 @@ module.exports = {
       },
     );
 
-    const chartByClass = getPercentTicketPerClass(chart);
+    const chartByClass = getSumByUnicProp(chart, 'key', 'value');
 
     const sortedArray = getArraySortByParams(chartByClass, 'value');
 
@@ -67,7 +69,7 @@ module.exports = {
       },
     );
 
-    const chartByClass = getPercentTicketPerClass(chart);
+    const chartByClass = getSumByUnicProp(chart, 'key', 'value');
 
     const sortedArray = getArraySortByParams(chartByClass, 'value');
 
@@ -90,7 +92,7 @@ module.exports = {
       },
     );
 
-    const chartByClass = getPercentTicketPerClass(chart);
+    const chartByClass = getSumByUnicProp(chart, 'key', 'value');
 
     const sortedArray = getArraySortByParams(chartByClass, 'value');
 
