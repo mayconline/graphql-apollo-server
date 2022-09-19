@@ -5,9 +5,31 @@ const {
   getArraySortByParams,
   getSumAmountEarning,
   getSumCostWallet,
+  getSumByUnicProp,
 } = require('../graphql/utils/shareFunc');
 
 module.exports = {
+  index: async (args, hasToken) => {
+    if (hasToken.role == 'USER') throw new Error('User Unauthorized');
+
+    let wallet = await Wallet.findById(args.walletID)
+      .populate('earning')
+      .populate('ticket');
+    if (!wallet) throw new Error('Wallet Not Found');
+
+    let isSameUserOrAdm =
+      hasToken._id == wallet.user || hasToken.role === 'ADM';
+    if (!isSameUserOrAdm) throw new Error('User Unauthorized');
+
+    const accEarningsByYear = getSumByUnicProp(
+      wallet.earning,
+      'year',
+      'amount',
+    );
+
+    return getArraySortByParams(accEarningsByYear, 'year');
+  },
+
   show: async (args, hasToken) => {
     if (hasToken.role == 'USER') throw new Error('User Unauthorized');
 

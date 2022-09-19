@@ -1,5 +1,9 @@
 module.exports = {
   Query: {
+    getEarningAccByYear: (_, args, { dataSources, hasToken }) =>
+      !hasToken
+        ? new Error('Token Not Exists')
+        : dataSources.EarningController.index(args, hasToken),
     getEarningByWallet: (_, args, { dataSources, hasToken }) =>
       !hasToken
         ? new Error('Token Not Exists')
