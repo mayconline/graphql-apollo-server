@@ -1,9 +1,9 @@
-const User = require('../models/User');
+import User from '../models/User';
 
-const bcrypt = require('bcrypt');
-const { setToken } = require('../graphql/utils/shareFunc');
+import bcrypt from 'bcrypt';
+import { setToken } from '../graphql/utils/shareFunc';
 
-module.exports = {
+export default {
   show: async args => {
     let user = await User.findOne({
       email: args.input.email.toLowerCase(),

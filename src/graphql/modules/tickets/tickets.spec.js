@@ -1,8 +1,4 @@
-const {
-  server,
-  createTestClient,
-  gql,
-} = require('../../utils/mocks/serverMock');
+import { server, createTestClient, gql } from '../../utils/mocks/serverMock';
 
 describe('Mutation Test', () => {
   const { mutate } = createTestClient(server);

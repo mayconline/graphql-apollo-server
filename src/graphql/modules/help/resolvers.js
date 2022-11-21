@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Query: {
     questions: async (_, __, { dataSources }) =>
       await dataSources.QuestionController.index(),

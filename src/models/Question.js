@@ -14,4 +14,4 @@ const QuestionSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('Question', QuestionSchema);
+export default model('Question', QuestionSchema);

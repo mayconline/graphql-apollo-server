@@ -1,11 +1,11 @@
-const User = require('../models/User');
-const Wallet = require('../models/Wallet');
-const Ticket = require('../models/Ticket');
+import User from '../models/User';
+import Wallet from '../models/Wallet';
+import Ticket from '../models/Ticket';
 
-const bcrypt = require('bcrypt');
-const { setToken } = require('../graphql/utils/shareFunc');
+import bcrypt from 'bcrypt';
+import { setToken } from '../graphql/utils/shareFunc';
 
-module.exports = {
+export default {
   index: async hasToken => {
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
 

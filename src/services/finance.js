@@ -1,11 +1,11 @@
-const { api, apiSummary } = require('./axios');
-const apiDollar = require('./apiDollar');
-const apiDollar2 = require('./apiDollar2');
-const {
+import { api, apiSummary } from './axios';
+import apiDollar from './apiDollar';
+import apiDollar2 from './apiDollar2';
+import {
   formatTicketByFraction,
   getTranslateSector,
-} = require('../graphql/utils/shareFunc');
-const { isCripto } = require('../graphql/utils/classSymbols');
+} from '../graphql/utils/shareFunc';
+import { isCripto } from '../graphql/utils/classSymbols';
 
 const getURLDollar1 = (olderDays = 1) => {
   let currentDate = new Date().toLocaleDateString();
@@ -145,7 +145,7 @@ const fetchApi = async ticket => {
   }
 };
 
-module.exports = {
+export default {
   getFinance: fetchApi,
   getCurrentFinanceByTickets: async ticketArray => {
     return await Promise.all(

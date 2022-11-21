@@ -1,7 +1,7 @@
-const Wallet = require('../models/Wallet');
-const Ticket = require('../models/Ticket');
+import Wallet from '../models/Wallet';
+import Ticket from '../models/Ticket';
 
-module.exports = {
+export default {
   index: async hasToken => {
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
 

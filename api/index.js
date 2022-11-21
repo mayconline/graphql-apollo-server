@@ -1,28 +1,29 @@
-require('dotenv').config();
-const { ApolloServer } = require('apollo-server-express');
-const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
-const mongoose = require('mongoose');
-const http = require('http');
-const express = require('express');
-const cors = require('cors');
+import * as dotenv from 'dotenv';
+dotenv.config();
+import { ApolloServer } from 'apollo-server-express';
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import mongoose from 'mongoose';
+import http from 'http';
+import express from 'express';
+import cors from 'cors';
 
-const { getErrorMessage } = require('../src/graphql/utils/errorHandler');
-const { getToken } = require('../src/graphql/utils/shareFunc');
+import { getErrorMessage } from '../src/graphql/utils/errorHandler';
+import { getToken } from '../src/graphql/utils/shareFunc';
 
-const finance = require('../src/services/finance');
+import finance from '../src/services/finance';
 
-const AuthController = require('../src/controllers/AuthController');
-const RecoveryPasswordController = require('../src/controllers/RecoveryPasswordController');
-const UserController = require('../src/controllers/UserController');
-const WalletController = require('../src/controllers/WalletController');
-const TicketController = require('../src/controllers/TicketController');
-const FinanceController = require('../src/controllers/FinanceController');
-const QuestionController = require('../src/controllers/QuestionController');
-const ReportsController = require('../src/controllers/ReportsController');
-const EarningController = require('../src/controllers/EarningController');
+import AuthController from '../src/controllers/AuthController';
+import RecoveryPasswordController from '../src/controllers/RecoveryPasswordController';
+import UserController from '../src/controllers/UserController';
+import WalletController from '../src/controllers/WalletController';
+import TicketController from '../src/controllers/TicketController';
+import FinanceController from '../src/controllers/FinanceController';
+import QuestionController from '../src/controllers/QuestionController';
+import ReportsController from '../src/controllers/ReportsController';
+import EarningController from '../src/controllers/EarningController';
 
-const typeDefs = require('../src/graphql/typeDefs');
-const resolvers = require('../src/graphql/resolvers');
+import typeDefs from '../src/graphql/typeDefs';
+import resolvers from '../src/graphql/resolvers';
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URL).then(
@@ -71,4 +72,4 @@ const startApolloServer = async (app, httpServer) => {
 
 startApolloServer(app, httpServer);
 
-module.exports = httpServer;
+export default httpServer;

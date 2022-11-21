@@ -33,4 +33,4 @@ const TicketSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('Ticket', TicketSchema);
+export default model('Ticket', TicketSchema);

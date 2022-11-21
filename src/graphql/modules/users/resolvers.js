@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Query: {
     users: (_, __, { dataSources, hasToken }) =>
       !hasToken

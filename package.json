@@ -6,6 +6,7 @@
   "engines": {
     "node": "18.12.1"
   },
+  "type": "module",
   "scripts": {
     "test": "jest --maxWorkers=50%",
     "dev": "nodemon src/index.js -e js,gql",

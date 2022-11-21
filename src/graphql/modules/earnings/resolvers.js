@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Query: {
     getEarningAccByYear: (_, args, { dataSources, hasToken }) =>
       !hasToken

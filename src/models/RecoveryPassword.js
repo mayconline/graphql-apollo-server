@@ -21,4 +21,4 @@ const RecoveryPasswordSchema = new Schema(
 
 RecoveryPasswordSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 });
 
-module.exports = model('RecoveryPassword', RecoveryPasswordSchema);
+export default model('RecoveryPassword', RecoveryPasswordSchema);

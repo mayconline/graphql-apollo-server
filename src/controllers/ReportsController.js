@@ -1,11 +1,11 @@
-const {
+import {
   getSumAmountWallet,
   getRandomDarkColor,
   getArraySortByParams,
   getSumByUnicProp,
-} = require('../graphql/utils/shareFunc');
+} from '../graphql/utils/shareFunc';
 
-module.exports = {
+export default {
   getEachTicketChart: currentArray => {
     let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 

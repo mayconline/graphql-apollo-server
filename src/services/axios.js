@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const api = axios.create({
   baseURL: process.env.API_STOCK,
@@ -8,7 +8,4 @@ const apiSummary = axios.create({
   baseURL: process.env.API_SUMMARY,
 });
 
-module.exports = {
-  api,
-  apiSummary,
-};
+export { api, apiSummary };

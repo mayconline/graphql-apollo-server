@@ -1,24 +1,25 @@
-require('dotenv').config();
-const { ApolloServer } = require('apollo-server');
-const mongoose = require('mongoose');
+import * as dotenv from 'dotenv';
+dotenv.config();
+import { ApolloServer } from 'apollo-server';
+import mongoose from 'mongoose';
 
-const { getErrorMessage } = require('./graphql/utils/errorHandler');
-const { getToken } = require('./graphql/utils/shareFunc');
+import { getErrorMessage } from './graphql/utils/errorHandler';
+import { getToken } from './graphql/utils/shareFunc';
 
-const finance = require('./services/finance');
+import finance from './services/finance';
 
-const AuthController = require('./controllers/AuthController');
-const RecoveryPasswordController = require('./controllers/RecoveryPasswordController');
-const UserController = require('./controllers/UserController');
-const WalletController = require('./controllers/WalletController');
-const TicketController = require('./controllers/TicketController');
-const FinanceController = require('./controllers/FinanceController');
-const QuestionController = require('./controllers/QuestionController');
-const ReportsController = require('./controllers/ReportsController');
-const EarningController = require('./controllers/EarningController');
+import AuthController from './controllers/AuthController';
+import RecoveryPasswordController from './controllers/RecoveryPasswordController';
+import UserController from './controllers/UserController';
+import WalletController from './controllers/WalletController';
+import TicketController from './controllers/TicketController';
+import FinanceController from './controllers/FinanceController';
+import QuestionController from './controllers/QuestionController';
+import ReportsController from './controllers/ReportsController';
+import EarningController from './controllers/EarningController';
 
-const typeDefs = require('./graphql/typeDefs');
-const resolvers = require('./graphql/resolvers');
+import { typeDefs } from './graphql/typeDefs';
+import { resolvers } from './graphql/resolvers';
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URL).then(

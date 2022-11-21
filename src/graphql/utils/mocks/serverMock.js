@@ -1,22 +1,22 @@
-const { ApolloServer, gql } = require('apollo-server');
-const { createTestClient } = require('apollo-server-testing');
-const { getErrorMessage } = require('../errorHandler');
+import { ApolloServer, gql } from 'apollo-server';
+import { createTestClient } from 'apollo-server-testing';
+import { getErrorMessage } from '../errorHandler';
 
-const { getCurrentFinanceByTickets, getFinance } = require('./dataMock');
+import { getCurrentFinanceByTickets, getFinance } from './dataMock';
 
-let finance = require('../../../services/finance');
-let shareFunc = require('../shareFunc');
+import finance from '../../../services/finance';
+import shareFunc from '../shareFunc';
 
-const AuthController = require('../../../controllers/AuthController');
-const UserController = require('../../../controllers/UserController');
-const WalletController = require('../../../controllers/WalletController');
-const TicketController = require('../../../controllers/TicketController');
-const FinanceController = require('../../../controllers/FinanceController');
-const QuestionController = require('../../../controllers/QuestionController');
-const ReportsController = require('../../../controllers/ReportsController');
+import AuthController from '../../../controllers/AuthController';
+import UserController from '../../../controllers/UserController';
+import WalletController from '../../../controllers/WalletController';
+import TicketController from '../../../controllers/TicketController';
+import FinanceController from '../../../controllers/FinanceController';
+import QuestionController from '../../../controllers/QuestionController';
+import ReportsController from '../../../controllers/ReportsController';
 
-const typeDefs = require('../../typeDefs');
-const resolvers = require('../../resolvers');
+import typeDefs from '../../typeDefs';
+import resolvers from '../../resolvers';
 
 const dataSources = () => ({
   finance,

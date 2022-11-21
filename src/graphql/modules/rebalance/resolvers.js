@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Query: {
     rebalances: async (_, args, { dataSources, hasToken }) => {
       if (!hasToken) return new Error('Token Not Exists');

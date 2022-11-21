@@ -26,4 +26,4 @@ const WalletSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('Wallet', WalletSchema);
+export default model('Wallet', WalletSchema);

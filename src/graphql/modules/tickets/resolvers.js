@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Query: {
     tickets: (_, __, { dataSources, hasToken }) =>
       !hasToken

@@ -21,4 +21,4 @@ const EarningSchema = new Schema(
   { timestamps: true },
 );
 
-module.exports = model('Earning', EarningSchema);
+export default model('Earning', EarningSchema);

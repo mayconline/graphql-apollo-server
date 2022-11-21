@@ -1,11 +1,11 @@
-const {
+import {
   getSumAmountWallet,
   getSumCostWallet,
   getSumGradeWallet,
   getPercentVariation,
-} = require('../../utils/shareFunc');
+} from '../../utils/shareFunc';
 
-module.exports = {
+export default {
   Wallet: {
     user: (users, __, { dataSources }) =>
       dataSources.UserController.show({ _id: users.user }),

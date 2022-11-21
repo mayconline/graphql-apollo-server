@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   UnitsTickets: [
     'ALUP11',
     'BIDI11',

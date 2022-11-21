@@ -1,14 +1,14 @@
-const Wallet = require('../models/Wallet');
-const Earning = require('../models/Earning');
+import Wallet from '../models/Wallet';
+import Earning from '../models/Earning';
 
-const {
+import {
   getArraySortByParams,
   getSumAmountEarning,
   getSumCostWallet,
   getSumByUnicProp,
-} = require('../graphql/utils/shareFunc');
+} from '../graphql/utils/shareFunc';
 
-module.exports = {
+export default {
   index: async (args, hasToken) => {
     if (hasToken.role == 'USER') throw new Error('User Unauthorized');
 

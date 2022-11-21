@@ -1,7 +1,7 @@
-const axios = require('axios');
+import axios from 'axios';
 
 const apiDollar = axios.create({
   baseURL: process.env.API_DOLLAR,
 });
 
-module.exports = apiDollar;
+export default apiDollar;

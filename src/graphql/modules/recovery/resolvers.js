@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Query: {
     recoveryList: (_, __, { dataSources, hasToken }) =>
       !hasToken

@@ -1,13 +1,11 @@
-const User = require('../models/User');
-const RecoveryPassword = require('../models/RecoveryPassword');
-const {
-  recovery_password_template,
-} = require('../templates-email/RecoveryPasswordTemplate');
-const SendGrid = require('../services/sendgrid');
-const crypto = require('crypto');
-const bcrypt = require('bcrypt');
+import User from '../models/User';
+import RecoveryPassword from '../models/RecoveryPassword';
+import { recovery_password_template } from '../templates-email/RecoveryPasswordTemplate';
+import SendGrid from '../services/sendgrid';
+import crypto from 'crypto';
+import bcrypt from 'bcrypt';
 
-module.exports = {
+export default {
   index: async hasToken => {
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
 

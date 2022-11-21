@@ -1,7 +1,7 @@
-const Question = require('../models/Question');
-const User = require('../models/User');
+import Question from '../models/Question';
+import User from '../models/User';
 
-module.exports = {
+export default {
   index: async () => {
     let questions = await Question.find().sort('createdAt').lean();
 

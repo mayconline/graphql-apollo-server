@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Mutation: {
     updateRole: async (_, args, { dataSources, hasToken }) =>
       !hasToken

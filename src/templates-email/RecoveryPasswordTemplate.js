@@ -1,5 +1,5 @@
-const mjml2html = require('mjml');
-const Dirpath = require('path');
+import mjml2html from 'mjml';
+import Dirpath from 'path';
 
 const options = {
   filePath: Dirpath.resolve(__dirname),
@@ -7,10 +7,9 @@ const options = {
   minify: true,
 };
 
-module.exports = {
-  recovery_password_template: async (email, code) =>
-    mjml2html(
-      `
+export const recovery_password_template = async (email, code) =>
+  mjml2html(
+    `
       <mjml>
       <mj-head>
         <mj-title>Código para redefinição de senha</mj-title>
@@ -93,6 +92,5 @@ module.exports = {
       </mj-body>
     </mjml>   
 `,
-      options,
-    ),
-};
+    options,
+  );

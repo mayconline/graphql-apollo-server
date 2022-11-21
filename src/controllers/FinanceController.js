@@ -1,17 +1,17 @@
-const {
+import {
   getSumAmountWallet,
   getSumCostWallet,
   getSumGradeWallet,
   getArraySortByParams,
   getPercentVariation,
-} = require('../graphql/utils/shareFunc');
+} from '../graphql/utils/shareFunc';
 
 const getStatus = percent => {
   if (percent === 0) return 'KEEP';
   return percent > 0 ? 'BUY' : 'ANALYZE';
 };
 
-module.exports = {
+export default {
   rentability: (currentArray, sort) => {
     let sumAmountWallet = getSumAmountWallet(currentArray);
     let sumCostWallet = getSumCostWallet(currentArray);
