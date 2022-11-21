@@ -1,6 +1,10 @@
 require('dotenv').config();
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require('apollo-server-express');
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 const mongoose = require('mongoose');
+const http = require('http');
+const express = require('express');
+const cors = require('cors');
 
 const { getErrorMessage } = require('../src/graphql/utils/errorHandler');
 const { getToken } = require('../src/graphql/utils/shareFunc');
@@ -30,6 +34,11 @@ mongoose.connect(process.env.MONGO_URL).then(
   },
 );
 
+const app = express();
+app.use(cors());
+app.use(express.json());
+const httpServer = http.createServer(app);
+
 const dataSources = () => ({
   finance,
   AuthController,
@@ -43,15 +52,23 @@ const dataSources = () => ({
   EarningController,
 });
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources,
-  context: ({ req }) => ({
-    hasToken: getToken(req),
-  }),
-  formatError: err => getErrorMessage(err),
-  cache: 'bounded',
-});
+const startApolloServer = async (app, httpServer) => {
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    dataSources,
+    context: ({ req }) => ({
+      hasToken: getToken(req),
+    }),
+    formatError: err => getErrorMessage(err),
+    cache: 'bounded',
+  });
 
-server.listen({ port: process.env.PORT });
+  await server.start();
+  server.applyMiddleware({ app });
+};
+
+startApolloServer(app, httpServer);
+
+module.exports = httpServer;
