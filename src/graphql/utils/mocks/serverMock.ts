@@ -2,7 +2,7 @@ import { ApolloServer, gql } from 'apollo-server';
 import { createTestClient } from 'apollo-server-testing';
 import { getErrorMessage } from '../errorHandler';
 
-import { getCurrentFinanceByTickets, getFinance } from './dataMock';
+import dataMock from './dataMock';
 
 import finance from '../../../services/finance';
 import { getToken } from '../shareFunc';
@@ -15,10 +15,10 @@ import FinanceController from '../../../controllers/FinanceController';
 import QuestionController from '../../../controllers/QuestionController';
 import ReportsController from '../../../controllers/ReportsController';
 
-import { typeDefs } from '../../typeDefs';
-import { resolvers } from '../../resolvers';
+import typeDefs from '../../typeDefs';
+import resolvers from '../../resolvers';
 
-const dataSources = () => ({
+const dataSources: any = () => ({
   finance,
   AuthController,
   UserController,
@@ -42,13 +42,9 @@ const server = new ApolloServer({
   cache: 'bounded',
 });
 
-getToken = jest.fn(() => ({
-  _id: '1',
-  role: 'ADM',
-  iat: 1603751302,
-  exp: 1603837702,
-}));
-finance.getCurrentFinanceByTickets = jest.fn(() => getCurrentFinanceByTickets);
-finance.getFinance = jest.fn(() => getFinance);
+finance.getCurrentFinanceByTickets = jest.fn(
+  () => dataMock.getCurrentFinanceByTickets,
+) as any;
+finance.getFinance = jest.fn(() => dataMock.getFinance) as any;
 
 export { server, createTestClient, gql };

@@ -4,4 +4,6 @@ import { join } from 'path';
 
 const typesArray = loadFilesSync(join(__dirname, 'modules', '**', '*.gql'));
 
-export const typeDefs = mergeTypeDefs(typesArray);
+const typeDefs = mergeTypeDefs(typesArray);
+
+export default typeDefs;

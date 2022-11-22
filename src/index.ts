@@ -18,8 +18,8 @@ import QuestionController from './controllers/QuestionController';
 import ReportsController from './controllers/ReportsController';
 import EarningController from './controllers/EarningController';
 
-import { typeDefs } from './graphql/typeDefs';
-import { resolvers } from './graphql/resolvers';
+import typeDefs from './graphql/typeDefs';
+import resolvers from './graphql/resolvers';
 
 const { MONGO_URL } = process.env;
 
