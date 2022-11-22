@@ -1,6 +1,4 @@
-import { ApolloServer } from 'apollo-server-express';
-
-import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
+import { ApolloServer } from '@saeris/apollo-server-vercel';
 
 import { getErrorMessage } from '../graphql/utils/errorHandler';
 import { getToken } from '../graphql/utils/shareFunc';
@@ -34,23 +32,17 @@ export function setApolloServer() {
     EarningController,
   });
 
-  const startApolloServer = async (app, httpServer) => {
-    const server = new ApolloServer({
-      typeDefs,
-      resolvers,
-      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-      dataSources,
-      context: ({ req }) => ({
-        hasToken: getToken(req),
-      }),
-      formatError: err => getErrorMessage(err),
-      cache: 'bounded',
-    });
+  const resolver: any = resolvers;
 
-    await server.start();
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers: resolver,
+    dataSources,
+    context: ({ req }) => ({
+      hasToken: getToken(req),
+    }),
+    formatError: err => getErrorMessage(err),
+  });
 
-    server.applyMiddleware({ app });
-  };
-
-  return { startApolloServer };
+  return { server };
 }

@@ -18,12 +18,11 @@
   "license": "ISC",
   "dependencies": {
     "@graphql-tools/load-files": "6.6.1",
+    "@saeris/apollo-server-vercel": "^1.0.1",
     "@sendgrid/mail": "7.7.0",
     "apollo-server": "3.11.1",
-    "apollo-server-express": "^3.11.1",
     "axios": "1.1.3",
     "bcrypt": "5.1.0",
-    "cors": "^2.8.5",
     "dotenv": "16.0.3",
     "graphql": "15.8.0",
     "graphql-tools": "8.3.12",
