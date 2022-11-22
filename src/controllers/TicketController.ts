@@ -24,7 +24,7 @@ export default {
       hasToken._id == wallet.user || hasToken.role === 'ADM';
     if (!isSameUserOrAdm) throw new Error('User Unauthorized');
 
-    const addClassSymbol = wallet.ticket.map(ticket => ({
+    const addClassSymbol = wallet.ticket.map((ticket: any) => ({
       ...ticket._doc,
       classSymbol: getClassTicket(formatSymbol(ticket.symbol)),
     }));
@@ -43,7 +43,7 @@ export default {
   },
 
   store: async (args, hasToken) => {
-    let wallet = await Wallet.findById(args.walletID).populate('ticket');
+    let wallet: any = await Wallet.findById(args.walletID).populate('ticket');
     if (!wallet) throw new Error('Wallet Not Found');
 
     let isSameUser = hasToken._id == wallet.user;

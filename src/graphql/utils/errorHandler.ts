@@ -5,7 +5,13 @@ import {
   ApolloError,
 } from 'apollo-server';
 
-export function getErrorMessage({ message, path }) {
+export function getErrorMessage({
+  message,
+  path,
+}: {
+  message: string;
+  path: any;
+}) {
   switch (message) {
     case 'User or Password Invalid':
       return new AuthenticationError(message);

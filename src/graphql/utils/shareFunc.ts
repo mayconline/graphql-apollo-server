@@ -1,25 +1,25 @@
 import { sign, verify } from 'jsonwebtoken';
 import { isUnit, isETF, isCripto } from './classSymbols';
 
-export function getSumGradeWallet(currentArray) {
+export function getSumGradeWallet(currentArray: any[]) {
   return currentArray.reduce((acc, cur) => acc + cur.grade, 0);
 }
-export function getSumCostWallet(currentArray) {
+export function getSumCostWallet(currentArray: any[]) {
   return currentArray.reduce(
     (acc, cur) => acc + cur.quantity * cur.averagePrice,
     0,
   );
 }
-export function getSumAmountWallet(currentArray) {
+export function getSumAmountWallet(currentArray: any[]) {
   return currentArray.reduce(
     (acc, cur) => acc + cur.quantity * cur.regularMarketPrice,
     0,
   );
 }
-export function getSumAmountEarning(currentArray) {
+export function getSumAmountEarning(currentArray: any[]) {
   return currentArray.reduce((acc, cur) => acc + cur.amount, 0);
 }
-export function getPercentVariation(SumCost, SumAmount) {
+export function getPercentVariation(SumCost: number, SumAmount: number) {
   let calcPercent = ((SumAmount - SumCost) / SumCost || 1) * 100;
 
   const percentVariation =
@@ -37,7 +37,11 @@ export function getPercentVariation(SumCost, SumAmount) {
 
   return percentVariation;
 }
-export function getArraySortByParams(array, params, inverse = false) {
+export function getArraySortByParams(
+  array: any[],
+  params: string,
+  inverse = false,
+) {
   return array.sort((a, b) => {
     let itema = a[params];
     let itemb = b[params];
@@ -51,25 +55,25 @@ export function getArraySortByParams(array, params, inverse = false) {
     }
   });
 }
-export async function setToken(_id, role) {
-  return sign({ _id, role }, process.env.JWT_TOKEN, {
+export async function setToken(_id: any, role: any) {
+  return sign({ _id, role }, process.env.JWT_TOKEN!, {
     expiresIn: process.env.JWT_EXPIRE,
   });
 }
-export function getToken({ headers }) {
+export function getToken({ headers }: any) {
   const { authorization } = headers;
   if (!authorization) return null;
 
   const token = authorization.replace('Bearer', '').trim();
 
   try {
-    const decoded = verify(token, process.env.JWT_TOKEN);
+    const decoded = verify(token, process.env.JWT_TOKEN!);
     return decoded;
   } catch {
     throw new Error('Token Invalid or Expired');
   }
 }
-export function formatSymbol(symbol) {
+export function formatSymbol(symbol: string) {
   return symbol.toUpperCase().replace('.SA', '').trim();
 }
 export function getRandomDarkColor() {
@@ -90,7 +94,7 @@ export function getRandomDarkColor() {
   }
   return rgb;
 }
-export function getClassTicket(ticket) {
+export function getClassTicket(ticket: string) {
   return ticket.slice(-2) === '31' ||
     ticket.slice(-2) === '33' ||
     ticket.slice(-2) === '34' ||
@@ -116,8 +120,8 @@ export function getClassTicket(ticket) {
     ? 'Cripto'
     : 'Outros';
 }
-export function getSumByUnicProp(array, key, value) {
-  let unicProps = [];
+export function getSumByUnicProp(array: any[], key: string, value: string) {
+  let unicProps: any[] = [];
 
   array.map(item => {
     if (!unicProps.includes(item[key]) && !!item[value]) {
@@ -136,7 +140,7 @@ export function getSumByUnicProp(array, key, value) {
 
   return sumByProp;
 }
-export function getTranslateSector(sector) {
+export function getTranslateSector(sector: string) {
   return {
     [sector]: sector,
     Financial: 'Financeiro',
@@ -245,7 +249,7 @@ export function getTranslateSector(sector) {
     'Utilities—Independent Power Producers': 'Elétrico',
   }[sector];
 }
-export function formatTicketByFraction(ticket) {
+export function formatTicketByFraction(ticket: string) {
   let formatedTicket = ticket;
 
   if (

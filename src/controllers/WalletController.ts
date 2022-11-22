@@ -42,7 +42,7 @@ export default {
     if (hasToken.role == 'USER' && walletLengthOnUser >= 2)
       throw new Error('Wallet limited to 2 items');
 
-    let newWallet = await Wallet.create({
+    let newWallet: any = await Wallet.create({
       user: hasToken._id,
       description: args.input.description,
     });

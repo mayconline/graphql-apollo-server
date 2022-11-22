@@ -27,8 +27,8 @@ export default {
 
     if (isSameEmail) throw new Error('Email Already Send');
 
-    let cryptoBytes = crypto.randomBytes(3);
-    cryptoBytes = cryptoBytes.toString('hex');
+    const randonCryptoBytes = crypto.randomBytes(3);
+    const cryptoBytes = randonCryptoBytes.toString('hex');
 
     const { html } = await recovery_password_template(user.email, cryptoBytes);
 
@@ -56,11 +56,13 @@ export default {
 
     if (!recovery) throw new Error('Code Invalid or Expired');
 
-    let user = await User.findOne({
+    const user = await User.findOne({
       email: args.input.email.toLowerCase(),
     });
 
-    let updateUser = await user.updateOne({
+    if (!user) throw new Error('User Not Exists');
+
+    const updateUser = await user.updateOne({
       password: await bcrypt.hash(args.input.password, 10),
     });
 

@@ -52,13 +52,13 @@ export default {
     }
 
     let currentYearEarnings = wallet.earning.filter(
-      earning => earning.year == args.year,
+      (earning: any) => earning.year == args.year,
     );
 
     if (currentYearEarnings.length != 12) {
       let autoCompletedEarnings = Array.from({ length: 12 }, (_, index) => {
         let currentIndex = currentYearEarnings.find(
-          current => current.month === index + 1,
+          (current: any) => current.month === index + 1,
         );
 
         return currentIndex
@@ -85,7 +85,7 @@ export default {
     if (!isSameUser) throw new Error('User Unauthorized');
 
     let isSameEarning = wallet.earning.some(
-      earning =>
+      (earning: any) =>
         earning.year == args.input.year && earning.month == args.input.month,
     );
 

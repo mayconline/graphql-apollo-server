@@ -21,38 +21,39 @@ import EarningController from './controllers/EarningController';
 import { typeDefs } from './graphql/typeDefs';
 import { resolvers } from './graphql/resolvers';
 
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_URL).then(
-  () => {
-    console.log('Successfully connected to db');
-  },
-  err => {
-    console.log('it was not possible to connect to the bd' + err);
-  },
-);
+const { MONGO_URL } = process.env;
 
-const dataSources = () => ({
-  finance,
-  AuthController,
-  RecoveryPasswordController,
-  UserController,
-  WalletController,
-  TicketController,
-  FinanceController,
-  QuestionController,
-  ReportsController,
-  EarningController,
-});
+if (MONGO_URL) {
+  mongoose
+    .connect(MONGO_URL)
+    .then(() => {
+      console.log('Successfully connected to db');
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources,
-  context: ({ req }) => ({
-    hasToken: getToken(req),
-  }),
-  formatError: err => getErrorMessage(err),
-  cache: 'bounded',
-});
+      const dataSources: any = () => ({
+        finance,
+        AuthController,
+        RecoveryPasswordController,
+        UserController,
+        WalletController,
+        TicketController,
+        FinanceController,
+        QuestionController,
+        ReportsController,
+        EarningController,
+      });
 
-server.listen({ port: process.env.PORT });
+      const server = new ApolloServer({
+        typeDefs,
+        resolvers,
+        dataSources,
+        context: ({ req }) => ({
+          hasToken: getToken(req),
+        }),
+        formatError: err => getErrorMessage(err),
+        cache: 'bounded',
+      });
+
+      server.listen({ port: process.env.PORT });
+    })
+    .catch(err => console.log('error on connect db' + err));
+}

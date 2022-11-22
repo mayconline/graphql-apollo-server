@@ -7,7 +7,7 @@ const options = {
   minify: true,
 };
 
-export const recovery_password_template = async (email, code) =>
+export const recovery_password_template = async (email: string, code: string) =>
   mjml2html(
     `
       <mjml>

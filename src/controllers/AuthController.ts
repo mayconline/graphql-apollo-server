@@ -42,7 +42,7 @@ export default {
 
     user = await User.findById(hasToken._id).lean();
 
-    const token = await setToken(user._id, user.role);
+    const token = await setToken(user?._id!, user?.role!);
 
     return { ...user, token };
   },

@@ -23,7 +23,7 @@ export default {
     let user = await User.findOne({ email: args.input.email.toLowerCase() });
     if (user) throw new Error('User Exists');
 
-    let newUser = await User.create({
+    let newUser: any = await User.create({
       email: args.input.email.toLowerCase(),
       password: await bcrypt.hash(args.input.password, 10),
       checkTerms: args.input.checkTerms,
@@ -55,7 +55,7 @@ export default {
 
     user = await User.findById(hasToken._id).lean();
 
-    const token = await setToken(user._id, user.role);
+    const token = await setToken(user?._id!, user?.role!);
 
     return { ...user, token };
   },
