@@ -8,7 +8,6 @@
   },
   "scripts": {
     "build": "npm run clean && tsc && npm run copy-mjml",
-    "copy-gql": "cp -r ./src/graphql/modules/ ./dist/graphql/",
     "copy-mjml": "cp -r ./src/templates-email/shared ./dist/templates-email",
     "clean": "rm -rf ./dist",
     "test": "jest --maxWorkers=50%",
