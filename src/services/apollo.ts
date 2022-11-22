@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server';
 
-import { getErrorMessage } from '../graphql/utils/errorHandler';
-import { getToken } from '../graphql/utils/shareFunc';
+import { getErrorMessage } from '../utils/errorHandler';
+import { getToken } from '../utils/shareFunc';
 
 import finance from '../services/finance';
 

@@ -4,7 +4,7 @@ import {
   getArraySortByParams,
   formatSymbol,
   getClassTicket,
-} from '../graphql/utils/shareFunc';
+} from '../utils/shareFunc';
 
 export default {
   index: async hasToken => {

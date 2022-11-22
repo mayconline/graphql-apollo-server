@@ -1,5 +1,8 @@
-module.exports = {
-  verbose: true,
+export default {
+  moduleFileExtensions: ['ts', 'js'],
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+  },
   testEnvironment: 'node',
-  clearMocks: true,
+  testMatch: ['<rootDir>/src/**/**/**/*.spec.ts'],
 };

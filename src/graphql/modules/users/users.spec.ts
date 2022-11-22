@@ -1,4 +1,4 @@
-import { server, createTestClient, gql } from '../../utils/mocks/serverMock';
+import { server, createTestClient, gql } from '../../../mocks/serverMock';
 
 describe('getUsers', () => {
   const { query } = createTestClient(server);
@@ -8,7 +8,6 @@ describe('getUsers', () => {
       users {
         _id
         email
-        password
         active
         checkTerms
       }
@@ -26,6 +25,8 @@ describe('getUsers', () => {
 
   it('should return users array', async () => {
     const res = await query({ query: GET_USERS });
+
+    expect(res.data).toHaveProperty('users');
   });
 
   it('should return one user', async () => {

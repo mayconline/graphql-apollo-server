@@ -1,4 +1,4 @@
-import { server, createTestClient, gql } from '../../utils/mocks/serverMock';
+import { server, createTestClient, gql } from '../../../mocks/serverMock';
 
 describe('Mutation Test', () => {
   const { mutate } = createTestClient(server);

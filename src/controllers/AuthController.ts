@@ -1,7 +1,7 @@
 import User from '../models/User';
 
 import bcrypt from 'bcrypt';
-import { setToken } from '../graphql/utils/shareFunc';
+import { setToken } from '../utils/shareFunc';
 
 export default {
   show: async args => {

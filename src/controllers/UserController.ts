@@ -3,7 +3,7 @@ import Wallet from '../models/Wallet';
 import Ticket from '../models/Ticket';
 
 import bcrypt from 'bcrypt';
-import { setToken } from '../graphql/utils/shareFunc';
+import { setToken } from '../utils/shareFunc';
 
 export default {
   index: async hasToken => {

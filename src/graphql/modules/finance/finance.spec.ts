@@ -1,4 +1,4 @@
-import { server, createTestClient, gql } from '../../utils/mocks/serverMock';
+import { server, createTestClient, gql } from '../../../mocks/serverMock';
 
 describe('Query Test', () => {
   const { query } = createTestClient(server);

@@ -1,4 +1,4 @@
-import { server, createTestClient, gql } from '../../utils/mocks/serverMock';
+import { server, createTestClient, gql } from '../../../mocks/serverMock';
 
 describe('Query Test', () => {
   const { query } = createTestClient(server);
@@ -72,7 +72,11 @@ describe('Query Test', () => {
       variables: { walletID: 'a', type: 'NOT_EXIST' },
     });
 
-    expect(res.errors[0].message).toBe(
+    console.log(JSON.stringify(res, null, 2));
+
+    const pathError = res!.errors![0];
+
+    expect(pathError.message).toBe(
       'Variable "$type" got invalid value "NOT_EXIST"; Value "NOT_EXIST" does not exist in "Type" enum.',
     );
   });

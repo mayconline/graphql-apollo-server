@@ -3,7 +3,7 @@ import {
   getSumCostWallet,
   getSumGradeWallet,
   getPercentVariation,
-} from '../../utils/shareFunc';
+} from '../../../utils/shareFunc';
 
 export default {
   Wallet: {

@@ -4,7 +4,7 @@ import {
   getSumGradeWallet,
   getArraySortByParams,
   getPercentVariation,
-} from '../graphql/utils/shareFunc';
+} from '../utils/shareFunc';
 
 const getStatus = percent => {
   if (percent === 0) return 'KEEP';

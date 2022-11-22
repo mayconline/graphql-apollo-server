@@ -1,4 +1,4 @@
-import { server, createTestClient, gql } from '../../utils/mocks/serverMock';
+import { server, createTestClient, gql } from '../../../mocks/serverMock';
 
 describe('Authenticate', () => {
   const { mutate } = createTestClient(server);
@@ -17,7 +17,7 @@ describe('Authenticate', () => {
 
   it('should return authenticate user', async () => {
     const userAuth = await mutate({
-      query: LOGIN,
+      mutation: LOGIN,
       variables: {
         email: 'jox@gh.com.br',
         password: '123',

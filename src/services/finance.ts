@@ -1,11 +1,8 @@
 import { api, apiSummary } from './axios';
 import apiDollar from './apiDollar';
 import apiDollar2 from './apiDollar2';
-import {
-  formatTicketByFraction,
-  getTranslateSector,
-} from '../graphql/utils/shareFunc';
-import { isCripto } from '../graphql/utils/classSymbols';
+import { formatTicketByFraction, getTranslateSector } from '../utils/shareFunc';
+import { isCripto } from '../utils/classSymbols';
 
 const getURLDollar1 = (olderDays = 1) => {
   let currentDate = new Date().toLocaleDateString();

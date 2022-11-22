@@ -6,7 +6,7 @@ import {
   getSumAmountEarning,
   getSumCostWallet,
   getSumByUnicProp,
-} from '../graphql/utils/shareFunc';
+} from '../utils/shareFunc';
 
 const index = async (args, hasToken) => {
   if (hasToken.role == 'USER') throw new Error('User Unauthorized');

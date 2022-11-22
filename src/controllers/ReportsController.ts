@@ -3,7 +3,7 @@ import {
   getRandomDarkColor,
   getArraySortByParams,
   getSumByUnicProp,
-} from '../graphql/utils/shareFunc';
+} from '../utils/shareFunc';
 
 export default {
   getEachTicketChart: currentArray => {
