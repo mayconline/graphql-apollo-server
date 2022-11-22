@@ -19,7 +19,11 @@ import EarningController from '../controllers/EarningController';
 import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolvers';
 
-export function setApolloServer(isServeless = false) {
+export function setApolloServer({
+  isServeless = false,
+}: {
+  isServeless?: boolean;
+}) {
   const dataSources: any = () => ({
     finance,
     AuthController,

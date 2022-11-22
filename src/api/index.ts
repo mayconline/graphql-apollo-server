@@ -17,7 +17,7 @@ if (MONGO_URL) {
       console.log('Successfully connected to db');
 
       const cors = Cors();
-      const { server } = setApolloServer();
+      const { server } = setApolloServer({ isServeless: true });
 
       server.start().then(() => {
         const handler = server.createHandler({ path: '/api' });
