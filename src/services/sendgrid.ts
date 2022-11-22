@@ -22,7 +22,7 @@ export default {
       .then(() => {
         hasSend = true;
       })
-      .catch(err => {
+      .catch(() => {
         hasSend = false;
       });
 

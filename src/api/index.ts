@@ -18,4 +18,4 @@ if (MONGO_URL) {
 
 const { server } = setApolloServer();
 
-export default server.createHandler();
+exports.handler = server.createHandler();

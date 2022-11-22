@@ -1,4 +1,5 @@
-import { ApolloServer } from '@saeris/apollo-server-vercel';
+import { ApolloServer } from 'apollo-server-lambda';
+import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 import { getErrorMessage } from '../graphql/utils/errorHandler';
 import { getToken } from '../graphql/utils/shareFunc';
@@ -38,10 +39,11 @@ export function setApolloServer() {
     typeDefs,
     resolvers: resolver,
     dataSources,
-    context: ({ req }) => ({
-      hasToken: getToken(req),
+    context: ({ context }) => ({
+      hasToken: getToken(context),
     }),
     formatError: err => getErrorMessage(err),
+    plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
   });
 
   return { server };
