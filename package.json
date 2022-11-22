@@ -7,7 +7,7 @@
     "node": "18.12.1"
   },
   "scripts": {
-    "build": "npm run clean && tsc && npm run copy-mjml && npm run copy-gql",
+    "build": "npm run clean && tsc && npm run copy-mjml",
     "copy-gql": "cp -r ./src/graphql/modules/ ./dist/graphql/",
     "copy-mjml": "cp -r ./src/templates-email/shared ./dist/templates-email",
     "clean": "rm -rf ./dist",
