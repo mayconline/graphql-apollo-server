@@ -1,4 +1,6 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from 'apollo-server-express';
+
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core';
 
 import { getErrorMessage } from '../graphql/utils/errorHandler';
 import { getToken } from '../graphql/utils/shareFunc';
@@ -32,16 +34,23 @@ export function setApolloServer() {
     EarningController,
   });
 
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    dataSources,
-    context: ({ req }) => ({
-      hasToken: getToken(req),
-    }),
-    formatError: err => getErrorMessage(err),
-    cache: 'bounded',
-  });
+  const startApolloServer = async (app, httpServer) => {
+    const server = new ApolloServer({
+      typeDefs,
+      resolvers,
+      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+      dataSources,
+      context: ({ req }) => ({
+        hasToken: getToken(req),
+      }),
+      formatError: err => getErrorMessage(err),
+      cache: 'bounded',
+    });
 
-  return { server };
+    await server.start();
+
+    server.applyMiddleware({ app });
+  };
+
+  return { startApolloServer };
 }

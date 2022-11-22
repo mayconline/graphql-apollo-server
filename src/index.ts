@@ -13,7 +13,7 @@ if (MONGO_URL) {
     .then(() => {
       console.log('Successfully connected to db');
 
-      const { server } = setApolloServer({ isServeless: false });
+      const { server } = setApolloServer();
 
       server.listen({ port: process.env.PORT });
     })
