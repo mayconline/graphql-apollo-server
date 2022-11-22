@@ -7,8 +7,9 @@
     "node": "18.12.1"
   },
   "scripts": {
-    "build": "tsc && npm run copy-gql",
+    "build": "tsc && npm run copy-gql && npm run copy-mjml",
     "copy-gql": "cp -r ./src/graphql/modules/ ./dist/graphql/",
+    "copy-mjml": "cp -r ./src/templates-email ./dist",
     "test": "jest --maxWorkers=50%",
     "dev": "nodemon 'src/index.ts' --exec 'ts-node' src/index.ts -e ts,graphql",
     "start": "NODE_ENV=production node dist/index.js"
