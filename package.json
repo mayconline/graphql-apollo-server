@@ -11,7 +11,7 @@
     "copy-gql": "cp -r ./src/graphql/modules/ ./dist/graphql/",
     "test": "jest --maxWorkers=50%",
     "dev": "nodemon 'src/index.ts' --exec 'ts-node' src/index.ts -e ts,graphql",
-    "start": "NODE_ENV=production node dist/index.js"
+    "start-one": "NODE_ENV=production node dist/index.js"
   },
   "keywords": [],
   "author": "",
