@@ -10,8 +10,8 @@
     "build": "tsc && npm run copy-gql",
     "copy-gql": "cp -r ./src/graphql/modules/ ./dist/graphql/",
     "test": "jest --maxWorkers=50%",
-    "dev": "nodemon 'src/index.ts' --exec 'ts-node' src/index.ts -e ts,graphql",
-    "start-one": "NODE_ENV=production node dist/index.js"
+    "dev": "nodemon 'src/dev.ts' --exec 'ts-node' src/dev.ts -e ts,graphql",
+    "start-one": "NODE_ENV=production node dist/dev.js"
   },
   "keywords": [],
   "author": "",
