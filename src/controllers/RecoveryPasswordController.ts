@@ -2,7 +2,7 @@ import User from '../models/User';
 import RecoveryPassword from '../models/RecoveryPassword';
 import { recovery_password_template } from '../templates-email/RecoveryPasswordTemplate';
 import SendGrid from '../services/sendgrid';
-import crypto from 'crypto';
+import { randomBytes } from 'node:crypto';
 import bcrypt from 'bcrypt';
 
 export default {
@@ -27,8 +27,7 @@ export default {
 
     if (isSameEmail) throw new Error('Email Already Send');
 
-    const randonCryptoBytes = crypto.randomBytes(3);
-    const cryptoBytes = randonCryptoBytes.toString('hex');
+    const cryptoBytes = randomBytes(3).toString('hex');
 
     const { html } = await recovery_password_template(user.email, cryptoBytes);
 
