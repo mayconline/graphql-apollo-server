@@ -10,11 +10,7 @@ const getURLDollar1 = (olderDays = 1) => {
 
   let date = `${month}-${Number(Number(day) - Number(olderDays))}-${year}`;
 
-  console.log({ date });
-
   let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&format=json`;
-
-  console.log({ urlOne });
 
   return {
     urlOne,
@@ -124,7 +120,6 @@ const fetchApi = async ticket => {
       sector,
     };
   } catch (e) {
-    console.log(e);
     return {
       regularMarketPrice: 0,
       financialCurrency: 'BRL',
