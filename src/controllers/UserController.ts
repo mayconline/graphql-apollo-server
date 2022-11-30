@@ -3,7 +3,7 @@ import Wallet from '../models/Wallet';
 import Ticket from '../models/Ticket';
 
 import bcrypt from 'bcrypt';
-import { setToken } from '../utils/shareFunc';
+import RefreshToken from './RefreshToken';
 
 export default {
   index: async hasToken => {
@@ -29,11 +29,11 @@ export default {
       checkTerms: args.input.checkTerms,
     });
 
-    const token = await setToken(newUser._id, newUser.role);
+    const tokens = await RefreshToken.store(newUser._id, newUser.role);
 
     newUser = {
       ...newUser._doc,
-      token,
+      ...tokens,
       password: null,
     };
 
@@ -55,9 +55,9 @@ export default {
 
     user = await User.findById(hasToken._id).lean();
 
-    const token = await setToken(user?._id!, user?.role!);
+    const tokens = await RefreshToken.store(user?._id!, user?.role!);
 
-    return { ...user, token };
+    return { ...user, ...tokens };
   },
   destroy: async (args, hasToken) => {
     if (hasToken.role != 'ADM') throw new Error('User Unauthorized');
@@ -84,6 +84,9 @@ export default {
         $in: walletsIDs,
       },
     });
+
+    const refreshToken = await RefreshToken.show(user._id);
+    if (refreshToken) await RefreshToken.destroy(refreshToken._id);
 
     await user.remove();
     return !!user;

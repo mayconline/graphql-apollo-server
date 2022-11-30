@@ -1,7 +1,6 @@
 import User from '../models/User';
-
 import bcrypt from 'bcrypt';
-import { setToken } from '../utils/shareFunc';
+import RefreshToken from './RefreshToken';
 
 export default {
   show: async args => {
@@ -21,11 +20,11 @@ export default {
 
     if (user.active === false) throw new Error('User Inactive');
 
-    const token = await setToken(user._id, user.role);
+    const tokens = await RefreshToken.store(user._id, user.role);
 
     return {
       ...user,
-      token,
+      ...tokens,
     };
   },
   update: async (args, hasToken) => {
@@ -42,9 +41,9 @@ export default {
 
     user = await User.findById(hasToken._id).lean();
 
-    const token = await setToken(user?._id!, user?.role!);
+    const tokens = await RefreshToken.store(user?._id!, user?.role!);
 
-    return { ...user, token };
+    return { ...user, ...tokens };
   },
   reactivateUser: async (args, hasToken) => {
     if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
