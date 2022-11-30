@@ -56,6 +56,7 @@ describe('create User', () => {
         checkTerms
         password
         token
+        refreshToken
         role
       }
     }
