@@ -17,6 +17,7 @@ const getURLDollar1 = (olderDays = 1) => {
 };
 
 const getConvertDollar = async amount => {
+  console.log('entry api dollar');
   let dollarBid = 0;
 
   const { urlOne } = getURLDollar1();
@@ -94,8 +95,12 @@ const fetchSummaryApi = async ticket => {
 const fetchApi = async ticket => {
   const formatedTicket = formatTicketByFraction(ticket);
 
+  console.log('entry fetch api');
+
   try {
     const res = await api.get(`quote?symbols=${formatedTicket}`);
+
+    console.log(res.data.quoteResponse);
 
     const { result } = await res.data.quoteResponse;
     if (!result) throw new Error('Failed Stock API');
@@ -109,6 +114,10 @@ const fetchApi = async ticket => {
         ? await getConvertDollar(regularMarketPrice)
         : regularMarketPrice;
 
+    console.log({ currency });
+
+    console.log({ convertedAmount });
+
     const { industry, sector } = await fetchSummaryApi(ticket);
 
     return {
@@ -121,6 +130,8 @@ const fetchApi = async ticket => {
       sector,
     };
   } catch (e) {
+    console.log('error fetch api', e);
+
     return {
       regularMarketPrice: 0,
       financialCurrency: 'BRL',
