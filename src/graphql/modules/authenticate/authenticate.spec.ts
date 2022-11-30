@@ -9,8 +9,19 @@ describe('Authenticate', () => {
         _id
         email
         token
+        refreshToken
         active
         role
+        plan {
+          transactionDate
+          renewDate
+          description
+          localizedPrice
+          productId
+          subscriptionPeriodAndroid
+          packageName
+          transactionId
+        }
       }
     }
   `;
@@ -30,5 +41,17 @@ describe('Authenticate', () => {
     expect(userAuth.data.login).toHaveProperty('token');
     expect(userAuth.data.login).toHaveProperty('active');
     expect(userAuth.data.login).toHaveProperty('role');
+    expect(userAuth.data.login).toHaveProperty('refreshToken');
+    expect(userAuth.data.login).toHaveProperty('plan');
+    expect(userAuth.data.login.plan).toHaveProperty('transactionDate');
+    expect(userAuth.data.login.plan).toHaveProperty('renewDate');
+    expect(userAuth.data.login.plan).toHaveProperty('description');
+    expect(userAuth.data.login.plan).toHaveProperty('localizedPrice');
+    expect(userAuth.data.login.plan).toHaveProperty('productId');
+    expect(userAuth.data.login.plan).toHaveProperty(
+      'subscriptionPeriodAndroid',
+    );
+    expect(userAuth.data.login.plan).toHaveProperty('packageName');
+    expect(userAuth.data.login.plan).toHaveProperty('transactionId');
   });
 });

@@ -20,6 +20,7 @@ export const typeDefs = gql`
     checkTerms: Boolean!
     role: Role!
     token: String
+    refreshToken: String
     plan: Plan
   }
 
