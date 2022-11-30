@@ -1,42 +1,42 @@
 import { Types } from 'mongoose';
 import RefreshTokenSchema from '../models/RefreshToken';
 import { setToken } from '../utils/shareFunc';
+import { randomUUID } from 'node:crypto';
 
-const show = async (identityID: Types.ObjectId) => {
-  const refreshToken = await RefreshTokenSchema.find({
-    $or: [{ user: identityID }, { _id: identityID }],
-  })
-    .populate({ path: 'user', select: 'role' })
-    .lean();
+const show = async (userID: Types.ObjectId) => {
+  const refreshToken = await RefreshTokenSchema.findOne({
+    user: userID,
+  }).lean();
 
-  if (!refreshToken.length) return null;
-
-  return refreshToken[0];
+  return refreshToken;
 };
 
 const store = async (userID: Types.ObjectId, role: string) => {
-  const hasExistsToken = await RefreshTokenSchema.find({ user: userID });
+  const oldRefreshToken = await show(userID);
 
-  if (!!hasExistsToken.length) {
-    await destroy(hasExistsToken[0]._id);
+  if (!!oldRefreshToken) {
+    await destroy(oldRefreshToken._id);
   }
+
+  const cryptoBytes = randomUUID();
 
   const refreshToken = await RefreshTokenSchema.create({
     user: userID,
+    rftoken: cryptoBytes,
   });
 
   const newToken = await setToken(userID, role);
 
   return {
     token: newToken,
-    refreshToken: String(refreshToken._id),
+    refreshToken: refreshToken.rftoken,
   };
 };
 
 const update = async (args: any) => {
-  const getRefreshToken = await RefreshTokenSchema.findById(
-    args.input.refreshToken,
-  )
+  const getRefreshToken = await RefreshTokenSchema.findOne({
+    rftoken: args.input.refreshToken,
+  })
     .populate({ path: 'user', select: 'role' })
     .lean();
 

@@ -1,7 +1,8 @@
 import { Schema, model } from 'mongoose';
+const { RFT_EXPIRE } = process.env;
 
-const expireDays = new Date().setDate(
-  new Date().getDate() + Number(process.env.RFT_EXPIRE),
+const expireSeconds = new Date().setSeconds(
+  new Date().getSeconds() + Number(RFT_EXPIRE),
 );
 
 const RefreshTokenSchema = new Schema({
@@ -12,8 +13,17 @@ const RefreshTokenSchema = new Schema({
   },
   expiresIn: {
     type: Number,
-    default: expireDays,
+    default: expireSeconds,
+  },
+  rftoken: {
+    type: String,
+    required: true,
   },
 });
+
+RefreshTokenSchema.index(
+  { rftoken: 1 },
+  { expireAfterSeconds: Number(RFT_EXPIRE), unique: true },
+);
 
 export default model('RefreshToken', RefreshTokenSchema);
