@@ -1,5 +1,9 @@
 import { Schema, model } from 'mongoose';
 
+const expireDays = new Date().setDate(
+  new Date().getDate() + Number(process.env.RFT_EXPIRE),
+);
+
 const RefreshTokenSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
@@ -8,7 +12,7 @@ const RefreshTokenSchema = new Schema({
   },
   expiresIn: {
     type: Number,
-    default: new Date().setDate(new Date().getDate() + 30),
+    default: expireDays,
   },
 });
 

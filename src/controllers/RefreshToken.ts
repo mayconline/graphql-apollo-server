@@ -40,13 +40,13 @@ const update = async (args: any) => {
     .populate({ path: 'user', select: 'role' })
     .lean();
 
-  if (!getRefreshToken) throw new Error('Token Invalid or Expired');
+  if (!getRefreshToken) throw new Error('Refresh Token Invalid or Expired');
 
   const { expiresIn, user } = getRefreshToken as any;
 
   const hasExpiredToken = expiresIn < Date.now();
 
-  if (hasExpiredToken) throw new Error('Token Invalid or Expired');
+  if (hasExpiredToken) throw new Error('Refresh Token Invalid or Expired');
 
   return await store(user._id, user.role);
 };

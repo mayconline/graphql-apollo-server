@@ -19,6 +19,8 @@ export function getErrorMessage({
       return new AuthenticationError(message);
     case 'Token Invalid or Expired':
       return new AuthenticationError(message);
+    case 'Refresh Token Invalid or Expired':
+      return new AuthenticationError(message);
     case 'User Exists':
       return new UserInputError(message, path);
     case 'User Not Exists':
