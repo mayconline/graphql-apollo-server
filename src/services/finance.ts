@@ -1,6 +1,5 @@
 import { api, apiSummary } from './axios';
 import apiDollar from './apiDollar';
-import apiDollar2 from './apiDollar2';
 import { formatTicketByFraction, getTranslateSector } from '../utils/shareFunc';
 import { isCripto } from '../utils/classSymbols';
 
@@ -20,33 +19,23 @@ const getURLDollar1 = (olderDays = 1) => {
 const getConvertDollar = async amount => {
   let dollarBid = 0;
 
-  const getDollar2 = await apiDollar2.get('json/all/USD-BRL');
-  let hasData = !!getDollar2?.data;
+  const { urlOne } = getURLDollar1();
 
-  if (hasData) {
-    const { bid } = getDollar2?.data?.USD;
-    dollarBid = bid;
+  const getDollar = await apiDollar.get(urlOne);
+
+  if (!!getDollar?.data?.value.length) {
+    const [{ cotacaoCompra }] = getDollar?.data?.value;
+    dollarBid = cotacaoCompra;
   }
 
-  if (!hasData) {
-    const { urlOne } = getURLDollar1();
+  if (!getDollar?.data?.value.length) {
+    const { urlOne } = getURLDollar1(3);
 
-    const getDollar = await apiDollar.get(urlOne);
+    const getOlderDollar = await apiDollar.get(urlOne);
 
-    if (!!getDollar?.data?.value.length) {
-      const [{ cotacaoCompra }] = getDollar?.data?.value;
+    if (!!getOlderDollar?.data?.value.length) {
+      const [{ cotacaoCompra }] = getOlderDollar?.data?.value;
       dollarBid = cotacaoCompra;
-    }
-
-    if (!getDollar?.data?.value.length) {
-      const { urlOne } = getURLDollar1(3);
-
-      const getOlderDollar = await apiDollar.get(urlOne);
-
-      if (!!getOlderDollar?.data?.value.length) {
-        const [{ cotacaoCompra }] = getOlderDollar?.data?.value;
-        dollarBid = cotacaoCompra;
-      }
     }
   }
 
