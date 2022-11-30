@@ -23,6 +23,8 @@ const getConvertDollar = async amount => {
 
   const getDollar = await apiDollar.get(urlOne);
 
+  console.log(getDollar.data);
+
   if (!!getDollar?.data?.value.length) {
     const [{ cotacaoCompra }] = getDollar?.data?.value;
     dollarBid = cotacaoCompra;
