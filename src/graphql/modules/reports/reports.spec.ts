@@ -72,8 +72,6 @@ describe('Query Test', () => {
       variables: { walletID: 'a', type: 'NOT_EXIST' },
     });
 
-    console.log(JSON.stringify(res, null, 2));
-
     const pathError = res!.errors![0];
 
     expect(pathError.message).toBe(
