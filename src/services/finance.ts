@@ -4,12 +4,17 @@ import { formatTicketByFraction, getTranslateSector } from '../utils/shareFunc';
 import { isCripto } from '../utils/classSymbols';
 
 const getURLDollar1 = (olderDays = 1) => {
-  let currentDate = new Date().toLocaleDateString();
-  const [day, month, year] = currentDate.split('/');
+  const day = new Date().getDate();
+  const month = new Date().getMonth() + 1;
+  const year = new Date().getFullYear();
 
   let date = `${month}-${Number(Number(day) - Number(olderDays))}-${year}`;
 
-  let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&$format=json`;
+  console.log({ date });
+
+  let urlOne = `CotacaoDolarDia(dataCotacao=@dataCotacao)?@dataCotacao='${date}'&format=json`;
+
+  console.log({ urlOne });
 
   return {
     urlOne,
@@ -17,14 +22,11 @@ const getURLDollar1 = (olderDays = 1) => {
 };
 
 const getConvertDollar = async amount => {
-  console.log('entry api dollar');
   let dollarBid = 0;
 
   const { urlOne } = getURLDollar1();
 
   const getDollar = await apiDollar.get(urlOne);
-
-  console.log(getDollar.data);
 
   if (!!getDollar?.data?.value.length) {
     const [{ cotacaoCompra }] = getDollar?.data?.value;
@@ -95,12 +97,8 @@ const fetchSummaryApi = async ticket => {
 const fetchApi = async ticket => {
   const formatedTicket = formatTicketByFraction(ticket);
 
-  console.log('entry fetch api');
-
   try {
     const res = await api.get(`quote?symbols=${formatedTicket}`);
-
-    console.log(res.data.quoteResponse);
 
     const { result } = await res.data.quoteResponse;
     if (!result) throw new Error('Failed Stock API');
@@ -114,10 +112,6 @@ const fetchApi = async ticket => {
         ? await getConvertDollar(regularMarketPrice)
         : regularMarketPrice;
 
-    console.log({ currency });
-
-    console.log({ convertedAmount });
-
     const { industry, sector } = await fetchSummaryApi(ticket);
 
     return {
@@ -130,8 +124,7 @@ const fetchApi = async ticket => {
       sector,
     };
   } catch (e) {
-    console.log('error fetch api', e);
-
+    console.log(e);
     return {
       regularMarketPrice: 0,
       financialCurrency: 'BRL',
