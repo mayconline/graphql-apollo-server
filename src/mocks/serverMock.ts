@@ -18,6 +18,7 @@ import FinanceController from '../controllers/FinanceController';
 import QuestionController from '../controllers/QuestionController';
 import ReportsController from '../controllers/ReportsController';
 import EarningController from '../controllers/EarningController';
+import RefreshToken from '../controllers/RefreshToken';
 
 import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolvers';
@@ -33,6 +34,7 @@ const dataSources: any = () => ({
   QuestionController,
   ReportsController,
   EarningController,
+  RefreshToken,
 });
 
 const serverMock: any = ApolloServer;

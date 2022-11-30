@@ -14,6 +14,7 @@ import FinanceController from '../controllers/FinanceController';
 import QuestionController from '../controllers/QuestionController';
 import ReportsController from '../controllers/ReportsController';
 import EarningController from '../controllers/EarningController';
+import RefreshTokenController from '../controllers/RefreshToken';
 
 import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolvers';
@@ -30,6 +31,7 @@ export function setApolloServer() {
     QuestionController,
     ReportsController,
     EarningController,
+    RefreshTokenController,
   });
 
   const server = new ApolloServer({
