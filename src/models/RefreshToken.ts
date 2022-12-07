@@ -23,7 +23,7 @@ const RefreshTokenSchema = new Schema({
 
 RefreshTokenSchema.index(
   { rftoken: 1 },
-  { expireAfterSeconds: Number(RFT_EXPIRE), unique: true },
+  { expireAfterSeconds: Number(RFT_EXPIRE) },
 );
 
 export default model('RefreshToken', RefreshTokenSchema);
