@@ -5,7 +5,7 @@ describe('Query Test', () => {
 
   it('should update refreshToken', async () => {
     const updateRefreshToken = gql`
-      mutation updateRefreshToken($refreshToken: ID!) {
+      mutation updateRefreshToken($refreshToken: String!) {
         updateRefreshToken(input: { refreshToken: $refreshToken }) {
           token
           refreshToken

@@ -7,7 +7,7 @@ export const typeDefs = gql`
   }
 
   input updateTokenInput {
-    refreshToken: ID!
+    refreshToken: String!
   }
 
   type Mutation {
