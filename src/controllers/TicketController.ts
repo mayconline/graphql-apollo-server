@@ -57,7 +57,7 @@ export default {
     let ticketLengthOnWallet = await wallet.ticket.length;
 
     if (hasToken.role == 'USER' && ticketLengthOnWallet >= 16)
-      throw new Error('Tickets limited to 16 items');
+      throw new Error('Tickets limit Reached');
 
     let ticket = await Ticket.create({
       symbol: args.input.symbol,

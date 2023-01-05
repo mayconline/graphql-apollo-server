@@ -39,8 +39,8 @@ export default {
     let wallet = await Wallet.find({ user: hasToken._id });
     let walletLengthOnUser = wallet.length;
 
-    if (hasToken.role == 'USER' && walletLengthOnUser >= 2)
-      throw new Error('Wallet limited to 2 items');
+    if (hasToken.role == 'USER' && walletLengthOnUser >= 1)
+      throw new Error('Wallet limit Reached');
 
     let newWallet: any = await Wallet.create({
       user: hasToken._id,

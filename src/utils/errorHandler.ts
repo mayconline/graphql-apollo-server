@@ -43,9 +43,9 @@ export function getErrorMessage({
       return new UserInputError(message, path);
     case 'Earning Exists':
       return new UserInputError(message, path);
-    case 'Tickets limited to 16 items':
+    case 'Tickets limit Reached':
       return new ForbiddenError(message);
-    case 'Wallet limited to 2 items':
+    case 'Wallet limit Reached':
       return new ForbiddenError(message);
     case 'Failed Convert Dollar':
       return new ApolloError(message, path);
