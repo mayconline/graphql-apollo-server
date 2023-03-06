@@ -88,7 +88,7 @@ export default {
     const refreshToken = await RefreshToken.show(user._id);
     if (refreshToken) await RefreshToken.destroy(refreshToken._id);
 
-    await user.remove();
+    await user.deleteOne();
     return !!user;
   },
 };

@@ -84,7 +84,7 @@ export default {
       },
     });
 
-    await wallet.remove();
+    await wallet.deleteOne();
     return !!wallet;
   },
 };
