@@ -65,7 +65,7 @@ export default {
       password: await bcrypt.hash(args.input.password, 10),
     });
 
-    await recovery.remove();
+    await recovery.deleteOne();
 
     return !!updateUser;
   },

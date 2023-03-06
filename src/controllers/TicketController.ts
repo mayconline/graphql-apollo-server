@@ -103,7 +103,7 @@ export default {
     await wallet.ticket.splice(wallet.ticket.indexOf(ticket._id), 1);
     await wallet.save();
 
-    await ticket.remove();
+    await ticket.deleteOne();
 
     return !!ticket;
   },
