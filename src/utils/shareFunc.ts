@@ -248,6 +248,7 @@ export function getTranslateSector(sector: string) {
     'REIT—Specialty': 'Imobiliário',
     Tobacco: 'Tabaco',
     'Utilities—Independent Power Producers': 'Elétrico',
+    'Conglomerates':'Holding'
   }[sector];
 }
 export function formatTicketByFraction(ticket: string) {
