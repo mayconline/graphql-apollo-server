@@ -94,14 +94,12 @@ const fetchApi = async ticket => {
   const formatedTicket = formatTicketByFraction(ticket);
 
   try {
-    const res = await api.get(`quote?symbols=${formatedTicket}`);
+    const res = await api.get(formatedTicket);
 
-    const { result } = await res.data.quoteResponse;
+    const { result } = await res?.data?.chart;
     if (!result) throw new Error('Failed Stock API');
 
-    const [
-      { regularMarketPrice, currency, exchange, market, longName, shortName },
-    ] = result;
+    const { regularMarketPrice, currency } = result?.[0]?.meta;
 
     const convertedAmount =
       currency === 'USD'
@@ -113,9 +111,7 @@ const fetchApi = async ticket => {
     return {
       regularMarketPrice: convertedAmount,
       financialCurrency: currency,
-      exchange,
-      market,
-      longName: longName ? longName : shortName ? shortName : formatedTicket,
+      longName: formatedTicket,
       industry,
       sector,
     };
@@ -123,8 +119,6 @@ const fetchApi = async ticket => {
     return {
       regularMarketPrice: 0,
       financialCurrency: 'BRL',
-      exchange: 'SAO',
-      market: 'br_market',
       longName: 'ERROR',
       industry: 'Outros',
       sector: 'Outros',
@@ -141,8 +135,6 @@ export default {
           const {
             regularMarketPrice,
             financialCurrency,
-            exchange,
-            market,
             longName,
             industry,
             sector,
@@ -156,8 +148,6 @@ export default {
             grade,
             regularMarketPrice,
             financialCurrency,
-            exchange,
-            market,
             longName,
             industry,
             sector,

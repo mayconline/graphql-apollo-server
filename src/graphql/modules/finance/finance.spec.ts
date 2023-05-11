@@ -8,8 +8,6 @@ describe('Query Test', () => {
       getApiFinance(symbol: $symbol) {
         regularMarketPrice
         financialCurrency
-        exchange
-        market
         longName
         symbol
       }
@@ -25,8 +23,6 @@ describe('Query Test', () => {
     expect(res.data).toHaveProperty('getApiFinance');
     expect(res.data.getApiFinance).toHaveProperty('regularMarketPrice');
     expect(res.data.getApiFinance).toHaveProperty('financialCurrency');
-    expect(res.data.getApiFinance).toHaveProperty('exchange');
-    expect(res.data.getApiFinance).toHaveProperty('market');
     expect(res.data.getApiFinance).toHaveProperty('longName');
     expect(res.data.getApiFinance).toHaveProperty('symbol');
   });

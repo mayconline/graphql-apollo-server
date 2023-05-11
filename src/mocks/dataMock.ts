@@ -274,8 +274,6 @@ export default {
   getFinance: {
     regularMarketPrice: 70,
     financialCurrency: 'BRL',
-    exchange: 'SAO',
-    market: 'br_market',
     longName: 'Lojas Renner S.A.',
     symbol: 'LREN3.SA',
   },
@@ -288,8 +286,6 @@ export default {
       grade: 8,
       regularMarketPrice: 20,
       financialCurrency: 'BRL',
-      exchange: 'SAO',
-      market: 'br_market',
       longName: 'Itausa - Investimentos Itau S.A.',
     },
     {
@@ -300,8 +296,6 @@ export default {
       grade: 2,
       regularMarketPrice: 20,
       financialCurrency: 'BRL',
-      exchange: 'SAO',
-      market: 'br_market',
       longName: 'WEG S.A.',
     },
   ],

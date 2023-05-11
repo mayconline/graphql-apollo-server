@@ -4,8 +4,6 @@ export const typeDefs = gql`
   type Finance {
     regularMarketPrice: Float
     financialCurrency: String
-    exchange: String
-    market: String
     longName: String
     symbol: String
   }
