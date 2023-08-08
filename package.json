@@ -28,7 +28,7 @@
     "graphql-tools": "8.3.20",
     "jsonwebtoken": "9.0.0",
     "mjml": "4.14.1",
-    "mongoose": "7.1.1"
+    "mongoose": "7.3.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
