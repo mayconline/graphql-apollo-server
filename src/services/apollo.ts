@@ -1,4 +1,5 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
 
 import { getErrorMessage } from '../utils/errorHandler';
 import { getToken } from '../utils/shareFunc';
@@ -19,8 +20,8 @@ import RefreshTokenController from '../controllers/RefreshToken';
 import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolvers';
 
-export function setApolloServer() {
-  const dataSources: any = () => ({
+export async function setApolloServer() {
+  const dataSources = {
     finance,
     AuthController,
     RecoveryPasswordController,
@@ -32,18 +33,22 @@ export function setApolloServer() {
     ReportsController,
     EarningController,
     RefreshTokenController,
-  });
+  };
 
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    dataSources,
-    context: ({ req }) => ({
-      hasToken: getToken(req),
-    }),
     formatError: err => getErrorMessage(err),
     cache: 'bounded',
   });
 
-  return { server };
+  await startStandaloneServer(server, {
+    context: async ({ req }) => ({
+      hasToken: getToken(req),
+      dataSources,
+    }),
+    listen: { port: Number(process.env.PORT) },
+  });
+
+  return { server, dataSources, startStandaloneServer };
 }
