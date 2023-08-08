@@ -56,26 +56,22 @@ const fetchSummaryApi = async ticket => {
   };
 
   try {
-    const summary = await apiSummary.get(`quoteSummary/${formatedTicket}`, {
+    const summary = await apiSummary.get(`search`, {
       params: {
-        modules: 'summaryProfile',
+        q: formatedTicket,
       },
     });
 
-    if (!!summary) {
-      const { result: resultSummary } = await summary.data.quoteSummary;
+    if (!!summary?.data?.quotes?.length) {
+      const resultSummary = summary.data.quotes[0];
 
-      if (!!resultSummary) {
-        const [{ summaryProfile }] = resultSummary;
-
-        if (
-          summaryProfile?.industry &&
-          summaryProfile?.sector &&
-          (summaryProfile?.industry || summaryProfile?.sector) !== ''
-        ) {
-          profileStock.industry = getTranslateSector(summaryProfile.industry);
-          profileStock.sector = getTranslateSector(summaryProfile.sector);
-        }
+      if (
+        resultSummary?.industry &&
+        resultSummary?.sector &&
+        (resultSummary?.industry || resultSummary?.sector) !== ''
+      ) {
+        profileStock.industry = getTranslateSector(resultSummary.industry);
+        profileStock.sector = getTranslateSector(resultSummary.sector);
       }
     }
 
