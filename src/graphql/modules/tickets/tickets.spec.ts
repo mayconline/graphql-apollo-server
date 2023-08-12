@@ -1,7 +1,8 @@
-import { server, createTestClient, gql } from '../../../mocks/serverMock';
+import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
+import { SingleGraphQLResponse } from '../../../mocks/type';
 
 describe('Mutation Test', () => {
-  const { mutate } = createTestClient(server);
+  const server = mockApolloServer;
 
   const CREATE_TICKET = gql`
     mutation createTicket(
@@ -68,46 +69,67 @@ describe('Mutation Test', () => {
   `;
 
   it('should create ticket', async () => {
-    const res = await mutate({
-      mutation: CREATE_TICKET,
-      variables: {
-        walletID: 'a',
-        symbol: 'lren3.sa',
-        name: 'Lojas Renner SA',
-        quantity: 90,
-        averagePrice: 31.2,
-        grade: 5,
+    const res = (await server.executeOperation(
+      {
+        query: CREATE_TICKET,
+        variables: {
+          walletID: 'a',
+          symbol: 'lren3.sa',
+          name: 'Lojas Renner SA',
+          quantity: 90,
+          averagePrice: 31.2,
+          grade: 5,
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('createTicket');
+    expect(res.body.singleResult.data).toHaveProperty('createTicket');
   });
 
   it('should update ticket', async () => {
-    const res = await mutate({
-      mutation: UPDATE_TICKET,
-      variables: {
-        _id: '2',
-        symbol: 'lren3.sa',
-        name: 'Lojas Renner SA',
-        quantity: 100,
-        averagePrice: 40.2,
-        grade: 10,
+    const res = (await server.executeOperation(
+      {
+        query: UPDATE_TICKET,
+        variables: {
+          _id: '2',
+          symbol: 'lren3.sa',
+          name: 'Lojas Renner SA',
+          quantity: 100,
+          averagePrice: 40.2,
+          grade: 10,
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('updateTicket');
+    expect(res.body.singleResult.data).toHaveProperty('updateTicket');
   });
 
   it('should delete ticket by id and remove id in wallet', async () => {
-    const res = await mutate({
-      mutation: DELETE_TICKET,
-      variables: {
-        id: '1',
-        walletID: 'a',
+    const res = (await server.executeOperation(
+      {
+        query: DELETE_TICKET,
+        variables: {
+          id: '1',
+          walletID: 'a',
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('deleteTicket');
+    expect(res.body.singleResult.data).toHaveProperty('deleteTicket');
   });
 });

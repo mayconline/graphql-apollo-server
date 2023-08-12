@@ -1,7 +1,8 @@
-import { server, createTestClient, gql } from '../../../mocks/serverMock';
+import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
+import { SingleGraphQLResponse } from '../../../mocks/type';
 
 describe('Query Test', () => {
-  const { query } = createTestClient(server);
+  const server = mockApolloServer;
 
   const REBALANCES = gql`
     query rebalances($walletID: ID!, $sort: SortRebalance!) {
@@ -21,21 +22,30 @@ describe('Query Test', () => {
   `;
 
   it('should return ticket rebalanced', async () => {
-    const res = await query({
-      query: REBALANCES,
-      variables: { walletID: 'a', sort: 'targetAmount' },
-    });
+    const res = (await server.executeOperation(
+      {
+        query: REBALANCES,
+        variables: { walletID: 'a', sort: 'targetAmount' },
+      },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('rebalances');
-    expect(res.data.rebalances[0]).toHaveProperty('_id');
-    expect(res.data.rebalances[0]).toHaveProperty('symbol');
-    expect(res.data.rebalances[0]).toHaveProperty('longName');
-    expect(res.data.rebalances[0]).toHaveProperty('status');
-    expect(res.data.rebalances[0]).toHaveProperty('currentAmount');
-    expect(res.data.rebalances[0]).toHaveProperty('gradePercent');
-    expect(res.data.rebalances[0]).toHaveProperty('currentPercent');
-    expect(res.data.rebalances[0]).toHaveProperty('targetPercent');
-    expect(res.data.rebalances[0]).toHaveProperty('targetAmount');
-    expect(res.data.rebalances[0]).toHaveProperty('financialCurrency');
+    const bodyData = res.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('rebalances');
+    expect(bodyData.rebalances[0]).toHaveProperty('_id');
+    expect(bodyData.rebalances[0]).toHaveProperty('symbol');
+    expect(bodyData.rebalances[0]).toHaveProperty('longName');
+    expect(bodyData.rebalances[0]).toHaveProperty('status');
+    expect(bodyData.rebalances[0]).toHaveProperty('currentAmount');
+    expect(bodyData.rebalances[0]).toHaveProperty('gradePercent');
+    expect(bodyData.rebalances[0]).toHaveProperty('currentPercent');
+    expect(bodyData.rebalances[0]).toHaveProperty('targetPercent');
+    expect(bodyData.rebalances[0]).toHaveProperty('targetAmount');
+    expect(bodyData.rebalances[0]).toHaveProperty('financialCurrency');
   });
 });

@@ -1,7 +1,8 @@
-import { server, createTestClient, gql } from '../../../mocks/serverMock';
+import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
+import { SingleGraphQLResponse } from '../../../mocks/type';
 
 describe('Authenticate', () => {
-  const { query, mutate } = createTestClient(server);
+  const server = mockApolloServer;
 
   it('should return array earnings', async () => {
     const getEarningByWallet = gql`
@@ -15,19 +16,28 @@ describe('Authenticate', () => {
       }
     `;
 
-    const earnings = await query({
-      query: getEarningByWallet,
-      variables: {
-        walletID: 'teste_id',
-        year: 2022,
+    const earnings = (await server.executeOperation(
+      {
+        query: getEarningByWallet,
+        variables: {
+          walletID: 'teste_id',
+          year: 2022,
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(earnings.data).toHaveProperty('getEarningByWallet');
-    expect(earnings.data.getEarningByWallet[0]).toHaveProperty('_id');
-    expect(earnings.data.getEarningByWallet[0]).toHaveProperty('year');
-    expect(earnings.data.getEarningByWallet[0]).toHaveProperty('month');
-    expect(earnings.data.getEarningByWallet[0]).toHaveProperty('amount');
+    const bodyData = earnings.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('getEarningByWallet');
+    expect(bodyData.getEarningByWallet[0]).toHaveProperty('_id');
+    expect(bodyData.getEarningByWallet[0]).toHaveProperty('year');
+    expect(bodyData.getEarningByWallet[0]).toHaveProperty('month');
+    expect(bodyData.getEarningByWallet[0]).toHaveProperty('amount');
   });
 
   it('should return array earnings by year', async () => {
@@ -41,17 +51,26 @@ describe('Authenticate', () => {
       }
     `;
 
-    const earnings = await query({
-      query: getEarningAccByYear,
-      variables: {
-        walletID: 'teste_id',
+    const earnings = (await server.executeOperation(
+      {
+        query: getEarningAccByYear,
+        variables: {
+          walletID: 'teste_id',
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(earnings.data).toHaveProperty('getEarningAccByYear');
-    expect(earnings.data.getEarningAccByYear[0]).toHaveProperty('_id');
-    expect(earnings.data.getEarningAccByYear[0]).toHaveProperty('year');
-    expect(earnings.data.getEarningAccByYear[0]).toHaveProperty('amount');
+    const bodyData = earnings.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('getEarningAccByYear');
+    expect(bodyData.getEarningAccByYear[0]).toHaveProperty('_id');
+    expect(bodyData.getEarningAccByYear[0]).toHaveProperty('year');
+    expect(bodyData.getEarningAccByYear[0]).toHaveProperty('amount');
   });
 
   it('should return sum earnings', async () => {
@@ -66,19 +85,28 @@ describe('Authenticate', () => {
       }
     `;
 
-    const earnings = await query({
-      query: getSumEarning,
-      variables: {
-        walletID: 'teste_id',
-        year: 2022,
+    const earnings = (await server.executeOperation(
+      {
+        query: getSumEarning,
+        variables: {
+          walletID: 'teste_id',
+          year: 2022,
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(earnings.data).toHaveProperty('getSumEarning');
-    expect(earnings.data.getSumEarning).toHaveProperty('sumCurrentYear');
-    expect(earnings.data.getSumEarning).toHaveProperty('sumOldYear');
-    expect(earnings.data.getSumEarning).toHaveProperty('sumTotalEarnings');
-    expect(earnings.data.getSumEarning).toHaveProperty('yieldOnCost');
+    const bodyData = earnings.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('getSumEarning');
+    expect(bodyData.getSumEarning).toHaveProperty('sumCurrentYear');
+    expect(bodyData.getSumEarning).toHaveProperty('sumOldYear');
+    expect(bodyData.getSumEarning).toHaveProperty('sumTotalEarnings');
+    expect(bodyData.getSumEarning).toHaveProperty('yieldOnCost');
   });
 
   it('should update earnings', async () => {
@@ -103,21 +131,30 @@ describe('Authenticate', () => {
       }
     `;
 
-    const earnings = await mutate({
-      mutation: updateEarning,
-      variables: {
-        _id: 'teste_id',
-        walletID: 'teste_walletID',
-        year: 2022,
-        month: 12,
-        amount: 20,
+    const earnings = (await server.executeOperation(
+      {
+        query: updateEarning,
+        variables: {
+          _id: 'teste_id',
+          walletID: 'teste_walletID',
+          year: 2022,
+          month: 12,
+          amount: 20,
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(earnings.data).toHaveProperty('updateEarning');
-    expect(earnings.data.updateEarning).toHaveProperty('_id');
-    expect(earnings.data.updateEarning).toHaveProperty('year');
-    expect(earnings.data.updateEarning).toHaveProperty('month');
-    expect(earnings.data.updateEarning).toHaveProperty('amount');
+    const bodyData = earnings.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('updateEarning');
+    expect(bodyData.updateEarning).toHaveProperty('_id');
+    expect(bodyData.updateEarning).toHaveProperty('year');
+    expect(bodyData.updateEarning).toHaveProperty('month');
+    expect(bodyData.updateEarning).toHaveProperty('amount');
   });
 });
