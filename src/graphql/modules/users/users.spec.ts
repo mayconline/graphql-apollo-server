@@ -1,8 +1,9 @@
-import { server, createTestClient, gql } from '../../../mocks/serverMock';
+import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
+import { SingleGraphQLResponse } from '../../../mocks/type';
+
+const server = mockApolloServer;
 
 describe('getUsers', () => {
-  const { query } = createTestClient(server);
-
   const GET_USERS = gql`
     query getUsers {
       users {
@@ -24,23 +25,35 @@ describe('getUsers', () => {
   `;
 
   it('should return users array', async () => {
-    const res = await query({ query: GET_USERS });
+    const res = (await server.executeOperation(
+      { query: GET_USERS },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('users');
+    expect(res.body.singleResult.data).toHaveProperty('users');
   });
 
   it('should return one user', async () => {
-    const res = await query({
-      query: GET_USER_BY_TOKEN,
-    });
+    const res = (await server.executeOperation(
+      {
+        query: GET_USER_BY_TOKEN,
+      },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('getUserByToken');
+    expect(res.body.singleResult.data).toHaveProperty('getUserByToken');
   });
 });
 
 describe('create User', () => {
-  const { mutate } = createTestClient(server);
-
   const CREATE_USER = gql`
     mutation createUser(
       $email: String!
@@ -63,15 +76,22 @@ describe('create User', () => {
   `;
 
   it('should create user', async () => {
-    const res = await mutate({
-      mutation: CREATE_USER,
-      variables: {
-        email: 'te@te.com.br',
-        password: '123',
-        checkTerms: true,
+    const res = (await server.executeOperation(
+      {
+        query: CREATE_USER,
+        variables: {
+          email: 'te@te.com.br',
+          password: '123',
+          checkTerms: true,
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('createUser');
+    expect(res.body.singleResult.data).toHaveProperty('createUser');
   });
 });

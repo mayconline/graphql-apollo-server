@@ -1,7 +1,8 @@
-import { server, createTestClient, gql } from '../../../mocks/serverMock';
+import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
+import { SingleGraphQLResponse } from '../../../mocks/type';
 
 describe('Query Test', () => {
-  const { query } = createTestClient(server);
+  const server = mockApolloServer;
 
   const GET_REPORTS_BY_TYPE = gql`
     query getReportsByType($walletID: ID!, $type: Type!) {
@@ -15,67 +16,114 @@ describe('Query Test', () => {
   `;
 
   it('should return reports by class', async () => {
-    const res = await query({
-      query: GET_REPORTS_BY_TYPE,
-      variables: { walletID: 'a', type: 'CLASS' },
-    });
+    const res = (await server.executeOperation(
+      {
+        query: GET_REPORTS_BY_TYPE,
+        variables: { walletID: 'a', type: 'CLASS' },
+      },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('getReportsByType');
-    expect(res.data.getReportsByType[0]).toHaveProperty('_id');
-    expect(res.data.getReportsByType[0]).toHaveProperty('key');
-    expect(res.data.getReportsByType[0]).toHaveProperty('value');
-    expect(res.data.getReportsByType[0]).toHaveProperty('color');
+    const bodyData = res.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('getReportsByType');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('_id');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('key');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('value');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('color');
   });
 
   it('should return reports by ticket', async () => {
-    const res = await query({
-      query: GET_REPORTS_BY_TYPE,
-      variables: { walletID: 'a', type: 'TICKET' },
-    });
+    const res = (await server.executeOperation(
+      {
+        query: GET_REPORTS_BY_TYPE,
+        variables: { walletID: 'a', type: 'TICKET' },
+      },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('getReportsByType');
-    expect(res.data.getReportsByType[0]).toHaveProperty('_id');
-    expect(res.data.getReportsByType[0]).toHaveProperty('key');
-    expect(res.data.getReportsByType[0]).toHaveProperty('value');
-    expect(res.data.getReportsByType[0]).toHaveProperty('color');
+    const bodyData = res.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('getReportsByType');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('_id');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('key');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('value');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('color');
   });
 
   it('should return reports by sector', async () => {
-    const res = await query({
-      query: GET_REPORTS_BY_TYPE,
-      variables: { walletID: 'a', type: 'SECTOR' },
-    });
+    const res = (await server.executeOperation(
+      {
+        query: GET_REPORTS_BY_TYPE,
+        variables: { walletID: 'a', type: 'SECTOR' },
+      },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('getReportsByType');
-    expect(res.data.getReportsByType[0]).toHaveProperty('_id');
-    expect(res.data.getReportsByType[0]).toHaveProperty('key');
-    expect(res.data.getReportsByType[0]).toHaveProperty('value');
-    expect(res.data.getReportsByType[0]).toHaveProperty('color');
+    const bodyData = res.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('getReportsByType');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('_id');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('key');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('value');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('color');
   });
 
   it('should return reports by industry', async () => {
-    const res = await query({
-      query: GET_REPORTS_BY_TYPE,
-      variables: { walletID: 'a', type: 'INDUSTRY' },
-    });
+    const res = (await server.executeOperation(
+      {
+        query: GET_REPORTS_BY_TYPE,
+        variables: { walletID: 'a', type: 'INDUSTRY' },
+      },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('getReportsByType');
-    expect(res.data.getReportsByType[0]).toHaveProperty('_id');
-    expect(res.data.getReportsByType[0]).toHaveProperty('key');
-    expect(res.data.getReportsByType[0]).toHaveProperty('value');
-    expect(res.data.getReportsByType[0]).toHaveProperty('color');
+    const bodyData = res.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('getReportsByType');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('_id');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('key');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('value');
+    expect(bodyData.getReportsByType[0]).toHaveProperty('color');
   });
 
   it('should return error if not exist enum', async () => {
-    const res = await query({
-      query: GET_REPORTS_BY_TYPE,
-      variables: { walletID: 'a', type: 'NOT_EXIST' },
-    });
+    const res = (await server.executeOperation(
+      {
+        query: GET_REPORTS_BY_TYPE,
+        variables: { walletID: 'a', type: 'NOT_EXIST' },
+      },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    const pathError = res!.errors![0];
+    const bodyData = res.body.singleResult?.errors?.[0];
 
-    expect(pathError.message).toBe(
+    console.log(JSON.stringify(bodyData, null, 2));
+
+    expect(bodyData?.message).toBe(
       'Variable "$type" got invalid value "NOT_EXIST"; Value "NOT_EXIST" does not exist in "Type" enum.',
     );
+
+    expect(bodyData?.extensions?.code).toBe('BAD_USER_INPUT');
   });
 });

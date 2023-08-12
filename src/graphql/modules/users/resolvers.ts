@@ -4,7 +4,6 @@ export default {
       !hasToken
         ? new Error('Token Not Exists')
         : dataSources.UserController.index(hasToken),
-
     getUserByToken: (_, __, { dataSources, hasToken }) =>
       !hasToken
         ? new Error('Token Not Exists')

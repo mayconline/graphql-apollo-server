@@ -1,7 +1,8 @@
-import { server, createTestClient, gql } from '../../../mocks/serverMock';
+import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
+import { SingleGraphQLResponse } from '../../../mocks/type';
 
 describe('Authenticate', () => {
-  const { mutate } = createTestClient(server);
+  const server = mockApolloServer;
 
   const LOGIN = gql`
     mutation login($email: String!, $password: String!) {
@@ -27,31 +28,38 @@ describe('Authenticate', () => {
   `;
 
   it('should return authenticate user', async () => {
-    const userAuth = await mutate({
-      mutation: LOGIN,
-      variables: {
-        email: 'jox@gh.com.br',
-        password: '123',
+    const userAuth = (await server.executeOperation(
+      {
+        query: LOGIN,
+        variables: {
+          email: 'jox@gh.com.br',
+          password: '123',
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(userAuth.data).toHaveProperty('login');
-    expect(userAuth.data.login).toHaveProperty('_id');
-    expect(userAuth.data.login).toHaveProperty('email');
-    expect(userAuth.data.login).toHaveProperty('token');
-    expect(userAuth.data.login).toHaveProperty('active');
-    expect(userAuth.data.login).toHaveProperty('role');
-    expect(userAuth.data.login).toHaveProperty('refreshToken');
-    expect(userAuth.data.login).toHaveProperty('plan');
-    expect(userAuth.data.login.plan).toHaveProperty('transactionDate');
-    expect(userAuth.data.login.plan).toHaveProperty('renewDate');
-    expect(userAuth.data.login.plan).toHaveProperty('description');
-    expect(userAuth.data.login.plan).toHaveProperty('localizedPrice');
-    expect(userAuth.data.login.plan).toHaveProperty('productId');
-    expect(userAuth.data.login.plan).toHaveProperty(
-      'subscriptionPeriodAndroid',
-    );
-    expect(userAuth.data.login.plan).toHaveProperty('packageName');
-    expect(userAuth.data.login.plan).toHaveProperty('transactionId');
+    const bodyData = userAuth.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('login');
+    expect(bodyData.login).toHaveProperty('_id');
+    expect(bodyData.login).toHaveProperty('email');
+    expect(bodyData.login).toHaveProperty('token');
+    expect(bodyData.login).toHaveProperty('active');
+    expect(bodyData.login).toHaveProperty('role');
+    expect(bodyData.login).toHaveProperty('refreshToken');
+    expect(bodyData.login).toHaveProperty('plan');
+    expect(bodyData.login.plan).toHaveProperty('transactionDate');
+    expect(bodyData.login.plan).toHaveProperty('renewDate');
+    expect(bodyData.login.plan).toHaveProperty('description');
+    expect(bodyData.login.plan).toHaveProperty('localizedPrice');
+    expect(bodyData.login.plan).toHaveProperty('productId');
+    expect(bodyData.login.plan).toHaveProperty('subscriptionPeriodAndroid');
+    expect(bodyData.login.plan).toHaveProperty('packageName');
+    expect(bodyData.login.plan).toHaveProperty('transactionId');
   });
 });

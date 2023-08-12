@@ -1,8 +1,9 @@
-import { server, createTestClient, gql } from '../../../mocks/serverMock';
+import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
+import { SingleGraphQLResponse } from '../../../mocks/type';
+
+const server = mockApolloServer;
 
 describe('Query Test', () => {
-  const { query } = createTestClient(server);
-
   const GET_WALLETS_BY_USER = gql`
     query getWalletByUser {
       getWalletByUser {
@@ -27,18 +28,25 @@ describe('Query Test', () => {
   `;
 
   it('should return wallets array', async () => {
-    const res = await query({
-      query: GET_WALLETS_BY_USER,
-    });
+    const res = (await server.executeOperation(
+      {
+        query: GET_WALLETS_BY_USER,
+      },
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('getWalletByUser');
-    expect(res.data.getWalletByUser[0]).toHaveProperty('_id');
+    const bodyData = res.body.singleResult.data;
+
+    expect(bodyData).toHaveProperty('getWalletByUser');
+    expect(bodyData.getWalletByUser[0]).toHaveProperty('_id');
   });
 });
 
 describe('Mutation Test', () => {
-  const { mutate } = createTestClient(server);
-
   const CREATE_WALLET = gql`
     mutation createWallet($description: String!) {
       createWallet(input: { description: $description }) {
@@ -78,36 +86,57 @@ describe('Mutation Test', () => {
   `;
 
   it('should create wallet', async () => {
-    const res = await mutate({
-      mutation: CREATE_WALLET,
-      variables: {
-        description: 'Carteira Mock',
+    const res = (await server.executeOperation(
+      {
+        query: CREATE_WALLET,
+        variables: {
+          description: 'Carteira Mock',
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('createWallet');
+    expect(res.body.singleResult.data).toHaveProperty('createWallet');
   });
 
   it('should update wallet', async () => {
-    const res = await mutate({
-      mutation: UPDATE_WALLET,
-      variables: {
-        id: 'a',
-        description: 'Ações',
+    const res = (await server.executeOperation(
+      {
+        query: UPDATE_WALLET,
+        variables: {
+          id: 'a',
+          description: 'Ações',
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('updateWallet');
+    expect(res.body.singleResult.data).toHaveProperty('updateWallet');
   });
 
   it('should delete wallet by id', async () => {
-    const res = await mutate({
-      mutation: DELETE_WALLET,
-      variables: {
-        id: 'a',
+    const res = (await server.executeOperation(
+      {
+        query: DELETE_WALLET,
+        variables: {
+          id: 'a',
+        },
       },
-    });
+      {
+        contextValue: {
+          dataSources,
+        },
+      },
+    )) as SingleGraphQLResponse<any>;
 
-    expect(res.data).toHaveProperty('deleteWallet');
+    expect(res.body.singleResult.data).toHaveProperty('deleteWallet');
   });
 });

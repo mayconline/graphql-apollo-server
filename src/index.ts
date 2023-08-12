@@ -3,7 +3,7 @@ dotenv.config();
 
 import mongoose from 'mongoose';
 
-import { setApolloServer } from './services/apollo';
+import { initApolloServer } from './services/apollo';
 
 const { MONGO_URL } = process.env;
 
@@ -13,9 +13,7 @@ if (MONGO_URL) {
     .then(() => {
       console.log('Successfully connected to db');
 
-      const { server } = setApolloServer();
-
-      server.listen({ port: process.env.PORT });
+      initApolloServer();
     })
     .catch(err => console.log('error on connect db' + err));
 }
