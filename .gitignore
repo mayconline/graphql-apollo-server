@@ -9,6 +9,7 @@
 
 #test
 *.snap
+/coverage
 
 # misc
 .DS_Store
