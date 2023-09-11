@@ -16,6 +16,8 @@ export default {
   },
 
   show: async (args, hasToken) => {
+    if (!Boolean(args?.walletID)) throw new Error('Wallet Not Found');
+
     let wallet = await Wallet.findById(args.walletID).populate('ticket');
 
     if (!wallet) throw new Error('Wallet Not Found');

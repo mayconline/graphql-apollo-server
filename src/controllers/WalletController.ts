@@ -10,6 +10,8 @@ export default {
     return wallets;
   },
   showOne: async (args, hasToken) => {
+    if (!Boolean(args?._id)) throw new Error('Wallet Not Found');
+
     let wallet = await Wallet.findById(args._id).lean();
     if (!wallet) throw new Error('Wallet Not Found');
 
