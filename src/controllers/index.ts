@@ -1,14 +1,14 @@
+import finance from '../services/finance';
 import AuthController from './AuthController';
-import RecoveryPasswordController from './RecoveryPasswordController';
-import UserController from './UserController';
-import WalletController from './WalletController';
-import TicketController from './TicketController';
+import EarningController from './EarningController';
 import FinanceController from './FinanceController';
 import QuestionController from './QuestionController';
-import ReportsController from './ReportsController';
-import EarningController from './EarningController';
+import RecoveryPasswordController from './RecoveryPasswordController';
 import RefreshTokenController from './RefreshToken';
-import finance from '../services/finance';
+import ReportsController from './ReportsController';
+import TicketController from './TicketController';
+import UserController from './UserController';
+import WalletController from './WalletController';
 
 export const dataSources = {
   finance,
