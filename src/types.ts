@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export interface IAuthControllerArgs {
   input: {
     _id: string;
@@ -20,7 +22,7 @@ export interface IAuthControllerArgs {
 }
 
 export interface ITokenProps {
-  _id: string;
+  _id: Types.ObjectId;
   role: 'USER' | 'PREMIUM' | 'ADM';
 }
 
@@ -35,4 +37,19 @@ export enum ERROR_CODE {
   BAD_USER_INPUT = 'BAD_USER_INPUT',
   FORBIDDEN = 'FORBIDDEN',
   API_ERROR = 'API_ERROR',
+}
+
+export interface IEarningQueryControllerArgs {
+  walletID: string;
+  year: number;
+}
+
+export interface IEarningMutationControllerArgs {
+  _id: string;
+  walletID: string;
+  input: {
+    year: number;
+    month: number;
+    amount: number;
+  };
 }
