@@ -1,3 +1,4 @@
+import { IFinanceControllerArgs, IReportsResponseProps } from '../types';
 import {
   getSumAmountWallet,
   getRandomDarkColor,
@@ -6,7 +7,9 @@ import {
 } from '../utils/shareFunc';
 
 export default {
-  getEachTicketChart: currentArray => {
+  getEachTicketChart: (
+    currentArray: IFinanceControllerArgs[],
+  ): IReportsResponseProps[] => {
     try {
       const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
@@ -33,7 +36,7 @@ export default {
       throw new Error(error.message);
     }
   },
-  getEachClassChart: currentArray => {
+  getEachClassChart: (currentArray: IFinanceControllerArgs[]) => {
     try {
       const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
@@ -60,7 +63,7 @@ export default {
       throw new Error(error.message);
     }
   },
-  getEachSectorChart: currentArray => {
+  getEachSectorChart: (currentArray: IFinanceControllerArgs[]) => {
     try {
       const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
@@ -87,7 +90,7 @@ export default {
       throw new Error(error.message);
     }
   },
-  getEachIndustryChart: currentArray => {
+  getEachIndustryChart: (currentArray: IFinanceControllerArgs[]) => {
     try {
       const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 

@@ -77,6 +77,9 @@ export interface IFinanceControllerArgs {
   regularMarketPrice: number;
   financialCurrency: string;
   grade: number;
+  industry: string;
+  sector: string;
+  classSymbol: string;
 }
 
 export enum SORT_RENTABILITY {
@@ -119,7 +122,7 @@ export interface IRebalanceResponseProps {
   currentPercent: number;
   targetPercent: number;
   targetAmount: number;
-  financialCurrency: string;
+  financialCurrency: 'USD' | 'BRL';
 }
 
 export interface IQuestionControllerArgs {
@@ -127,4 +130,61 @@ export interface IQuestionControllerArgs {
     ask: string;
     answer: string;
   };
+}
+
+export enum SORT_TICKET {
+  symbol = 'symbol',
+  grade = 'grade',
+}
+
+export interface ITicketResponseProps {
+  _id: string;
+  symbol: string;
+  name: string;
+  quantity: number;
+  averagePrice: number;
+  grade: number;
+  classSymbol: string;
+}
+
+export interface ITicketMutationControllerArgs {
+  _id: string;
+  walletID: string;
+  input: Omit<ITicketResponseProps, '_id | classSymbol'>;
+}
+
+export interface ITicketQueryControllerArgs {
+  walletID: string;
+  sort: SORT_TICKET;
+}
+
+export interface IReportsResponseProps {
+  _id: string;
+  key: string;
+  value: number;
+  color: string;
+}
+
+export interface IFetchStockApiResponse {
+  chart: {
+    result: Array<{
+      meta: {
+        regularMarketPrice: number;
+        currency: 'USD' | 'BRL';
+      };
+    }>;
+  };
+}
+
+export interface IFetchSummaryApiResponse {
+  quotes: Array<{
+    industry: string;
+    sector: string;
+  }>;
+}
+
+export interface IFetchConvertDollarApiResponse {
+  value: Array<{
+    cotacaoCompra: number;
+  }>;
 }
