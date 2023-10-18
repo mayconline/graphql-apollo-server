@@ -20,7 +20,7 @@ export function getSumAmountEarning(currentArray: any[]) {
   return currentArray.reduce((acc, cur) => acc + cur.amount, 0);
 }
 export function getPercentVariation(SumCost: number, SumAmount: number) {
-  let calcPercent = ((SumAmount - SumCost) / SumCost || 1) * 100;
+  const calcPercent = ((SumAmount - SumCost) / SumCost || 1) * 100;
 
   const percentVariation =
     SumAmount === SumCost
@@ -43,16 +43,15 @@ export function getArraySortByParams(
   inverse = false,
 ) {
   return array.sort((a, b) => {
-    let itema = a[params];
-    let itemb = b[params];
+    const itema = a[params];
+    const itemb = b[params];
 
     if (typeof itema === 'number') {
       return inverse ? itema - itemb : itemb - itema;
-    } else {
-      if (itemb < itema) return 1;
-      if (itemb > itema) return -1;
-      return 0;
     }
+    if (itemb < itema) return 1;
+    if (itemb > itema) return -1;
+    return 0;
   });
 }
 export async function setToken(_id: any, role: any) {
@@ -78,20 +77,20 @@ export function formatSymbol(symbol: string) {
   return symbol.toUpperCase().replace('.SA', '').trim();
 }
 export function getRandomDarkColor() {
-  var lum = -0.25;
-  var hex = String(
-    '#' + Math.random().toString(16).slice(2, 8).toUpperCase(),
+  const lum = -0.25;
+  let hex = String(
+    `#${Math.random().toString(16).slice(2, 8).toUpperCase()}`,
   ).replace(/[^0-9a-f]/gi, '');
   if (hex.length < 6) {
     hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
   }
-  var rgb = '#',
-    c,
-    i;
-  for (i = 0; i < 3; i++) {
+  let rgb = '#';
+  let c;
+  let i;
+  for (i = 0; i < 3; i += 1) {
     c = parseInt(hex.substr(i * 2, 2), 16);
     c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
-    rgb += ('00' + c).substr(c.length);
+    rgb += `00${c}`.substr(c.length);
   }
   return rgb;
 }
@@ -122,15 +121,11 @@ export function getClassTicket(ticket: string) {
     : 'Outros';
 }
 export function getSumByUnicProp(array: any[], key: string, value: string) {
-  let unicProps: any[] = [];
+  const unicKeysWithValue = [
+    ...new Set(array.filter(item => !!item[value]).map(item => item[key])),
+  ];
 
-  array.map(item => {
-    if (!unicProps.includes(item[key]) && !!item[value]) {
-      return unicProps.push(item[key]);
-    }
-  });
-
-  const sumByProp = unicProps.map((unic, index) => ({
+  const sumByProp = unicKeysWithValue.map((unic, index) => ({
     _id: unic,
     [key]: unic,
     [value]: array
@@ -248,7 +243,7 @@ export function getTranslateSector(sector: string) {
     'REIT—Specialty': 'Imobiliário',
     Tobacco: 'Tabaco',
     'Utilities—Independent Power Producers': 'Elétrico',
-    'Conglomerates':'Holding'
+    Conglomerates: 'Holding',
   }[sector];
 }
 export function formatTicketByFraction(ticket: string) {

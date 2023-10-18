@@ -51,5 +51,6 @@ module.exports = {
     ],
     'prettier/prettier': 'error',
     'no-shadow': 'off',
+    'no-nested-ternary': 'off',
   },
 };
