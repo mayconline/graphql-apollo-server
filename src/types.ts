@@ -21,6 +21,20 @@ export interface IAuthControllerArgs {
   };
 }
 
+export interface IRecoveryPasswordSendControllerArgs {
+  input: {
+    email: string;
+  };
+}
+
+export interface IRecoveryPasswordResetControllerArgs {
+  input: {
+    email: string;
+    code: string;
+    password: string;
+  };
+}
+
 export interface ITokenProps {
   _id: Types.ObjectId;
   role: 'USER' | 'PREMIUM' | 'ADM';
