@@ -13,8 +13,8 @@ const getStatus = percent => {
 
 export default {
   rentability: (currentArray, sort) => {
-    let sumAmountWallet = getSumAmountWallet(currentArray);
-    let sumCostWallet = getSumCostWallet(currentArray);
+    const sumAmountWallet = getSumAmountWallet(currentArray);
+    const sumCostWallet = getSumCostWallet(currentArray);
 
     const res = currentArray.map(
       ({
@@ -26,10 +26,10 @@ export default {
         regularMarketPrice,
         financialCurrency,
       }) => {
-        let costAmount = quantity * averagePrice;
-        let currentAmount = quantity * regularMarketPrice;
-        let variationAmount = currentAmount - costAmount;
-        let variationPercent = getPercentVariation(costAmount, currentAmount);
+        const costAmount = quantity * averagePrice;
+        const currentAmount = quantity * regularMarketPrice;
+        const variationAmount = currentAmount - costAmount;
+        const variationPercent = getPercentVariation(costAmount, currentAmount);
 
         return {
           _id,
@@ -49,8 +49,8 @@ export default {
   },
 
   rebalance: (currentArray, sort) => {
-    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
-    let sumGradeWallet = getSumGradeWallet(currentArray) || 1;
+    const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
+    const sumGradeWallet = getSumGradeWallet(currentArray) || 1;
 
     const rebalanced = currentArray.map(
       ({
@@ -62,12 +62,12 @@ export default {
         regularMarketPrice,
         financialCurrency,
       }) => {
-        let currentAmount = quantity * regularMarketPrice;
-        let gradePercent = (grade / sumGradeWallet) * 100;
-        let currentPercent = (currentAmount / sumAmountWallet) * 100;
-        let targetPercent = gradePercent - currentPercent;
-        let targetAmount = (targetPercent * sumAmountWallet) / 100;
-        let status = getStatus(targetPercent);
+        const currentAmount = quantity * regularMarketPrice;
+        const gradePercent = (grade / sumGradeWallet) * 100;
+        const currentPercent = (currentAmount / sumAmountWallet) * 100;
+        const targetPercent = gradePercent - currentPercent;
+        const targetAmount = (targetPercent * sumAmountWallet) / 100;
+        const status = getStatus(targetPercent);
 
         return {
           _id,
