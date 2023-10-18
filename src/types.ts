@@ -53,3 +53,64 @@ export interface IEarningMutationControllerArgs {
     amount: number;
   };
 }
+
+export interface IFinanceControllerArgs {
+  _id: string;
+  symbol: string;
+  longName: string;
+  quantity: number;
+  averagePrice: number;
+  regularMarketPrice: number;
+  financialCurrency: string;
+  grade: number;
+}
+
+export enum SORT_RENTABILITY {
+  symbol = 'symbol',
+  costAmount = 'costAmount',
+  currentAmount = 'currentAmount',
+  variationPercent = 'variationPercent',
+}
+
+export interface IRentabilityResponseProps {
+  _id: string;
+  symbol: string;
+  longName: string;
+  sumCostWallet: number;
+  sumAmountWallet: number;
+  costAmount: number;
+  currentAmount: number;
+  variationAmount: number;
+  variationPercent: number;
+  financialCurrency: string;
+}
+
+export enum SORT_REBALANCE {
+  symbol = 'symbol',
+  status = 'status',
+  currentAmount = 'currentAmount',
+  targetAmount = 'targetAmount',
+  currentPercent = 'currentPercent',
+  targetPercent = 'targetPercent',
+  gradePercent = 'gradePercent',
+}
+
+export interface IRebalanceResponseProps {
+  _id: string;
+  symbol: string;
+  longName: string;
+  status: 'BUY' | 'KEEP' | 'ANALYZE';
+  currentAmount: number;
+  gradePercent: number;
+  currentPercent: number;
+  targetPercent: number;
+  targetAmount: number;
+  financialCurrency: string;
+}
+
+export interface IQuestionControllerArgs {
+  input: {
+    ask: string;
+    answer: string;
+  };
+}
