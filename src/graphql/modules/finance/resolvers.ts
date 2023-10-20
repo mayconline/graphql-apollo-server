@@ -1,8 +1,11 @@
 export default {
   Query: {
     getApiFinance: async (_, args, { dataSources }) => {
-      const finance = await dataSources.finance.getFinance(args.symbol);
-      return finance;
+      try {
+        return await dataSources.finance.getFinance(args.symbol);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
     },
   },
 };

@@ -5,7 +5,8 @@ export const typeDefs = gql`
     regularMarketPrice: Float
     financialCurrency: String
     longName: String
-    symbol: String
+    sector: String
+    industry: String
   }
 
   type Query {

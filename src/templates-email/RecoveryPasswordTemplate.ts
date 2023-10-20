@@ -88,7 +88,12 @@ export const recoveryPasswordTemplate = async (email: string, code: string) =>
     
         </mj-wrapper>
     
-        <mj-include path="./shared/footer.mjml" />
+        <mj-section>
+        <mj-column>
+          <mj-text align="center" font-size="12px" line-height="16px" color="#B5BBC9">© ${new Date().getFullYear()} Rebalanceei
+          </mj-text>
+        </mj-column>
+      </mj-section>
       </mj-body>
     </mjml>   
 `,
