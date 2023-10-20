@@ -1,5 +1,3 @@
-import { Types } from 'mongoose';
-
 export interface IAuthControllerArgs {
   input: {
     _id: string;
@@ -36,7 +34,7 @@ export interface IRecoveryPasswordResetControllerArgs {
 }
 
 export interface ITokenProps {
-  _id: Types.ObjectId;
+  _id: string;
   role: 'USER' | 'PREMIUM' | 'ADM';
 }
 
@@ -63,7 +61,7 @@ export enum ERROR_CODE {
 }
 
 export interface IWalletControllerArgs {
-  _id: Types.ObjectId;
+  _id: string;
   input: {
     description: string;
   };

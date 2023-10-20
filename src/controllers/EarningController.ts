@@ -26,7 +26,7 @@ const index = async (
     if (!wallet) throw new Error('Wallet Not Found');
 
     const isSameUserOrAdm =
-      hasToken._id === wallet.user || hasToken.role === 'ADM';
+      hasToken._id === wallet.user?.toString() || hasToken.role === 'ADM';
     if (!isSameUserOrAdm) throw new Error('User Unauthorized');
 
     const accEarningsByYear = getSumByUnicProp(
@@ -52,7 +52,7 @@ const show = async (
     if (!wallet) throw new Error('Wallet Not Found');
 
     const isSameUserOrAdm =
-      hasToken._id === wallet.user || hasToken.role === 'ADM';
+      hasToken._id === wallet.user?.toString() || hasToken.role === 'ADM';
     if (!isSameUserOrAdm) throw new Error('User Unauthorized');
 
     if (!wallet.earning.length) {
@@ -103,7 +103,7 @@ const store = async (
     const wallet = await Wallet.findById(args.walletID).populate('earning');
     if (!wallet) throw new Error('Wallet Not Found');
 
-    const isSameUser = hasToken._id === wallet.user;
+    const isSameUser = hasToken._id === wallet.user?.toString();
     if (!isSameUser) throw new Error('User Unauthorized');
 
     const isSameEarning = wallet.earning.some(

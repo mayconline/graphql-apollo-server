@@ -21,7 +21,7 @@ export default {
       const wallet = await Wallet.findById(args._id).lean();
       if (!wallet) throw new Error('Wallet Not Found');
 
-      const isSameUser = hasToken._id === wallet.user;
+      const isSameUser = hasToken._id === wallet.user?.toString();
       if (!isSameUser) throw new Error('User Unauthorized');
 
       return wallet;
@@ -80,7 +80,7 @@ export default {
       let wallet = await Wallet.findById(args._id);
       if (!wallet) throw new Error('Wallet Not Found');
 
-      const isSameUser = hasToken._id === wallet.user;
+      const isSameUser = hasToken._id === wallet.user?.toString();
       if (!isSameUser) throw new Error('User Unauthorized');
 
       await wallet.updateOne({
@@ -99,7 +99,7 @@ export default {
       const wallet = await Wallet.findById(args._id);
       if (!wallet) throw new Error('Wallet Not Found');
 
-      const isSameUser = hasToken._id === wallet.user;
+      const isSameUser = hasToken._id === wallet.user?.toString();
       if (!isSameUser) throw new Error('User Unauthorized');
 
       await Ticket.deleteMany({

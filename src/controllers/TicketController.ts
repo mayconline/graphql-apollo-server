@@ -33,7 +33,8 @@ export default {
       if (!wallet) throw new Error('Wallet Not Found');
 
       const isSameUserOrAdm =
-        hasToken._id === wallet.user || hasToken.role === 'ADM';
+        hasToken._id === wallet.user?.toString() || hasToken.role === 'ADM';
+
       if (!isSameUserOrAdm) throw new Error('User Unauthorized');
 
       const addClassSymbol = wallet.ticket.map((ticket: any) => ({
@@ -64,7 +65,7 @@ export default {
       );
       if (!wallet) throw new Error('Wallet Not Found');
 
-      const isSameUser = hasToken._id === wallet.user;
+      const isSameUser = hasToken._id === wallet.user?.toString();
       if (!isSameUser) throw new Error('User Unauthorized');
 
       const sameSymbol = await wallet.ticket.find(
@@ -127,7 +128,7 @@ export default {
       const wallet = await Wallet.findById(args.walletID);
       if (!wallet) throw new Error('Wallet Not Found');
 
-      const isSameUser = hasToken._id === wallet.user;
+      const isSameUser = hasToken._id === wallet.user?.toString();
       if (!isSameUser) throw new Error('User Unauthorized');
 
       await wallet.ticket.splice(wallet.ticket.indexOf(ticket._id), 1);
