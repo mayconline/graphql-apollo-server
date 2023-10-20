@@ -46,11 +46,27 @@ export interface IRefreshControllerArgs {
   };
 }
 
+export interface IUserControllerArgs {
+  _id: string;
+  input: {
+    email: string;
+    password: string;
+    checkTerms: boolean;
+  };
+}
+
 export enum ERROR_CODE {
   UNAUTHENTICATED = 'UNAUTHENTICATED',
   BAD_USER_INPUT = 'BAD_USER_INPUT',
   FORBIDDEN = 'FORBIDDEN',
   API_ERROR = 'API_ERROR',
+}
+
+export interface IWalletControllerArgs {
+  _id: Types.ObjectId;
+  input: {
+    description: string;
+  };
 }
 
 export interface IEarningQueryControllerArgs {
