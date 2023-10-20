@@ -10,7 +10,8 @@ describe('Query Test', () => {
         regularMarketPrice
         financialCurrency
         longName
-        symbol
+        sector
+        industry
       }
     }
   `;

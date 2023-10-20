@@ -4,7 +4,6 @@ import { addMocksToSchema } from '@graphql-tools/mock';
 import { gql } from 'graphql-tag';
 
 import dataMock from './dataMock';
-import { getToken } from '../utils/shareFunc';
 import SendGrid from '../services/sendgrid';
 
 import { dataSources } from '../controllers';
@@ -16,8 +15,6 @@ const mockApolloServer = new ApolloServer({
     schema: makeExecutableSchema({ typeDefs, resolvers }),
   }),
 });
-
-(getToken as any) = jest.fn();
 
 dataSources.finance.getCurrentFinanceByTickets = jest.fn(
   () => dataMock.getCurrentFinanceByTickets,
