@@ -1,4 +1,11 @@
 import {
+  IFinanceControllerArgs,
+  IRebalanceResponseProps,
+  IRentabilityResponseProps,
+  SORT_REBALANCE,
+  SORT_RENTABILITY,
+} from '../types';
+import {
   getSumAmountWallet,
   getSumCostWallet,
   getSumGradeWallet,
@@ -12,78 +19,95 @@ const getStatus = percent => {
 };
 
 export default {
-  rentability: (currentArray, sort) => {
-    let sumAmountWallet = getSumAmountWallet(currentArray);
-    let sumCostWallet = getSumCostWallet(currentArray);
+  rentability: (
+    currentArray: IFinanceControllerArgs[],
+    sort: SORT_RENTABILITY,
+  ): IRentabilityResponseProps[] => {
+    try {
+      const sumAmountWallet = getSumAmountWallet(currentArray);
+      const sumCostWallet = getSumCostWallet(currentArray);
 
-    const res = currentArray.map(
-      ({
-        _id,
-        symbol,
-        longName,
-        quantity,
-        averagePrice,
-        regularMarketPrice,
-        financialCurrency,
-      }) => {
-        let costAmount = quantity * averagePrice;
-        let currentAmount = quantity * regularMarketPrice;
-        let variationAmount = currentAmount - costAmount;
-        let variationPercent = getPercentVariation(costAmount, currentAmount);
-
-        return {
+      const res = currentArray.map(
+        ({
           _id,
           symbol,
           longName,
-          sumCostWallet,
-          sumAmountWallet,
-          costAmount,
-          currentAmount,
-          variationAmount,
-          variationPercent,
+          quantity,
+          averagePrice,
+          regularMarketPrice,
           financialCurrency,
-        };
-      },
-    );
-    return getArraySortByParams(res, sort);
+        }) => {
+          const costAmount = quantity * averagePrice;
+          const currentAmount = quantity * regularMarketPrice;
+          const variationAmount = currentAmount - costAmount;
+          const variationPercent = getPercentVariation(
+            costAmount,
+            currentAmount,
+          );
+
+          return {
+            _id,
+            symbol,
+            longName,
+            sumCostWallet,
+            sumAmountWallet,
+            costAmount,
+            currentAmount,
+            variationAmount,
+            variationPercent,
+            financialCurrency,
+          };
+        },
+      );
+      return getArraySortByParams(res, sort);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
 
-  rebalance: (currentArray, sort) => {
-    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
-    let sumGradeWallet = getSumGradeWallet(currentArray) || 1;
+  rebalance: (
+    currentArray: IFinanceControllerArgs[],
+    sort: SORT_REBALANCE,
+  ): IRebalanceResponseProps[] => {
+    try {
+      const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
+      const sumGradeWallet = getSumGradeWallet(currentArray) || 1;
 
-    const rebalanced = currentArray.map(
-      ({
-        _id,
-        symbol,
-        longName,
-        quantity,
-        grade,
-        regularMarketPrice,
-        financialCurrency,
-      }) => {
-        let currentAmount = quantity * regularMarketPrice;
-        let gradePercent = (grade / sumGradeWallet) * 100;
-        let currentPercent = (currentAmount / sumAmountWallet) * 100;
-        let targetPercent = gradePercent - currentPercent;
-        let targetAmount = (targetPercent * sumAmountWallet) / 100;
-        let status = getStatus(targetPercent);
-
-        return {
+      const rebalanced = currentArray.map(
+        ({
           _id,
           symbol,
           longName,
-          status,
-          currentAmount,
-          gradePercent,
-          currentPercent,
-          targetPercent,
-          targetAmount,
+          quantity,
+          grade,
+          regularMarketPrice,
           financialCurrency,
-        };
-      },
-    );
+        }) => {
+          const currentAmount = quantity * regularMarketPrice;
+          const gradePercent = (grade / sumGradeWallet) * 100;
+          const currentPercent = (currentAmount / sumAmountWallet) * 100;
+          const targetPercent = gradePercent - currentPercent;
+          const targetAmount = (targetPercent * sumAmountWallet) / 100;
+          const status = getStatus(targetPercent);
 
-    return getArraySortByParams(rebalanced, sort);
+          return {
+            _id,
+            symbol,
+            longName,
+            status,
+            currentAmount,
+            gradePercent,
+            currentPercent,
+            targetPercent,
+            targetAmount,
+            financialCurrency,
+          };
+        },
+      );
+
+      return getArraySortByParams(rebalanced, sort);
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
 };

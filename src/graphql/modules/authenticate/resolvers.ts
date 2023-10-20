@@ -1,16 +1,29 @@
 export default {
   Mutation: {
-    updateRole: async (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : await dataSources.AuthController.update(args, hasToken),
+    updateRole: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    login: async (_, args, { dataSources }) =>
-      await dataSources.AuthController.show(args),
+        return await dataSources.AuthController.update(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    login: async (_, args, { dataSources }) => {
+      try {
+        return await dataSources.AuthController.show(args);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    reactivateUser: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    reactivateUser: async (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : await await dataSources.AuthController.reactivateUser(args, hasToken),
+        return await dataSources.AuthController.reactivateUser(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
   },
 };

@@ -1,92 +1,117 @@
 import Wallet from '../models/Wallet';
 import Ticket from '../models/Ticket';
+import { ITokenProps, IWalletControllerArgs } from '../types';
 
 export default {
-  index: async hasToken => {
-    if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+  index: async (hasToken: ITokenProps) => {
+    try {
+      if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
 
-    let wallets = await Wallet.find().sort('-updatedAt').lean();
+      const wallets = await Wallet.find().sort('-updatedAt').lean();
 
-    return wallets;
-  },
-  showOne: async (args, hasToken) => {
-    if (!Boolean(args?._id)) throw new Error('Wallet Not Found');
-
-    let wallet = await Wallet.findById(args._id).lean();
-    if (!wallet) throw new Error('Wallet Not Found');
-
-    let isSameUser = hasToken._id == wallet.user;
-    if (!isSameUser) throw new Error('User Unauthorized');
-
-    return wallet;
-  },
-  show: async hasToken => {
-    let wallet = await Wallet.find({ user: hasToken._id })
-      .populate('ticket')
-      .populate('user');
-
-    if (!wallet) throw new Error('Wallet Not Found');
-
-    let walletLengthOnUser = wallet.length;
-
-    if (hasToken.role == 'USER' && walletLengthOnUser >= 2) {
-      let showWallet = wallet.filter((_, index) => index <= 1);
-
-      return showWallet;
+      return wallets;
+    } catch (error: any) {
+      throw new Error(error.message);
     }
-
-    return wallet;
   },
-  store: async (args, hasToken) => {
-    let wallet = await Wallet.find({ user: hasToken._id });
-    let walletLengthOnUser = wallet.length;
+  showOne: async (args: IWalletControllerArgs, hasToken: ITokenProps) => {
+    try {
+      if (!args?._id) throw new Error('Wallet Not Found');
 
-    if (hasToken.role == 'USER' && walletLengthOnUser >= 1)
-      throw new Error('Wallet limit Reached');
+      const wallet = await Wallet.findById(args._id).lean();
+      if (!wallet) throw new Error('Wallet Not Found');
 
-    let newWallet: any = await Wallet.create({
-      user: hasToken._id,
-      description: args.input.description,
-    });
+      const isSameUser = hasToken._id === wallet.user;
+      if (!isSameUser) throw new Error('User Unauthorized');
 
-    newWallet = {
-      ...newWallet._doc,
-      sumCostWallet: 0,
-      sumAmountWallet: 0,
-      sumGradeWallet: 0,
-    };
-
-    return newWallet;
+      return wallet;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
-  update: async (args, hasToken) => {
-    let wallet = await Wallet.findById(args._id);
-    if (!wallet) throw new Error('Wallet Not Found');
+  show: async (hasToken: ITokenProps) => {
+    try {
+      const wallet = await Wallet.find({ user: hasToken._id })
+        .populate('ticket')
+        .populate('user');
 
-    let isSameUser = hasToken._id == wallet.user;
-    if (!isSameUser) throw new Error('User Unauthorized');
+      if (!wallet) throw new Error('Wallet Not Found');
 
-    await wallet.updateOne({
-      description: args.input.description,
-    });
+      const walletLengthOnUser = wallet.length;
 
-    wallet = await Wallet.findById(args._id).lean();
+      if (hasToken.role === 'USER' && walletLengthOnUser >= 2) {
+        const showWallet = wallet.filter((_, index) => index <= 1);
 
-    return wallet;
+        return showWallet;
+      }
+
+      return wallet;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
-  destroy: async (args, hasToken) => {
-    let wallet = await Wallet.findById(args._id);
-    if (!wallet) throw new Error('Wallet Not Found');
+  store: async (args: IWalletControllerArgs, hasToken: ITokenProps) => {
+    try {
+      const wallet = await Wallet.find({ user: hasToken._id });
+      const walletLengthOnUser = wallet.length;
 
-    let isSameUser = hasToken._id == wallet.user;
-    if (!isSameUser) throw new Error('User Unauthorized');
+      if (hasToken.role === 'USER' && walletLengthOnUser >= 1)
+        throw new Error('Wallet limit Reached');
 
-    await Ticket.deleteMany({
-      _id: {
-        $in: wallet?.ticket,
-      },
-    });
+      let newWallet: any = await Wallet.create({
+        user: hasToken._id,
+        description: args.input.description,
+      });
 
-    await wallet.deleteOne();
-    return !!wallet;
+      newWallet = {
+        ...newWallet._doc,
+        sumCostWallet: 0,
+        sumAmountWallet: 0,
+        sumGradeWallet: 0,
+      };
+
+      return newWallet;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  update: async (args: IWalletControllerArgs, hasToken: ITokenProps) => {
+    try {
+      let wallet = await Wallet.findById(args._id);
+      if (!wallet) throw new Error('Wallet Not Found');
+
+      const isSameUser = hasToken._id === wallet.user;
+      if (!isSameUser) throw new Error('User Unauthorized');
+
+      await wallet.updateOne({
+        description: args.input.description,
+      });
+
+      wallet = await Wallet.findById(args._id).lean();
+
+      return wallet;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  },
+  destroy: async (args: IWalletControllerArgs, hasToken: ITokenProps) => {
+    try {
+      const wallet = await Wallet.findById(args._id);
+      if (!wallet) throw new Error('Wallet Not Found');
+
+      const isSameUser = hasToken._id === wallet.user;
+      if (!isSameUser) throw new Error('User Unauthorized');
+
+      await Ticket.deleteMany({
+        _id: {
+          $in: wallet?.ticket,
+        },
+      });
+
+      await wallet.deleteOne();
+      return !!wallet;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
 };

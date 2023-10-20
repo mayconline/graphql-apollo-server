@@ -1,25 +1,28 @@
 export default {
   Query: {
     rebalances: async (_, args, { dataSources, hasToken }) => {
-      if (!hasToken) return new Error('Token Not Exists');
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-      const ticketArray = await dataSources.TicketController.show(
-        {
-          walletID: args.walletID,
-        },
-        hasToken,
-      );
+        const ticketArray = await dataSources.TicketController.show(
+          {
+            walletID: args.walletID,
+          },
+          hasToken,
+        );
 
-      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
-        ticketArray,
-      );
+        const currentArray =
+          await dataSources.finance.getCurrentFinanceByTickets(ticketArray);
 
-      const rebalanced = await dataSources.FinanceController.rebalance(
-        currentArray,
-        args.sort,
-      );
+        const rebalanced = await dataSources.FinanceController.rebalance(
+          currentArray,
+          args.sort,
+        );
 
-      return rebalanced;
+        return rebalanced;
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
     },
   },
 };

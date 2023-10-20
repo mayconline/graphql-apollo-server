@@ -1,26 +1,49 @@
 export default {
   Query: {
-    users: (_, __, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.UserController.index(hasToken),
-    getUserByToken: (_, __, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.UserController.show(hasToken),
+    users: async (_, __, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
+
+        return await dataSources.UserController.index(hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    getUserByToken: async (_, __, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
+
+        return await dataSources.UserController.show(hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
   },
   Mutation: {
-    createUser: (_, args, { dataSources }) =>
-      dataSources.UserController.store(args),
+    createUser: async (_, args, { dataSources }) => {
+      try {
+        return await dataSources.UserController.store(args);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    updateUser: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    updateUser: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.UserController.update(args, hasToken),
+        return await dataSources.UserController.update(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    deleteUser: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    deleteUser: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.UserController.destroy(args, hasToken),
+        return await dataSources.UserController.destroy(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
   },
 };

@@ -1,23 +1,43 @@
 export default {
   Query: {
-    getEarningAccByYear: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.EarningController.index(args, hasToken),
-    getEarningByWallet: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.EarningController.show(args, hasToken),
-    getSumEarning: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.EarningController.count(args, hasToken),
+    getEarningAccByYear: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
+
+        return await dataSources.EarningController.index(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    getEarningByWallet: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
+
+        return await dataSources.EarningController.show(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    getSumEarning: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
+
+        return await dataSources.EarningController.count(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
   },
 
   Mutation: {
-    updateEarning: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.EarningController.update(args, hasToken),
+    updateEarning: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
+
+        return await dataSources.EarningController.update(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
   },
 };

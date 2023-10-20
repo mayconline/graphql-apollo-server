@@ -1,19 +1,13 @@
 import { GraphQLError } from 'graphql';
 
-enum ERROR_CODE {
-  UNAUTHENTICATED = 'UNAUTHENTICATED',
-  BAD_USER_INPUT = 'BAD_USER_INPUT',
-  FORBIDDEN = 'FORBIDDEN',
-  API_ERROR = 'API_ERROR',
-}
+import { ERROR_CODE } from '../types';
 
-export const setGraphQLError = (message, code) => {
-  return new GraphQLError(message, {
+export const setGraphQLError = (message, code) =>
+  new GraphQLError(message, {
     extensions: {
       code,
     },
   });
-};
 
 export function getErrorMessage(err) {
   switch (err.message) {

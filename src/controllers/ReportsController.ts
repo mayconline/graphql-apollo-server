@@ -1,3 +1,4 @@
+import { IFinanceControllerArgs, IReportsResponseProps } from '../types';
 import {
   getSumAmountWallet,
   getRandomDarkColor,
@@ -6,96 +7,114 @@ import {
 } from '../utils/shareFunc';
 
 export default {
-  getEachTicketChart: currentArray => {
-    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
+  getEachTicketChart: (
+    currentArray: IFinanceControllerArgs[],
+  ): IReportsResponseProps[] => {
+    try {
+      const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
-    const chart = currentArray.map(
-      ({ _id, symbol, quantity, regularMarketPrice }) => {
-        let currentAmount = quantity * regularMarketPrice;
-        let currentPercent = (currentAmount / sumAmountWallet) * 100;
+      const chart = currentArray.map(
+        ({ _id, symbol, quantity, regularMarketPrice }) => {
+          const currentAmount = quantity * regularMarketPrice;
+          const currentPercent = (currentAmount / sumAmountWallet) * 100;
 
-        return {
-          _id,
-          key: symbol,
-          value: currentPercent,
-          color: getRandomDarkColor(),
-        };
-      },
-    );
+          return {
+            _id,
+            key: symbol,
+            value: currentPercent,
+            color: getRandomDarkColor(),
+          };
+        },
+      );
 
-    const chartByClass = getSumByUnicProp(chart, 'key', 'value');
+      const chartByClass = getSumByUnicProp(chart, 'key', 'value');
 
-    const sortedArray = getArraySortByParams(chartByClass, 'value');
+      const sortedArray = getArraySortByParams(chartByClass, 'value');
 
-    return sortedArray;
+      return sortedArray;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
-  getEachClassChart: currentArray => {
-    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
+  getEachClassChart: (currentArray: IFinanceControllerArgs[]) => {
+    try {
+      const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
-    const chart = currentArray.map(
-      ({ _id, quantity, regularMarketPrice, classSymbol }) => {
-        let currentAmount = quantity * regularMarketPrice;
-        let currentPercent = (currentAmount / sumAmountWallet) * 100;
+      const chart = currentArray.map(
+        ({ _id, quantity, regularMarketPrice, classSymbol }) => {
+          const currentAmount = quantity * regularMarketPrice;
+          const currentPercent = (currentAmount / sumAmountWallet) * 100;
 
-        return {
-          _id,
-          key: classSymbol,
-          value: currentPercent,
-          color: getRandomDarkColor(),
-        };
-      },
-    );
+          return {
+            _id,
+            key: classSymbol,
+            value: currentPercent,
+            color: getRandomDarkColor(),
+          };
+        },
+      );
 
-    const chartByClass = getSumByUnicProp(chart, 'key', 'value');
+      const chartByClass = getSumByUnicProp(chart, 'key', 'value');
 
-    const sortedArray = getArraySortByParams(chartByClass, 'value');
+      const sortedArray = getArraySortByParams(chartByClass, 'value');
 
-    return sortedArray;
+      return sortedArray;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
-  getEachSectorChart: currentArray => {
-    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
+  getEachSectorChart: (currentArray: IFinanceControllerArgs[]) => {
+    try {
+      const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
-    const chart = currentArray.map(
-      ({ _id, quantity, regularMarketPrice, sector }) => {
-        let currentAmount = quantity * regularMarketPrice;
-        let currentPercent = (currentAmount / sumAmountWallet) * 100;
+      const chart = currentArray.map(
+        ({ _id, quantity, regularMarketPrice, sector }) => {
+          const currentAmount = quantity * regularMarketPrice;
+          const currentPercent = (currentAmount / sumAmountWallet) * 100;
 
-        return {
-          _id,
-          key: sector,
-          value: currentPercent,
-          color: getRandomDarkColor(),
-        };
-      },
-    );
+          return {
+            _id,
+            key: sector,
+            value: currentPercent,
+            color: getRandomDarkColor(),
+          };
+        },
+      );
 
-    const chartByClass = getSumByUnicProp(chart, 'key', 'value');
+      const chartByClass = getSumByUnicProp(chart, 'key', 'value');
 
-    const sortedArray = getArraySortByParams(chartByClass, 'value');
+      const sortedArray = getArraySortByParams(chartByClass, 'value');
 
-    return sortedArray;
+      return sortedArray;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
-  getEachIndustryChart: currentArray => {
-    let sumAmountWallet = getSumAmountWallet(currentArray) || 1;
+  getEachIndustryChart: (currentArray: IFinanceControllerArgs[]) => {
+    try {
+      const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
 
-    const chart = currentArray.map(
-      ({ _id, quantity, regularMarketPrice, industry }) => {
-        let currentAmount = quantity * regularMarketPrice;
-        let currentPercent = (currentAmount / sumAmountWallet) * 100;
+      const chart = currentArray.map(
+        ({ _id, quantity, regularMarketPrice, industry }) => {
+          const currentAmount = quantity * regularMarketPrice;
+          const currentPercent = (currentAmount / sumAmountWallet) * 100;
 
-        return {
-          _id,
-          key: industry,
-          value: currentPercent,
-          color: getRandomDarkColor(),
-        };
-      },
-    );
+          return {
+            _id,
+            key: industry,
+            value: currentPercent,
+            color: getRandomDarkColor(),
+          };
+        },
+      );
 
-    const chartByClass = getSumByUnicProp(chart, 'key', 'value');
+      const chartByClass = getSumByUnicProp(chart, 'key', 'value');
 
-    const sortedArray = getArraySortByParams(chartByClass, 'value');
+      const sortedArray = getArraySortByParams(chartByClass, 'value');
 
-    return sortedArray;
+      return sortedArray;
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
   },
 };

@@ -10,7 +10,8 @@ describe('Query Test', () => {
         regularMarketPrice
         financialCurrency
         longName
-        symbol
+        sector
+        industry
       }
     }
   `;
@@ -34,6 +35,7 @@ describe('Query Test', () => {
     expect(bodyData.getApiFinance).toHaveProperty('regularMarketPrice');
     expect(bodyData.getApiFinance).toHaveProperty('financialCurrency');
     expect(bodyData.getApiFinance).toHaveProperty('longName');
-    expect(bodyData.getApiFinance).toHaveProperty('symbol');
+    expect(bodyData.getApiFinance).toHaveProperty('sector');
+    expect(bodyData.getApiFinance).toHaveProperty('industry');
   });
 });

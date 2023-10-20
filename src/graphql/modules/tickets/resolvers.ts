@@ -1,27 +1,49 @@
 export default {
   Query: {
-    tickets: (_, __, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.TicketController.index(hasToken),
+    tickets: async (_, __, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    getTicketsByWallet: (_, args, { dataSources, hasToken }) =>
-      dataSources.TicketController.show(args, hasToken),
+        return await dataSources.TicketController.index(hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    getTicketsByWallet: async (_, args, { dataSources, hasToken }) => {
+      try {
+        return await dataSources.TicketController.show(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
   },
   Mutation: {
-    createTicket: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.TicketController.store(args, hasToken),
+    createTicket: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    updateTicket: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.TicketController.update(args),
+        return await dataSources.TicketController.store(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    updateTicket: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    deleteTicket: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.TicketController.destroy(args, hasToken),
+        return await dataSources.TicketController.update(args);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    deleteTicket: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
+
+        return await dataSources.TicketController.destroy(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
   },
 };

@@ -7,149 +7,203 @@ import {
 
 export default {
   Wallet: {
-    user: (users, __, { dataSources }) =>
-      dataSources.UserController.show({ _id: users.user }),
-
-    ticket: (wallets, __, { dataSources, hasToken }) =>
-      dataSources.TicketController.show({ walletID: wallets._id }, hasToken),
-
+    user: async (wallets, __, { dataSources }) => {
+      try {
+        return await dataSources.UserController.show({ _id: wallets.user });
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    ticket: async (wallets, __, { dataSources, hasToken }) => {
+      try {
+        return await dataSources.TicketController.show(
+          { walletID: wallets._id },
+          hasToken,
+        );
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
     sumGradeWallet: async (wallets, __, { dataSources, hasToken }) => {
-      const ticketArray = await dataSources.TicketController.show(
-        {
-          walletID: wallets._id,
-        },
-        hasToken,
-      );
-      return getSumGradeWallet(ticketArray);
+      try {
+        const ticketArray = await dataSources.TicketController.show(
+          {
+            walletID: wallets._id,
+          },
+          hasToken,
+        );
+
+        return getSumGradeWallet(ticketArray);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
     },
 
     sumCostWallet: async (wallets, __, { dataSources, hasToken }) => {
-      const ticketArray = await dataSources.TicketController.show(
-        {
-          walletID: wallets._id,
-        },
-        hasToken,
-      );
-      return getSumCostWallet(ticketArray);
+      try {
+        const ticketArray = await dataSources.TicketController.show(
+          {
+            walletID: wallets._id,
+          },
+          hasToken,
+        );
+
+        return getSumCostWallet(ticketArray);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
     },
 
     sumAmountWallet: async (wallets, __, { dataSources, hasToken }) => {
-      const ticketArray = await dataSources.TicketController.show(
-        {
-          walletID: wallets._id,
-        },
-        hasToken,
-      );
+      try {
+        const ticketArray = await dataSources.TicketController.show(
+          {
+            walletID: wallets._id,
+          },
+          hasToken,
+        );
 
-      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
-        ticketArray,
-      );
+        const currentArray =
+          await dataSources.finance.getCurrentFinanceByTickets(ticketArray);
 
-      return getSumAmountWallet(currentArray);
+        return getSumAmountWallet(currentArray);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
     },
     percentRentabilityWallet: async (
       wallets,
       __,
       { dataSources, hasToken },
     ) => {
-      const ticketArray = await dataSources.TicketController.show(
-        {
-          walletID: wallets._id,
-        },
-        hasToken,
-      );
+      try {
+        const ticketArray = await dataSources.TicketController.show(
+          {
+            walletID: wallets._id,
+          },
+          hasToken,
+        );
 
-      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
-        ticketArray,
-      );
+        const currentArray =
+          await dataSources.finance.getCurrentFinanceByTickets(ticketArray);
 
-      let SumAmount = getSumAmountWallet(currentArray);
-      let SumCost = getSumCostWallet(ticketArray);
+        const SumAmount = getSumAmountWallet(currentArray);
+        const SumCost = getSumCostWallet(ticketArray);
 
-      return getPercentVariation(SumCost, SumAmount);
+        return getPercentVariation(SumCost, SumAmount);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
     },
     percentPositionWallet: async (wallets, __, { dataSources, hasToken }) => {
-      const ticketArray = await dataSources.TicketController.show(
-        {
-          walletID: wallets._id,
-        },
-        hasToken,
-      );
+      try {
+        const ticketArray = await dataSources.TicketController.show(
+          {
+            walletID: wallets._id,
+          },
+          hasToken,
+        );
 
-      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
-        ticketArray,
-      );
+        const currentArray =
+          await dataSources.finance.getCurrentFinanceByTickets(ticketArray);
 
-      let SumAmount = getSumAmountWallet(currentArray);
-      let sumAmountAllWallet = wallets.sumAmountAllWallet;
+        const SumAmount = getSumAmountWallet(currentArray);
+        const { sumAmountAllWallet } = wallets;
 
-      let percent = (SumAmount * 100) / sumAmountAllWallet || 0;
+        const percent = (SumAmount * 100) / sumAmountAllWallet || 0;
 
-      return percent;
+        return percent;
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
     },
   },
   Query: {
-    wallets: (_, __, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.WalletController.index(hasToken),
+    wallets: async (_, __, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    getWalletById: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.WalletController.showOne(args, hasToken),
+        return await dataSources.WalletController.index(hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    getWalletById: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
+        return await dataSources.WalletController.showOne(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
     getWalletByUser: async (_, __, { dataSources, hasToken }) => {
-      if (!hasToken) return new Error('Token Not Exists');
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-      let AllWallets = await dataSources.WalletController.show(hasToken);
+        const AllWallets = await dataSources.WalletController.show(hasToken);
 
-      let AllWalletsIDS = await AllWallets.map(wallets => wallets._id);
+        const AllWalletsIDS = await AllWallets.map(wallets => wallets._id);
 
-      let AllTickets = await Promise.all(
-        AllWalletsIDS.map(async walletID => {
-          let filteredTicket = await dataSources.TicketController.show(
-            { walletID },
-            hasToken,
-          );
+        const AllTickets = await Promise.all(
+          AllWalletsIDS.map(async walletID => {
+            const filteredTicket = await dataSources.TicketController.show(
+              { walletID },
+              hasToken,
+            );
 
-          return filteredTicket;
-        }),
-      );
+            return filteredTicket;
+          }),
+        );
 
-      let ticketArray = await AllTickets.reduce(
-        (acc, cur) => [...acc, ...cur],
-        [],
-      );
+        const ticketArray = await AllTickets.reduce(
+          (acc, cur) => [...acc, ...cur],
+          [],
+        );
 
-      const currentArray = await dataSources.finance.getCurrentFinanceByTickets(
-        ticketArray,
-      );
+        const currentArray =
+          await dataSources.finance.getCurrentFinanceByTickets(ticketArray);
 
-      let SumAllAmount = getSumAmountWallet(currentArray);
+        const SumAllAmount = getSumAmountWallet(currentArray);
 
-      let res = AllWallets.map(wallet => ({
-        ...wallet._doc,
-        sumAmountAllWallet: SumAllAmount,
-      }));
+        const res = AllWallets.map(wallet => ({
+          ...wallet._doc,
+          sumAmountAllWallet: SumAllAmount,
+        }));
 
-      return res;
+        return res;
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
     },
   },
   Mutation: {
-    createWallet: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.WalletController.store(args, hasToken),
+    createWallet: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    updateWallet: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.WalletController.update(args, hasToken),
+        return await dataSources.WalletController.store(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    updateWallet: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
 
-    deleteWallet: (_, args, { dataSources, hasToken }) =>
-      !hasToken
-        ? new Error('Token Not Exists')
-        : dataSources.WalletController.destroy(args, hasToken),
+        return await dataSources.WalletController.update(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
+    deleteWallet: async (_, args, { dataSources, hasToken }) => {
+      try {
+        if (!hasToken) throw new Error('Token Not Exists');
+
+        return await dataSources.WalletController.destroy(args, hasToken);
+      } catch (error: any) {
+        throw new Error(error.message);
+      }
+    },
   },
 };
