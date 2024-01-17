@@ -118,8 +118,6 @@ describe('Query Test', () => {
 
     const bodyData = res.body.singleResult?.errors?.[0];
 
-    console.log(JSON.stringify(bodyData, null, 2));
-
     expect(bodyData?.message).toBe(
       'Variable "$type" got invalid value "NOT_EXIST"; Value "NOT_EXIST" does not exist in "Type" enum.',
     );
