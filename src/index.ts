@@ -1,9 +1,8 @@
-import 'dotenv/config';
-
 import mongoose from 'mongoose';
 import { initApolloServer } from './services/apollo';
+import { env } from './services/env';
 
-const { MONGO_URL } = process.env;
+const { MONGO_URL } = env;
 
 if (MONGO_URL) {
   mongoose

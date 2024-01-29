@@ -7,6 +7,7 @@ import { getToken } from '../utils/shareFunc';
 import { dataSources } from '../controllers';
 import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolvers';
+import { env } from './env';
 
 export async function setApolloServer() {
   const server = new ApolloServer<BaseContext>({
@@ -27,6 +28,6 @@ export async function initApolloServer() {
       hasToken: getToken(req),
       dataSources,
     }),
-    listen: { port: Number(process.env.PORT) },
+    listen: { port: Number(env.PORT) },
   });
 }

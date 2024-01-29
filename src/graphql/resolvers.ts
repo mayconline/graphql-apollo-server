@@ -1,10 +1,9 @@
 import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeResolvers } from '@graphql-tools/merge';
 import { join } from 'path';
+import { env } from '../services/env';
 
-console.log(process.env.NODE_ENV);
-
-const ext = process.env.NODE_ENV === 'production' ? 'js' : 'ts';
+const ext = env.NODE_ENV === 'production' ? 'js' : 'ts';
 
 const resolversArray = loadFilesSync(
   join(__dirname, 'modules', '**', `resolvers.${ext}`),

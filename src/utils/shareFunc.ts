@@ -1,5 +1,6 @@
 import { sign, verify } from 'jsonwebtoken';
 import { isUnit, isETF, isCripto } from './classSymbols';
+import { env } from '../services/env';
 
 export function getSumGradeWallet(currentArray: any[]) {
   return currentArray.reduce((acc, cur) => acc + cur.grade, 0);
@@ -55,8 +56,8 @@ export function getArraySortByParams(
   });
 }
 export async function setToken(_id: any, role: any) {
-  return sign({ _id, role }, process.env.JWT_TOKEN!, {
-    expiresIn: process.env.JWT_EXPIRE,
+  return sign({ _id, role }, env.JWT_TOKEN, {
+    expiresIn: env.JWT_EXPIRE,
   });
 }
 export function getToken({ headers }: any) {
@@ -66,7 +67,7 @@ export function getToken({ headers }: any) {
   const token = authorization.replace('Bearer', '').trim();
 
   try {
-    const decoded = verify(token, process.env.JWT_TOKEN!);
+    const decoded = verify(token, env.JWT_TOKEN);
 
     return decoded;
   } catch {

@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { env } from './env';
 
 const api = axios.create({
-  baseURL: process.env.API_STOCK,
+  baseURL: env.API_STOCK,
 });
 
 const apiSummary = axios.create({
-  baseURL: process.env.API_SUMMARY,
+  baseURL: env.API_SUMMARY,
 });
 
 export { api, apiSummary };

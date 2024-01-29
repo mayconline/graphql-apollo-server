@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
+import { env } from '../services/env';
 
-const { RFT_EXPIRE } = process.env;
+const { RFT_EXPIRE } = env;
 
 const expireSeconds = new Date().setSeconds(
   new Date().getSeconds() + Number(RFT_EXPIRE),
