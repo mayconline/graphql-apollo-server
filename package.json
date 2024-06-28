@@ -8,8 +8,8 @@
     "copy-mjml": "cp -r ./src/templates-email/shared ./dist/templates-email",
     "clean": "rm -rf ./dist",
     "test": "jest --maxWorkers=50%",
-    "dev": "tsx watch --env-file .env ./src/index.ts",
-    "start": "NODE_ENV=production node --env-file .env dist/index.js",
+    "dev": "tsx watch ./src/index.ts",
+    "start": "NODE_ENV=production node dist/index.js",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -22,6 +22,7 @@
     "@sendgrid/mail": "8.1.0",
     "axios": "1.6.5",
     "bcrypt": "5.1.1",
+    "dotenv": "^16.4.5",
     "graphql": "16.8.1",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "9.0.2",

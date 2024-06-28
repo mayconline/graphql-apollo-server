@@ -59,5 +59,6 @@ module.exports = {
         devDependencies: true,
       },
     ],
+    'import/no-extraneous-dependencies': 'off',
   },
 };
