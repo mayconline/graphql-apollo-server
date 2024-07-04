@@ -104,6 +104,7 @@ const etfTickets = [
   'ESGE11',
   'UTEC11',
   'ESGU11',
+  'SPYI11',
 ];
 const criptoTickets = [
   'BTC-USD',
