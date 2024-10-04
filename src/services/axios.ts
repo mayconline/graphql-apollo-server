@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { env } from './env';
 
+console.log(env);
+
 const api = axios.create({
   baseURL: env.API_STOCK,
 });
