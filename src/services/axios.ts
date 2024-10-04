@@ -16,4 +16,9 @@ api.interceptors.request.use(config => {
   return config;
 });
 
+apiSummary.interceptors.request.use(config => {
+  config.headers['User-Agent'] = 'Mozilla/5.0 (compatible; AcmeBot/1.0)'; // Adicionando o header
+  return config;
+});
+
 export { api, apiSummary };
