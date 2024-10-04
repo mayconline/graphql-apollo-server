@@ -98,6 +98,8 @@ const fetchSummaryApi = async ticket => {
 
     return profileStock;
   } catch (e) {
+    console.log('Error at fetchSummaryApi:', e);
+
     return profileStock;
   }
 };
