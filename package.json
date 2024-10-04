@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "npm run clean && tsc && npm run copy-mjml",
-    "copy-mjml": "cp -r ./src/templates-email/shared ./dist/templates-email",
-    "clean": "rm -rf ./dist",
+    "copy-mjml": "cp -r ./src/templates-email/shared ./public/templates-email",
+    "clean": "rm -rf ./public",
     "test": "jest --maxWorkers=50%",
     "dev": "tsx watch ./src/index.ts",
-    "start": "NODE_ENV=production node dist/index.js",
+    "start": "NODE_ENV=production node public/index.js",
     "prepare": "husky install"
   },
   "keywords": [],
