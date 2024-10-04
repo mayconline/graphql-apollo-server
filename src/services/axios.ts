@@ -17,7 +17,7 @@ api.interceptors.request.use(config => {
 });
 
 apiSummary.interceptors.request.use(config => {
-  config.headers['User-Agent'] = 'Mozilla/5.0 (compatible; AcmeBot/1.0)'; // Adicionando o header
+  config.headers['User-Agent'] = 'insomnia/2023.1.0'; // Adicionando o header
   return config;
 });
 
