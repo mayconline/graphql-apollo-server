@@ -5,6 +5,8 @@ import { env } from '../services/env';
 
 const ext = env.NODE_ENV === 'production' ? 'js' : 'ts';
 
+console.log(`NODE_ENV: ${env.NODE_ENV}`);
+
 const resolversArray = loadFilesSync(
   join(__dirname, 'modules', '**', `resolvers.${ext}`),
 );
