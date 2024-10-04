@@ -16,10 +16,4 @@ api.interceptors.request.use(config => {
   return config;
 });
 
-apiSummary.interceptors.request.use(config => {
-  config.headers['User-Agent'] = 'curl/7.68.0'; // Adicionando o header
-  config.headers.Accept = '*/*';
-  return config;
-});
-
 export { api, apiSummary };
