@@ -9,16 +9,14 @@ const apiSummary = axios.create({
   baseURL: env.API_SUMMARY,
 });
 
-// Interceptor para adicionar delay de 1 segundo em cada requisição
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-api.interceptors.request.use(async config => {
-  await delay(1000); // Delay de 1 segundo
+// Adicionando o header 'User-Agent' nas requisições
+api.interceptors.request.use(config => {
+  config.headers['User-Agent'] = 'curl/7.68.0'; // Adicionando o header
   return config;
 });
 
-apiSummary.interceptors.request.use(async config => {
-  await delay(1000); // Delay de 1 segundo
+apiSummary.interceptors.request.use(config => {
+  config.headers['User-Agent'] = 'curl/7.68.0'; // Adicionando o header
   return config;
 });
 
