@@ -127,7 +127,9 @@ const fetchApi = async (ticket: string) => {
       industry,
       sector,
     };
-  } catch (e) {
+  } catch (e: any) {
+    console.log('Error at fetchApi:', e);
+
     return {
       regularMarketPrice: 0,
       financialCurrency: 'BRL',
