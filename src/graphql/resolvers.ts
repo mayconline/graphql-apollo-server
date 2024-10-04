@@ -5,12 +5,23 @@ import { env } from '../services/env';
 
 const ext = env.NODE_ENV === 'production' ? 'js' : 'ts';
 
-console.log(`NODE_ENV: ${env.NODE_ENV}`);
+const isVercel = env.IS_VERCEL === 'TRUE';
+
+console.log(`IS_VERCEL: ${isVercel}`);
+
+console.log(`dir: ${process.cwd()}`);
+console.log(`ext: ${__dirname}`);
+
+const resolversArrayVercel = loadFilesSync(
+  join(process.cwd(), 'modules', '**', `resolvers.ts`),
+);
 
 const resolversArray = loadFilesSync(
   join(__dirname, 'modules', '**', `resolvers.${ext}`),
 );
 
-const resolvers = mergeResolvers(resolversArray);
+const resolvers = mergeResolvers(
+  isVercel ? resolversArrayVercel : resolversArray,
+);
 
 export default resolvers;
