@@ -9,6 +9,8 @@ import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolvers';
 import { env } from './env';
 
+console.log('resolvers', { typeDefs, resolvers });
+
 export async function setApolloServer() {
   const server = new ApolloServer<BaseContext>({
     typeDefs,
