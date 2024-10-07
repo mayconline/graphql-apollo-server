@@ -1,14 +1,31 @@
-import { loadFilesSync } from '@graphql-tools/load-files';
 import { mergeTypeDefs } from '@graphql-tools/merge';
-import { join } from 'path';
-import { env } from '../services/env';
 
-const ext = env.NODE_ENV === 'production' ? 'js' : 'ts';
+import { typeDefs as authTypeDefs } from './modules/authenticate/schema';
+import { typeDefs as earningsTypeDefs } from './modules/earnings/schema';
+import { typeDefs as financeTypeDefs } from './modules/finance/schema';
+import { typeDefs as helpTypeDefs } from './modules/help/schema';
+import { typeDefs as rebalanceTypeDefs } from './modules/rebalance/schema';
+import { typeDefs as recoveryTypeDefs } from './modules/recovery/schema';
+import { typeDefs as refreshTokenTypeDefs } from './modules/refreshToken/schema';
+import { typeDefs as rentabilityTypeDefs } from './modules/rentability/schema';
+import { typeDefs as reportsTypeDefs } from './modules/reports/schema';
+import { typeDefs as ticketsHistoryTypeDefs } from './modules/tickets/schema';
+import { typeDefs as ticketsTypeDefs } from './modules/users/schema';
+import { typeDefs as walletsTypeDefs } from './modules/wallets/schema';
 
-const typesArray = loadFilesSync(
-  join(__dirname, 'modules', '**', `schema.${ext}`),
-);
-
-const typeDefs = mergeTypeDefs(typesArray);
+const typeDefs = mergeTypeDefs([
+  authTypeDefs,
+  earningsTypeDefs,
+  financeTypeDefs,
+  helpTypeDefs,
+  rebalanceTypeDefs,
+  recoveryTypeDefs,
+  refreshTokenTypeDefs,
+  rentabilityTypeDefs,
+  reportsTypeDefs,
+  ticketsHistoryTypeDefs,
+  ticketsTypeDefs,
+  walletsTypeDefs,
+]);
 
 export default typeDefs;

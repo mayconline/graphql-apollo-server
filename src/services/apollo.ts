@@ -6,15 +6,15 @@ import { getToken } from '../utils/shareFunc';
 
 import { dataSources } from '../controllers';
 import typeDefs from '../graphql/typeDefs';
-import resolvers from '../graphql/resolvers';
+import customResolvers from '../graphql/resolvers';
 import { env } from './env';
 
-console.log('resolvers', { typeDefs, resolvers });
+console.log('resolvers', { typeDefs, customResolvers });
 
 export async function setApolloServer() {
   const server = new ApolloServer<BaseContext>({
     typeDefs,
-    resolvers,
+    resolvers: customResolvers as any,
     formatError: err => getErrorMessage(err),
     cache: 'bounded',
   });
