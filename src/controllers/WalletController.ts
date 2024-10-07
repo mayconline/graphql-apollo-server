@@ -77,7 +77,7 @@ export default {
   },
   update: async (args: IWalletControllerArgs, hasToken: ITokenProps) => {
     try {
-      let wallet = await Wallet.findById(args._id);
+      let wallet: any = await Wallet.findById(args._id);
       if (!wallet) throw new Error('Wallet Not Found');
 
       const isSameUser = hasToken._id === wallet.user?.toString();

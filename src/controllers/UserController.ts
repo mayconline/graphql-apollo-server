@@ -56,7 +56,7 @@ export default {
   },
   update: async (args: IUserControllerArgs, hasToken: ITokenProps) => {
     try {
-      let user = await User.findById(hasToken._id).select('+password');
+      let user: any = await User.findById(hasToken._id).select('+password');
       if (!user) throw new Error('User Not Exists');
 
       const { email, password, ...rest } = await args.input;

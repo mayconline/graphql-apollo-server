@@ -34,7 +34,7 @@ export default {
   },
   update: async (args: IAuthControllerArgs, hasToken: ITokenProps) => {
     try {
-      let user = await User.findById(hasToken._id);
+      let user: any = await User.findById(hasToken._id);
       if (!user) throw new Error('User Not Exists');
 
       if (args.input.role === 'ADM' && hasToken.role !== 'ADM') {
