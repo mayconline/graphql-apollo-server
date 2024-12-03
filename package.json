@@ -26,7 +26,7 @@
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "9.0.2",
     "mjml": "4.15.3",
-    "mongoose": "8.7.0",
+    "mongoose": "8.8.3",
     "zod": "^3.23.8"
   },
   "devDependencies": {
