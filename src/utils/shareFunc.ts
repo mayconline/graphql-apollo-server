@@ -27,14 +27,14 @@ export function getPercentVariation(SumCost: number, SumAmount: number) {
     SumAmount === SumCost
       ? 0
       : SumCost < 0 && SumAmount === 0
-      ? 100
-      : SumCost === 0 && SumAmount < 0
-      ? -100
-      : SumCost === 0 && SumAmount > 0
-      ? 100
-      : SumCost > 0
-      ? calcPercent
-      : SumCost < 0 && calcPercent * -1;
+        ? 100
+        : SumCost === 0 && SumAmount < 0
+          ? -100
+          : SumCost === 0 && SumAmount > 0
+            ? 100
+            : SumCost > 0
+              ? calcPercent
+              : SumCost < 0 && calcPercent * -1;
 
   return percentVariation;
 }
@@ -103,23 +103,23 @@ export function getClassTicket(ticket: string) {
     ticket.slice(-2) === '39'
     ? 'BDR'
     : ticket.slice(-2) === '3F' ||
-      ticket.slice(-2) === '4F' ||
-      ticket.slice(-2) === '5F' ||
-      ticket.slice(-2) === '6F' ||
-      ticket.slice(-3) === '11F' ||
-      ticket.slice(-1) === '3' ||
-      ticket.slice(-1) === '4' ||
-      ticket.slice(-1) === '5' ||
-      ticket.slice(-1) === '6' ||
-      isUnit(ticket)
-    ? 'Ação'
-    : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)
-    ? 'FII'
-    : isETF(ticket)
-    ? 'ETF'
-    : isCripto(ticket)
-    ? 'Cripto'
-    : 'Outros';
+        ticket.slice(-2) === '4F' ||
+        ticket.slice(-2) === '5F' ||
+        ticket.slice(-2) === '6F' ||
+        ticket.slice(-3) === '11F' ||
+        ticket.slice(-1) === '3' ||
+        ticket.slice(-1) === '4' ||
+        ticket.slice(-1) === '5' ||
+        ticket.slice(-1) === '6' ||
+        isUnit(ticket)
+      ? 'Ação'
+      : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)
+        ? 'FII'
+        : isETF(ticket)
+          ? 'ETF'
+          : isCripto(ticket)
+            ? 'Cripto'
+            : 'Outros';
 }
 export function getSumByUnicProp(array: any[], key: string, value: string) {
   const unicKeysWithValue = [
@@ -245,6 +245,7 @@ export function getTranslateSector(sector: string) {
     Tobacco: 'Tabaco',
     'Utilities—Independent Power Producers': 'Elétrico',
     Conglomerates: 'Holding',
+    'Electrical Equipment & Parts': 'Máquinas e Motores',
   }[sector];
 }
 export function formatTicketByFraction(ticket: string) {
