@@ -1,10 +1,13 @@
 import 'dotenv/config';
 
 import mongoose from 'mongoose';
+
 import { initApolloServer } from './services/apollo';
 import { env } from './services/env';
 
-const { MONGO_URL } = env;
+import { startCpuProfiling, stopCpuProfiling } from './services/cpuProfiling';
+
+const { MONGO_URL, NODE_ENV } = env;
 
 if (MONGO_URL) {
   mongoose
@@ -15,4 +18,9 @@ if (MONGO_URL) {
       initApolloServer();
     })
     .catch(err => console.log(`error on connect db${err}`));
+}
+
+if (NODE_ENV === 'development') {
+  startCpuProfiling();
+  stopCpuProfiling();
 }
