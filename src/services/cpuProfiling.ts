@@ -1,5 +1,6 @@
 import { Session } from 'node:inspector/promises';
-import { writeFile } from 'node:fs/promises';
+import { writeFileSync } from 'node:fs';
+import { join } from 'path';
 
 function cpuProfiling() {
   let _session: Session;
@@ -21,10 +22,17 @@ function cpuProfiling() {
       const { profile } = await _session.post('Profiler.stop');
       if (!profile) return;
 
-      const profileName = `cpu-profile-${Date.now()}.cpuprofile`;
+      const profileName = join(
+        process.cwd(),
+        `cpu-profile-${Date.now()}.cpuprofile`,
+      );
       const profileString = JSON.stringify(profile);
 
-      await writeFile(profileName, profileString);
+      try {
+        writeFileSync(profileName, profileString);
+      } catch (error) {
+        console.error('Error writing profile file:', error);
+      }
 
       _session.disconnect();
     },
@@ -39,7 +47,7 @@ function stopCpuProfiling() {
   exitSignals.forEach(signal => {
     process.once(signal, async () => {
       await stop();
-      process.exit(0);
+      setTimeout(() => process.exit(0), 100);
     });
   });
 }
