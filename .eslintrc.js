@@ -53,12 +53,6 @@ module.exports = {
     'prettier/prettier': 'error',
     'no-shadow': 'off',
     'no-nested-ternary': 'off',
-    'import/no-extraneous-dependencies': [
-      'error',
-      {
-        devDependencies: true,
-      },
-    ],
     'import/no-extraneous-dependencies': 'off',
   },
 };
