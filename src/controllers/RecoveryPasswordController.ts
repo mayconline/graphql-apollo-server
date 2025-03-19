@@ -4,7 +4,7 @@ import User from '../models/User';
 import RecoveryPassword from '../models/RecoveryPassword';
 import { recoveryPasswordTemplate } from '../templates-email/RecoveryPasswordTemplate';
 import SendGrid from '../services/sendgrid';
-import {
+import type {
   IRecoveryPasswordResetControllerArgs,
   IRecoveryPasswordSendControllerArgs,
   ITokenProps,

@@ -5,7 +5,7 @@ import {
   formatSymbol,
   getClassTicket,
 } from '../utils/shareFunc';
-import {
+import type {
   ITicketMutationControllerArgs,
   ITicketQueryControllerArgs,
   ITokenProps,

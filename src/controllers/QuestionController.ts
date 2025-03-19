@@ -1,6 +1,6 @@
 import Question from '../models/Question';
 import User from '../models/User';
-import { IQuestionControllerArgs, ITokenProps } from '../types';
+import type { IQuestionControllerArgs, ITokenProps } from '../types';
 
 export default {
   index: async () => {

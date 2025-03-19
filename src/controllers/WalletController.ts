@@ -1,6 +1,6 @@
 import Wallet from '../models/Wallet';
 import Ticket from '../models/Ticket';
-import { ITokenProps, IWalletControllerArgs } from '../types';
+import type { ITokenProps, IWalletControllerArgs } from '../types';
 
 export default {
   index: async (hasToken: ITokenProps) => {

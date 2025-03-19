@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { Types } from 'mongoose';
+import type { Types } from 'mongoose';
 import RefreshTokenSchema from '../models/RefreshToken';
 import { setToken } from '../utils/shareFunc';
 

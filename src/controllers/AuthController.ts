@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import User from '../models/User';
-import { IAuthControllerArgs, ITokenProps } from '../types';
+import type { IAuthControllerArgs, ITokenProps } from '../types';
 import RefreshToken from './RefreshToken';
 
 export default {
@@ -48,7 +48,7 @@ export default {
 
       user = await User.findById(hasToken._id).lean();
 
-      const tokens = await RefreshToken.store(user?._id!, user?.role!);
+      const tokens = await RefreshToken.store(user?._id, user?.role);
 
       return { ...user, ...tokens };
     } catch (error: any) {

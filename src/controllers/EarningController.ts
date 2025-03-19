@@ -7,7 +7,7 @@ import {
   getSumCostWallet,
   getSumByUnicProp,
 } from '../utils/shareFunc';
-import {
+import type {
   IEarningMutationControllerArgs,
   IEarningQueryControllerArgs,
   ITokenProps,

@@ -4,7 +4,7 @@ import Wallet from '../models/Wallet';
 import Ticket from '../models/Ticket';
 
 import RefreshToken from './RefreshToken';
-import { ITokenProps, IUserControllerArgs } from '../types';
+import type { ITokenProps, IUserControllerArgs } from '../types';
 
 export default {
   index: async (hasToken: ITokenProps) => {
@@ -71,7 +71,7 @@ export default {
 
       user = await User.findById(hasToken._id).lean();
 
-      const tokens = await RefreshToken.store(user?._id!, user?.role!);
+      const tokens = await RefreshToken.store(user?._id, user?.role);
 
       return { ...user, ...tokens };
     } catch (error: any) {
@@ -89,7 +89,7 @@ export default {
 
       const ticketsIDs = wallets
         .map(wallet => wallet.ticket)
-        .reduce((acc, cur) => [...acc, ...cur], []);
+        .reduce((acc, cur) => acc.concat(cur), []);
 
       const walletsIDs = wallets.map(wallet => wallet._id);
 

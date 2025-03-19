@@ -1,4 +1,4 @@
-import { IFinanceControllerArgs, IReportsResponseProps } from '../types';
+import type { IFinanceControllerArgs, IReportsResponseProps } from '../types';
 import {
   getSumAmountWallet,
   getRandomDarkColor,
