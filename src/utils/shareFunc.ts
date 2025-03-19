@@ -57,7 +57,7 @@ export function getArraySortByParams(
 }
 export async function setToken(_id: any, role: any) {
   return sign({ _id, role }, env.JWT_TOKEN, {
-    expiresIn: env.JWT_EXPIRE,
+    expiresIn: env.JWT_EXPIRE as any,
   });
 }
 export function getToken({ headers }: any) {
