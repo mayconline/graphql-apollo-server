@@ -1,6 +1,6 @@
 import { Session } from 'node:inspector/promises';
 import { writeFileSync } from 'node:fs';
-import { join } from 'path';
+import { join } from 'node:path';
 
 function cpuProfiling() {
   let _session: Session;
@@ -42,14 +42,14 @@ function cpuProfiling() {
 const { start: startCpuProfiling, stop } = cpuProfiling();
 
 function stopCpuProfiling() {
-  const exitSignals = ['SIGINT', 'SIGTERM', 'SIGQUIT'];
+  const EXIT_SIGNALS = ['SIGINT', 'SIGTERM', 'SIGQUIT'];
 
-  exitSignals.forEach(signal => {
+  for (const signal of EXIT_SIGNALS) {
     process.once(signal, async () => {
       await stop();
       setTimeout(() => process.exit(0), 100);
     });
-  });
+  }
 }
 
 export { startCpuProfiling, stopCpuProfiling };

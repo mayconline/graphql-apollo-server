@@ -1,4 +1,4 @@
-import { ApolloServer, BaseContext } from '@apollo/server';
+import { ApolloServer, type BaseContext } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 
 import { getErrorMessage } from '../utils/errorHandler';

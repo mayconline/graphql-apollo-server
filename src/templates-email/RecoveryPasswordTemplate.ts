@@ -1,5 +1,5 @@
 import mjml2html from 'mjml';
-import Dirpath from 'path';
+import Dirpath from 'node:path';
 
 const options = {
   filePath: Dirpath.resolve(__dirname),
