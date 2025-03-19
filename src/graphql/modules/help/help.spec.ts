@@ -1,70 +1,52 @@
-import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
-import { SingleGraphQLResponse } from '../../../mocks/type';
+import { gql, executeOperation } from '../../../mocks/serverMock';
 
-describe('Query Test', () => {
-  const server = mockApolloServer;
-
-  it('should return questions list', async () => {
-    const questions = gql`
-      query questions {
-        questions {
-          _id
-          ask
-          answer
-        }
+describe('Help', () => {
+  const GET_QUESTIONS = gql`
+    query questions {
+      questions {
+        _id
+        ask
+        answer
       }
-    `;
+    }
+  `;
 
-    const res = (await server.executeOperation(
-      {
-        query: questions,
-      },
-      {
-        contextValue: {
-          dataSources,
-        },
-      },
-    )) as SingleGraphQLResponse<any>;
+  const CREATE_QUESTION = gql`
+    mutation createQuestion($ask: String!, $answer: String!) {
+      createQuestion(input: { ask: $ask, answer: $answer }) {
+        _id
+        ask
+        answer
+      }
+    }
+  `;
 
-    const bodyData = res.body.singleResult.data;
+  describe('Queries', () => {
+    it('should return questions list', async () => {
+      const res = await executeOperation(GET_QUESTIONS);
 
-    expect(bodyData).toHaveProperty('questions');
-    expect(bodyData.questions[0]).toHaveProperty('_id');
-    expect(bodyData.questions[0]).toHaveProperty('ask');
-    expect(bodyData.questions[0]).toHaveProperty('answer');
+      const bodyData = res.body.singleResult.data;
+
+      expect(bodyData).toHaveProperty('questions');
+      expect(bodyData.questions[0]).toHaveProperty('_id');
+      expect(bodyData.questions[0]).toHaveProperty('ask');
+      expect(bodyData.questions[0]).toHaveProperty('answer');
+    });
   });
 
-  it('should create new question', async () => {
-    const questions = gql`
-      mutation createQuestion($ask: String!, $answer: String!) {
-        createQuestion(input: { ask: $ask, answer: $answer }) {
-          _id
-          ask
-          answer
-        }
-      }
-    `;
+  describe('Mutations', () => {
+    it('should create new question', async () => {
+      const res = await executeOperation(CREATE_QUESTION, {
+        ask: 'ask test',
+        answer: 'answer test',
+      });
 
-    const res = (await server.executeOperation(
-      {
-        query: questions,
-        variables: {
-          ask: 'ask test',
-          answer: 'answer test',
-        },
-      },
-      {
-        contextValue: {
-          dataSources,
-        },
-      },
-    )) as SingleGraphQLResponse<any>;
+      const bodyData = res.body.singleResult.data;
 
-    const bodyData = res.body.singleResult.data;
-
-    expect(bodyData).toHaveProperty('createQuestion');
-    expect(bodyData.createQuestion).toHaveProperty('_id');
-    expect(bodyData.createQuestion).toHaveProperty('ask');
-    expect(bodyData.createQuestion).toHaveProperty('answer');
+      expect(bodyData).toHaveProperty('createQuestion');
+      expect(bodyData.createQuestion).toHaveProperty('_id');
+      expect(bodyData.createQuestion).toHaveProperty('ask');
+      expect(bodyData.createQuestion).toHaveProperty('answer');
+    });
   });
 });

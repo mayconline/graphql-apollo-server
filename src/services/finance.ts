@@ -2,7 +2,7 @@ import { api, apiSummary } from './axios';
 import apiDollar from './apiDollar';
 import { formatTicketByFraction, getTranslateSector } from '../utils/shareFunc';
 import { isCripto } from '../utils/classSymbols';
-import {
+import type {
   IFetchConvertDollarApiResponse,
   IFetchStockApiResponse,
   IFetchSummaryApiResponse,
@@ -33,8 +33,9 @@ const getConvertDollar = async (amount: number) => {
 
     const { urlOne } = getURLDollar1();
 
-    const getDollar =
-      await apiDollar.get<IFetchConvertDollarApiResponse>(urlOne);
+    const getDollar = await apiDollar.get<IFetchConvertDollarApiResponse>(
+      urlOne,
+    );
 
     const hasDollarPrice = !!getDollar?.data?.value?.length;
 
@@ -72,7 +73,7 @@ const fetchSummaryApi = async ticket => {
   };
 
   try {
-    const summary = await apiSummary.get<IFetchSummaryApiResponse>(`search`, {
+    const summary = await apiSummary.get<IFetchSummaryApiResponse>('search', {
       params: {
         q: formatedTicket,
       },
@@ -147,7 +148,7 @@ export default {
   getCurrentFinanceByTickets: async (ticketArray: ITicketResponseProps[]) => {
     try {
       return await Promise.all(
-        ticketArray.map(
+        ticketArray?.map(
           async ({
             _id,
             symbol,

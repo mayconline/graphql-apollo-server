@@ -1,9 +1,6 @@
-import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
-import { SingleGraphQLResponse } from '../../../mocks/type';
+import { gql, executeOperation } from '../../../mocks/serverMock';
 
-describe('Query Test', () => {
-  const server = mockApolloServer;
-
+describe('Finance', () => {
   const GET_API_FINANCE = gql`
     query getApiFinance($symbol: String) {
       getApiFinance(symbol: $symbol) {
@@ -16,26 +13,20 @@ describe('Query Test', () => {
     }
   `;
 
-  it('should return ticket details', async () => {
-    const res = (await server.executeOperation(
-      {
-        query: GET_API_FINANCE,
-        variables: { symbol: 'mglu3.sa' },
-      },
-      {
-        contextValue: {
-          dataSources,
-        },
-      },
-    )) as SingleGraphQLResponse<any>;
+  describe('Queries', () => {
+    it('should return ticket details', async () => {
+      const res = await executeOperation(GET_API_FINANCE, {
+        symbol: 'mglu3.sa',
+      });
 
-    const bodyData = res.body.singleResult.data;
+      const bodyData = res.body.singleResult.data;
 
-    expect(bodyData).toHaveProperty('getApiFinance');
-    expect(bodyData.getApiFinance).toHaveProperty('regularMarketPrice');
-    expect(bodyData.getApiFinance).toHaveProperty('financialCurrency');
-    expect(bodyData.getApiFinance).toHaveProperty('longName');
-    expect(bodyData.getApiFinance).toHaveProperty('sector');
-    expect(bodyData.getApiFinance).toHaveProperty('industry');
+      expect(bodyData).toHaveProperty('getApiFinance');
+      expect(bodyData.getApiFinance).toHaveProperty('regularMarketPrice');
+      expect(bodyData.getApiFinance).toHaveProperty('financialCurrency');
+      expect(bodyData.getApiFinance).toHaveProperty('longName');
+      expect(bodyData.getApiFinance).toHaveProperty('sector');
+      expect(bodyData.getApiFinance).toHaveProperty('industry');
+    });
   });
 });

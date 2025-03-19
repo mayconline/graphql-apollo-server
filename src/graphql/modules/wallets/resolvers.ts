@@ -157,7 +157,7 @@ export default {
         );
 
         const ticketArray = await AllTickets.reduce(
-          (acc, cur) => [...acc, ...cur],
+          (acc, cur) => acc.concat(cur),
           [],
         );
 

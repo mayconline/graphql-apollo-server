@@ -1,37 +1,26 @@
-import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
-import { SingleGraphQLResponse } from '../../../mocks/type';
+import { gql, executeOperation } from '../../../mocks/serverMock';
 
-describe('Query Test', () => {
-  const server = mockApolloServer;
-
-  it('should update refreshToken', async () => {
-    const updateRefreshToken = gql`
-      mutation updateRefreshToken($refreshToken: String!) {
-        updateRefreshToken(input: { refreshToken: $refreshToken }) {
-          token
-          refreshToken
-        }
+describe('RefreshToken', () => {
+  const UPDATE_REFRESH_TOKEN = gql`
+    mutation updateRefreshToken($refreshToken: String!) {
+      updateRefreshToken(input: { refreshToken: $refreshToken }) {
+        token
+        refreshToken
       }
-    `;
+    }
+  `;
 
-    const res = (await server.executeOperation(
-      {
-        query: updateRefreshToken,
-        variables: {
-          refreshToken: 'token_test',
-        },
-      },
-      {
-        contextValue: {
-          dataSources,
-        },
-      },
-    )) as SingleGraphQLResponse<any>;
+  describe('Queries', () => {
+    it('should update refreshToken', async () => {
+      const res = await executeOperation(UPDATE_REFRESH_TOKEN, {
+        refreshToken: 'token_test',
+      });
 
-    const bodyData = res.body.singleResult.data;
+      const bodyData = res.body.singleResult.data;
 
-    expect(bodyData).toHaveProperty('updateRefreshToken');
-    expect(bodyData.updateRefreshToken).toHaveProperty('token');
-    expect(bodyData.updateRefreshToken).toHaveProperty('refreshToken');
+      expect(bodyData).toHaveProperty('updateRefreshToken');
+      expect(bodyData.updateRefreshToken).toHaveProperty('token');
+      expect(bodyData.updateRefreshToken).toHaveProperty('refreshToken');
+    });
   });
 });

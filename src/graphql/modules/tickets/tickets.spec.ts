@@ -1,8 +1,28 @@
-import { mockApolloServer, gql, dataSources } from '../../../mocks/serverMock';
-import { SingleGraphQLResponse } from '../../../mocks/type';
+import { executeOperation, gql } from '../../../mocks/serverMock';
 
-describe('Mutation Test', () => {
-  const server = mockApolloServer;
+describe('Tickets', () => {
+  const GET_TICKETS = gql`
+    query getTickets {
+      tickets {
+        _id
+        symbol
+      }
+    }
+  `;
+
+  const GET_TICKETS_BY_WALLET = gql`
+    query getTicketsByWallet($walletID: ID!, $sort: SortTickets!) {
+      getTicketsByWallet(walletID: $walletID, sort: $sort) {
+        _id
+        symbol
+        name
+        quantity
+        averagePrice
+        grade
+        classSymbol
+      }
+    }
+  `;
 
   const CREATE_TICKET = gql`
     mutation createTicket(
@@ -68,68 +88,70 @@ describe('Mutation Test', () => {
     }
   `;
 
-  it('should create ticket', async () => {
-    const res = (await server.executeOperation(
-      {
-        query: CREATE_TICKET,
-        variables: {
-          walletID: 'a',
-          symbol: 'lren3.sa',
-          name: 'Lojas Renner SA',
-          quantity: 90,
-          averagePrice: 31.2,
-          grade: 5,
-        },
-      },
-      {
-        contextValue: {
-          dataSources,
-        },
-      },
-    )) as SingleGraphQLResponse<any>;
+  describe('Queries', () => {
+    it('should return tickets', async () => {
+      const res = await executeOperation(GET_TICKETS);
 
-    expect(res.body.singleResult.data).toHaveProperty('createTicket');
+      expect(res.body.singleResult.data).toHaveProperty('tickets');
+      expect(res.body.singleResult.data.tickets).toBeInstanceOf(Array);
+      expect(res.body.singleResult.data.tickets[0]).toHaveProperty('_id');
+      expect(res.body.singleResult.data.tickets[0]).toHaveProperty('symbol');
+    });
+
+    it('should return tickets by wallet', async () => {
+      const res = await executeOperation(GET_TICKETS_BY_WALLET, {
+        walletID: 'a',
+        sort: 'grade',
+      });
+
+      const bodyData = res.body.singleResult.data;
+
+      expect(bodyData).toHaveProperty('getTicketsByWallet');
+      expect(bodyData.getTicketsByWallet).toBeInstanceOf(Array);
+      expect(bodyData.getTicketsByWallet[0]).toHaveProperty('_id');
+      expect(bodyData.getTicketsByWallet[0]).toHaveProperty('symbol');
+      expect(bodyData.getTicketsByWallet[0]).toHaveProperty('name');
+      expect(bodyData.getTicketsByWallet[0]).toHaveProperty('quantity');
+      expect(bodyData.getTicketsByWallet[0]).toHaveProperty('averagePrice');
+      expect(bodyData.getTicketsByWallet[0]).toHaveProperty('grade');
+      expect(bodyData.getTicketsByWallet[0]).toHaveProperty('classSymbol');
+    });
   });
 
-  it('should update ticket', async () => {
-    const res = (await server.executeOperation(
-      {
-        query: UPDATE_TICKET,
-        variables: {
-          _id: '2',
-          symbol: 'lren3.sa',
-          name: 'Lojas Renner SA',
-          quantity: 100,
-          averagePrice: 40.2,
-          grade: 10,
-        },
-      },
-      {
-        contextValue: {
-          dataSources,
-        },
-      },
-    )) as SingleGraphQLResponse<any>;
+  describe('Mutations', () => {
+    it('should create ticket', async () => {
+      const res = await executeOperation(CREATE_TICKET, {
+        walletID: 'a',
+        symbol: 'lren3.sa',
+        name: 'Lojas Renner SA',
+        quantity: 90,
+        averagePrice: 31.2,
+        grade: 5,
+      });
 
-    expect(res.body.singleResult.data).toHaveProperty('updateTicket');
-  });
+      expect(res.body.singleResult.data).toHaveProperty('createTicket');
+    });
 
-  it('should delete ticket by id and remove id in wallet', async () => {
-    const res = (await server.executeOperation(
-      {
-        query: DELETE_TICKET,
-        variables: {
-          id: '1',
-          walletID: 'a',
-        },
-      },
-      {
-        contextValue: {
-          dataSources,
-        },
-      },
-    )) as SingleGraphQLResponse<any>;
+    it('should update ticket', async () => {
+      const res = await executeOperation(UPDATE_TICKET, {
+        _id: '2',
+        symbol: 'lren3.sa',
+        name: 'Lojas Renner SA',
+        quantity: 100,
+        averagePrice: 40.2,
+        grade: 10,
+      });
 
-    expect(res.body.singleResult.data).toHaveProperty('deleteTicket');
+      expect(res.body.singleResult.data).toHaveProperty('updateTicket');
+    });
+
+    it('should delete ticket by id and remove id in wallet', async () => {
+      const res = await executeOperation(DELETE_TICKET, {
+        id: '1',
+        walletID: 'a',
+      });
+
+      expect(res.body.singleResult.data).toHaveProperty('deleteTicket');
+    });
   });
 });
