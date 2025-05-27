@@ -15,6 +15,8 @@ export interface IAuthControllerArgs {
       subscriptionPeriodAndroid: string;
       packageName: string;
       transactionId: string;
+      purchaseToken: string;
+      platform: 'ANDROID' | 'IOS';
     };
   };
 }

@@ -39,6 +39,11 @@ const UserSchema = new Schema(
       subscriptionPeriodAndroid: { type: String },
       packageName: { type: String },
       transactionId: { type: String },
+      purchaseToken: { type: String },
+      platform: {
+        type: String,
+        enum: ['ANDROID', 'IOS'],
+      },
     },
   },
   { timestamps: true },

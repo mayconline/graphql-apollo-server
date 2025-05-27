@@ -19,6 +19,8 @@ describe('Authenticate', () => {
           subscriptionPeriodAndroid
           packageName
           transactionId
+          purchaseToken
+          platform
         }
       }
     }

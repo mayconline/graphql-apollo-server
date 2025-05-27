@@ -10,6 +10,8 @@ export const typeDefs = gql`
     subscriptionPeriodAndroid: String
     packageName: String
     transactionId: String
+    purchaseToken: String
+    platform: Platform
   }
 
   type User {

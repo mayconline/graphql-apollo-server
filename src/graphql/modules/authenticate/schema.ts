@@ -1,6 +1,11 @@
 import { gql } from 'graphql-tag';
 
 export const typeDefs = gql`
+  enum Platform {
+    ANDROID
+    IOS
+  }
+
   enum Role {
     USER
     PREMIUM
@@ -21,6 +26,8 @@ export const typeDefs = gql`
     subscriptionPeriodAndroid: String
     packageName: String
     transactionId: String
+    purchaseToken: String
+    platform: Platform
   }
 
   input RoleInput {
