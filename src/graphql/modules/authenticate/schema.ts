@@ -28,6 +28,7 @@ export const typeDefs = gql`
     transactionId: String
     purchaseToken: String
     platform: Platform
+    autoRenewing: Boolean
   }
 
   input RoleInput {

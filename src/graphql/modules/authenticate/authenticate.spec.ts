@@ -21,6 +21,7 @@ describe('Authenticate', () => {
           transactionId
           purchaseToken
           platform
+          autoRenewing
         }
       }
     }
@@ -60,6 +61,9 @@ describe('Authenticate', () => {
       expect(bodyData.login.plan).toHaveProperty('subscriptionPeriodAndroid');
       expect(bodyData.login.plan).toHaveProperty('packageName');
       expect(bodyData.login.plan).toHaveProperty('transactionId');
+      expect(bodyData.login.plan).toHaveProperty('purchaseToken');
+      expect(bodyData.login.plan).toHaveProperty('platform');
+      expect(bodyData.login.plan).toHaveProperty('autoRenewing');
     });
   });
 

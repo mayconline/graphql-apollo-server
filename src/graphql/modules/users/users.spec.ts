@@ -18,6 +18,9 @@ describe('Users', () => {
           subscriptionPeriodAndroid
           packageName
           transactionId
+          purchaseToken
+          platform
+          autoRenewing
         }
       }
     }
@@ -40,6 +43,9 @@ describe('Users', () => {
           subscriptionPeriodAndroid
           packageName
           transactionId
+          purchaseToken
+          platform
+          autoRenewing
         }
       }
     }
@@ -113,6 +119,9 @@ describe('Users', () => {
       );
       expect(bodyData.users[0].plan).toHaveProperty('packageName');
       expect(bodyData.users[0].plan).toHaveProperty('transactionId');
+      expect(bodyData.users[0].plan).toHaveProperty('purchaseToken');
+      expect(bodyData.users[0].plan).toHaveProperty('platform');
+      expect(bodyData.users[0].plan).toHaveProperty('autoRenewing');
     });
 
     it('should return one user', async () => {
@@ -135,6 +144,11 @@ describe('Users', () => {
       expect(bodyData.getUserByToken.plan).toHaveProperty(
         'subscriptionPeriodAndroid',
       );
+      expect(bodyData.getUserByToken.plan).toHaveProperty('packageName');
+      expect(bodyData.getUserByToken.plan).toHaveProperty('transactionId');
+      expect(bodyData.getUserByToken.plan).toHaveProperty('purchaseToken');
+      expect(bodyData.getUserByToken.plan).toHaveProperty('platform');
+      expect(bodyData.getUserByToken.plan).toHaveProperty('autoRenewing');
     });
   });
 

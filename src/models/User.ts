@@ -44,6 +44,9 @@ const UserSchema = new Schema(
         type: String,
         enum: ['ANDROID', 'IOS'],
       },
+      autoRenewing: {
+        type: Boolean,
+      },
     },
   },
   { timestamps: true },
