@@ -9,6 +9,7 @@ import ReportsController from './ReportsController';
 import TicketController from './TicketController';
 import UserController from './UserController';
 import WalletController from './WalletController';
+import ValidatePurchaseController from './ValidatePurchaseController';
 
 export const dataSources = {
   finance,
@@ -22,4 +23,5 @@ export const dataSources = {
   ReportsController,
   EarningController,
   RefreshTokenController,
+  ValidatePurchaseController,
 };

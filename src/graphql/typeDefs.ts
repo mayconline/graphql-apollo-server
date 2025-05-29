@@ -12,6 +12,7 @@ import { typeDefs as reportsTypeDefs } from './modules/reports/schema';
 import { typeDefs as ticketsHistoryTypeDefs } from './modules/tickets/schema';
 import { typeDefs as ticketsTypeDefs } from './modules/users/schema';
 import { typeDefs as walletsTypeDefs } from './modules/wallets/schema';
+import { typeDefs as validatePurchaseTypeDefs } from './modules/validatePurchase/schema';
 
 const typeDefs = mergeTypeDefs([
   authTypeDefs,
@@ -26,6 +27,7 @@ const typeDefs = mergeTypeDefs([
   ticketsHistoryTypeDefs,
   ticketsTypeDefs,
   walletsTypeDefs,
+  validatePurchaseTypeDefs,
 ]);
 
 export default typeDefs;

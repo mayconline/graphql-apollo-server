@@ -15,6 +15,7 @@ const envSchema = z.object({
   APOLLO_GRAPH_REF: z.string(),
   APOLLO_KEY: z.string(),
   IS_VERCEL: z.string().optional(),
+  API_VALIDATE_PURCHASE: z.string(),
 });
 
 export const env = envSchema.parse(process.env);

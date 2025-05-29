@@ -204,3 +204,49 @@ export interface IFetchConvertDollarApiResponse {
     cotacaoCompra: number;
   }>;
 }
+
+type Platform = 'ANDROID' | 'IOS';
+
+export interface IValidatePurchaseRequest {
+  platform: Platform;
+  receipt: {
+    packageName: string;
+    productId: string;
+    purchaseToken: string;
+    subscription: boolean;
+  };
+}
+
+export interface IValidatePurchaseControllerArgs {
+  input: IValidatePurchaseRequest;
+}
+
+type PurchaseData = {
+  platform: Platform;
+  service: string;
+  status: number;
+  packageName: string;
+  productId: string;
+  purchaseToken: string;
+  startTimeMillis: number;
+  expiryTimeMillis: number;
+  autoRenewing: boolean;
+  priceCurrencyCode: string;
+  priceAmountMicros: number;
+  countryCode: string;
+  developerPayload: null | string;
+  cancelReason: number;
+  orderId: string;
+  purchaseType: number;
+  acknowledgementState: number;
+  kind: string;
+  transactionId: string;
+  quantity: number;
+  expirationDate: string;
+  cancellationDate: string;
+};
+
+export interface IValidatePurchaseResponse {
+  valid: boolean;
+  data: PurchaseData;
+}
