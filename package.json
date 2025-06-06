@@ -20,7 +20,7 @@
     "@graphql-tools/merge": "^9.0.24",
     "@sendgrid/mail": "8.1.4",
     "axios": "1.8.3",
-    "bcrypt": "5.1.1",
+    "bcrypt": "6.0.0",
     "dotenv": "16.4.7",
     "graphql": "16.10.0",
     "graphql-tag": "^2.12.6",
