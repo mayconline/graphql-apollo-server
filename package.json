@@ -16,18 +16,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "4.11.3",
+    "@apollo/server": "4.12.2",
     "@graphql-tools/merge": "^9.0.24",
-    "@sendgrid/mail": "8.1.4",
-    "axios": "1.8.3",
+    "@sendgrid/mail": "8.1.5",
+    "axios": "1.9.0",
     "bcrypt": "5.1.1",
-    "dotenv": "16.4.7",
-    "graphql": "16.10.0",
+    "dotenv": "16.5.0",
+    "graphql": "16.11.0",
     "graphql-tag": "^2.12.6",
     "jsonwebtoken": "9.0.2",
     "mjml": "4.15.3",
-    "mongoose": "8.12.1",
-    "zod": "3.24.2"
+    "mongoose": "8.15.2",
+    "zod": "3.25.64"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
