@@ -105,6 +105,16 @@ const etfTickets = [
   'UTEC11',
   'ESGU11',
   'SPYI11',
+  'GPUS11',
+  'CASA11',
+  'PKIN11',
+  'TECX11',
+  'GOAT11',
+  'B3BR11',
+  'IDKA11',
+  'NBOV11',
+  'LVOL11',
+  'HIGH11',
 ];
 const criptoTickets = [
   'BTC-USD',
