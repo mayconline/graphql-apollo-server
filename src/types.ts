@@ -40,6 +40,11 @@ export interface ITokenProps {
   role: 'USER' | 'PREMIUM' | 'ADM';
 }
 
+export interface IAuthTokenProps {
+  token: string;
+  decoded: ITokenProps;
+}
+
 export interface IRefreshControllerArgs {
   input: {
     refreshToken: string;

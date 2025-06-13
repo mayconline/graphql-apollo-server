@@ -4,7 +4,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.ValidatePurchaseController.validate(args);
+        return await dataSources.ValidatePurchaseController.validate(
+          args,
+          hasToken?.token,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }

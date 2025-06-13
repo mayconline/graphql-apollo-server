@@ -4,11 +4,19 @@ import type {
 } from '../types';
 import apiValidatePurchase from './apiValidatePurchase';
 
-export const validatePurchase = async (purchase: IValidatePurchaseRequest) => {
+export const validatePurchase = async (
+  purchase: IValidatePurchaseRequest,
+  authToken: string,
+) => {
   try {
     const response = await apiValidatePurchase.post<IValidatePurchaseResponse>(
       '/iap/validate-purchase',
       purchase,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+        },
+      },
     );
 
     return response;

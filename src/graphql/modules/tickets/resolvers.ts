@@ -4,14 +4,14 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.TicketController.index(hasToken);
+        return await dataSources.TicketController.index(hasToken?.decoded);
       } catch (error: any) {
         throw new Error(error.message);
       }
     },
     getTicketsByWallet: async (_, args, { dataSources, hasToken }) => {
       try {
-        return await dataSources.TicketController.show(args, hasToken);
+        return await dataSources.TicketController.show(args, hasToken?.decoded);
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -22,7 +22,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.TicketController.store(args, hasToken);
+        return await dataSources.TicketController.store(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -40,7 +43,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.TicketController.destroy(args, hasToken);
+        return await dataSources.TicketController.destroy(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }

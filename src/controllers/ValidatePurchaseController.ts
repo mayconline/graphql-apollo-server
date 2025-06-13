@@ -2,9 +2,12 @@ import { validatePurchase } from '../services/validatePurchase';
 import type { IValidatePurchaseControllerArgs } from '../types';
 
 export default {
-  validate: async (args: IValidatePurchaseControllerArgs) => {
+  validate: async (
+    args: IValidatePurchaseControllerArgs,
+    authToken: string,
+  ) => {
     try {
-      const { data: response } = await validatePurchase(args.input);
+      const { data: response } = await validatePurchase(args.input, authToken);
 
       const validateData = {
         transactionDate: response?.data?.startTimeMillis,

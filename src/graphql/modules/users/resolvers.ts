@@ -4,7 +4,7 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.UserController.index(hasToken);
+        return await dataSources.UserController.index(hasToken?.decoded);
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -13,7 +13,7 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.UserController.show(hasToken);
+        return await dataSources.UserController.show(hasToken?.decoded);
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -31,7 +31,7 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.UserController.update(args, hasToken);
+        return await dataSources.UserController.update(args, hasToken?.decoded);
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -40,7 +40,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.UserController.destroy(args, hasToken);
+        return await dataSources.UserController.destroy(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }

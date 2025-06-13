@@ -18,7 +18,7 @@ export default {
       try {
         return await dataSources.TicketController.show(
           { walletID: wallets._id },
-          hasToken,
+          hasToken?.decoded,
         );
       } catch (error: any) {
         throw new Error(error.message);
@@ -30,7 +30,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken,
+          hasToken?.decoded,
         );
 
         return getSumGradeWallet(ticketArray);
@@ -45,7 +45,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken,
+          hasToken?.decoded,
         );
 
         return getSumCostWallet(ticketArray);
@@ -60,7 +60,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken,
+          hasToken?.decoded,
         );
 
         const currentArray =
@@ -81,7 +81,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken,
+          hasToken?.decoded,
         );
 
         const currentArray =
@@ -101,7 +101,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken,
+          hasToken?.decoded,
         );
 
         const currentArray =
@@ -123,7 +123,7 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.WalletController.index(hasToken);
+        return await dataSources.WalletController.index(hasToken?.decoded);
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -132,7 +132,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.WalletController.showOne(args, hasToken);
+        return await dataSources.WalletController.showOne(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -141,7 +144,9 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        const AllWallets = await dataSources.WalletController.show(hasToken);
+        const AllWallets = await dataSources.WalletController.show(
+          hasToken?.decoded,
+        );
 
         const AllWalletsIDS = await AllWallets.map(wallets => wallets._id);
 
@@ -149,7 +154,7 @@ export default {
           AllWalletsIDS.map(async walletID => {
             const filteredTicket = await dataSources.TicketController.show(
               { walletID },
-              hasToken,
+              hasToken?.decoded,
             );
 
             return filteredTicket;
@@ -182,7 +187,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.WalletController.store(args, hasToken);
+        return await dataSources.WalletController.store(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -191,7 +199,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.WalletController.update(args, hasToken);
+        return await dataSources.WalletController.update(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -200,7 +211,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.WalletController.destroy(args, hasToken);
+        return await dataSources.WalletController.destroy(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }

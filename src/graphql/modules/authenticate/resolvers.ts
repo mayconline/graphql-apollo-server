@@ -4,7 +4,7 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.AuthController.update(args, hasToken);
+        return await dataSources.AuthController.update(args, hasToken?.decoded);
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -20,7 +20,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.AuthController.reactivateUser(args, hasToken);
+        return await dataSources.AuthController.reactivateUser(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }

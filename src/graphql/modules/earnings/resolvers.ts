@@ -4,7 +4,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.EarningController.index(args, hasToken);
+        return await dataSources.EarningController.index(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -13,7 +16,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.EarningController.show(args, hasToken);
+        return await dataSources.EarningController.show(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -22,7 +28,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.EarningController.count(args, hasToken);
+        return await dataSources.EarningController.count(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }
@@ -34,7 +43,10 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.EarningController.update(args, hasToken);
+        return await dataSources.EarningController.update(
+          args,
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }

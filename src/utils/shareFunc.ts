@@ -69,7 +69,7 @@ export function getToken({ headers }: any) {
   try {
     const decoded = verify(token, env.JWT_TOKEN);
 
-    return decoded;
+    return { decoded, token };
   } catch {
     throw new Error('Token Invalid or Expired');
   }

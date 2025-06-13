@@ -4,7 +4,9 @@ export default {
       try {
         if (!hasToken) throw new Error('Token Not Exists');
 
-        return await dataSources.RecoveryPasswordController.index(hasToken);
+        return await dataSources.RecoveryPasswordController.index(
+          hasToken?.decoded,
+        );
       } catch (error: any) {
         throw new Error(error.message);
       }

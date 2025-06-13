@@ -8,7 +8,7 @@ export default {
           {
             walletID: args.walletID,
           },
-          hasToken,
+          hasToken?.decoded,
         );
 
         const currentArray =
