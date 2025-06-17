@@ -30,7 +30,7 @@
     "zod": "3.25.64"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.0.0",
     "@graphql-tools/mock": "9.0.23",
     "@graphql-tools/schema": "10.0.23",
     "@types/bcrypt": "5.0.2",
