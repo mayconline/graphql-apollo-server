@@ -10,7 +10,7 @@ export const validatePurchase = async (
 ) => {
   try {
     const response = await apiValidatePurchase.post<IValidatePurchaseResponse>(
-      '/iap/validate-purchase',
+      '/api/validate-purchase',
       purchase,
       {
         headers: {
