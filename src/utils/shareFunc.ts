@@ -109,21 +109,17 @@ export function getRandomDarkColor() {
   return rgb;
 }
 export function getClassTicket(ticket: string) {
-  return ticket.slice(-2) === '31' ||
-    ticket.slice(-2) === '33' ||
-    ticket.slice(-2) === '34' ||
-    ticket.slice(-2) === '35' ||
-    ticket.slice(-2) === '39'
+  const BDR_CLASS = ['31', '33', '34', '35', '39'];
+
+  const ACAO_CLASS = {
+    fraction: ['1F', '3F', '4F', '5F', '6F'],
+    integer: ['3', '4', '5', '6'],
+  };
+
+  return BDR_CLASS.includes(ticket.slice(-2))
     ? 'BDR'
-    : ticket.slice(-2) === '3F' ||
-        ticket.slice(-2) === '4F' ||
-        ticket.slice(-2) === '5F' ||
-        ticket.slice(-2) === '6F' ||
-        ticket.slice(-3) === '11F' ||
-        ticket.slice(-1) === '3' ||
-        ticket.slice(-1) === '4' ||
-        ticket.slice(-1) === '5' ||
-        ticket.slice(-1) === '6' ||
+    : ACAO_CLASS.fraction.includes(ticket.slice(-2)) ||
+        ACAO_CLASS.integer.includes(ticket.slice(-1)) ||
         isUnit(ticket)
       ? 'Ação'
       : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)

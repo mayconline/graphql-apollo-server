@@ -61,13 +61,15 @@ const update = async (args: any) => {
       throw new Error('Refresh Token Invalid or Expired');
     }
 
-    const { expiresIn } = getRefreshToken as any;
+    const { expiresIn, user } = getRefreshToken as any;
 
     const hasExpiredToken = expiresIn < Date.now();
 
     if (hasExpiredToken) {
       throw new Error('Refresh Token Invalid or Expired');
     }
+
+    return await store(user._id, user.role);
   } catch (error: any) {
     throw new Error(error.message);
   }
