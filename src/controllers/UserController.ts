@@ -1,15 +1,16 @@
 import bcrypt from 'bcrypt';
+import Ticket from '../models/Ticket';
 import User from '../models/User';
 import Wallet from '../models/Wallet';
-import Ticket from '../models/Ticket';
-
-import RefreshToken from './RefreshToken';
 import type { ITokenProps, IUserControllerArgs } from '../types';
+import RefreshToken from './RefreshToken';
 
 export default {
   index: async (hasToken: ITokenProps) => {
     try {
-      if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+      if (hasToken.role !== 'ADM') {
+        throw new Error('User Unauthorized');
+      }
 
       const users = await User.find().sort('-updatedAt').lean();
 
@@ -21,7 +22,9 @@ export default {
   show: async (hasToken: ITokenProps) => {
     try {
       const user = await User.findById(hasToken._id).lean();
-      if (!user) throw new Error('User Not Exists');
+      if (!user) {
+        throw new Error('User Not Exists');
+      }
 
       return user;
     } catch (error: any) {
@@ -33,7 +36,9 @@ export default {
       const user = await User.findOne({
         email: args.input.email.toLowerCase(),
       });
-      if (user) throw new Error('User Exists');
+      if (user) {
+        throw new Error('User Exists');
+      }
 
       let newUser: any = await User.create({
         email: args.input.email.toLowerCase(),
@@ -57,13 +62,15 @@ export default {
   update: async (args: IUserControllerArgs, hasToken: ITokenProps) => {
     try {
       let user: any = await User.findById(hasToken._id).select('+password');
-      if (!user) throw new Error('User Not Exists');
+      if (!user) {
+        throw new Error('User Not Exists');
+      }
 
       const { email, password, ...rest } = await args.input;
 
       const data = {
-        email: !email ? user.email : email.toLowerCase(),
-        password: !password ? user.password : await bcrypt.hash(password, 10),
+        email: email ? email.toLowerCase() : user.email,
+        password: password ? await bcrypt.hash(password, 10) : user.password,
         ...rest,
       };
 
@@ -80,18 +87,22 @@ export default {
   },
   destroy: async (args: IUserControllerArgs, hasToken: ITokenProps) => {
     try {
-      if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+      if (hasToken.role !== 'ADM') {
+        throw new Error('User Unauthorized');
+      }
 
       const user = await User.findById(args._id);
-      if (!user) throw new Error('User Not Exists');
+      if (!user) {
+        throw new Error('User Not Exists');
+      }
 
       const wallets = await Wallet.find({ user: args._id });
 
       const ticketsIDs = wallets
-        .map(wallet => wallet.ticket)
+        .map((wallet) => wallet.ticket)
         .reduce((acc, cur) => acc.concat(cur), []);
 
-      const walletsIDs = wallets.map(wallet => wallet._id);
+      const walletsIDs = wallets.map((wallet) => wallet._id);
 
       await Ticket.deleteMany({
         _id: {
@@ -106,7 +117,9 @@ export default {
       });
 
       const refreshToken = await RefreshToken.show(user._id);
-      if (refreshToken) await RefreshToken.destroy(refreshToken._id);
+      if (refreshToken) {
+        await RefreshToken.destroy(refreshToken._id);
+      }
 
       await user.deleteOne();
       return !!user;

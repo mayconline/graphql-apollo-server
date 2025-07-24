@@ -1,4 +1,4 @@
-import { gql, executeOperation } from '../../../mocks/serverMock';
+import { executeOperation, gql } from '../../../mocks/serverMock';
 
 describe('Wallets', () => {
   const GET_WALLETS_BY_USER = gql`
@@ -139,7 +139,7 @@ describe('Wallets', () => {
       expect(bodyData.getWalletByUser[0].ticket[0]).toHaveProperty('symbol');
       expect(bodyData.getWalletByUser[0].ticket[0]).toHaveProperty('quantity');
       expect(bodyData.getWalletByUser[0].ticket[0]).toHaveProperty(
-        'averagePrice',
+        'averagePrice'
       );
       expect(bodyData.getWalletByUser[0].ticket[0]).toHaveProperty('grade');
     });

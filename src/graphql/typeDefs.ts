@@ -11,8 +11,8 @@ import { typeDefs as rentabilityTypeDefs } from './modules/rentability/schema';
 import { typeDefs as reportsTypeDefs } from './modules/reports/schema';
 import { typeDefs as ticketsHistoryTypeDefs } from './modules/tickets/schema';
 import { typeDefs as ticketsTypeDefs } from './modules/users/schema';
-import { typeDefs as walletsTypeDefs } from './modules/wallets/schema';
 import { typeDefs as validatePurchaseTypeDefs } from './modules/validatePurchase/schema';
+import { typeDefs as walletsTypeDefs } from './modules/wallets/schema';
 
 const typeDefs = mergeTypeDefs([
   authTypeDefs,

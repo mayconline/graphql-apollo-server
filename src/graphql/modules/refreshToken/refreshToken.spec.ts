@@ -1,4 +1,4 @@
-import { gql, executeOperation } from '../../../mocks/serverMock';
+import { executeOperation, gql } from '../../../mocks/serverMock';
 
 describe('RefreshToken', () => {
   const UPDATE_REFRESH_TOKEN = gql`

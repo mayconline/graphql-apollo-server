@@ -2,13 +2,15 @@ export default {
   Query: {
     getRentability: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         const ticketArray = await dataSources.TicketController.show(
           {
             walletID: args.walletID,
           },
-          hasToken?.decoded,
+          hasToken?.decoded
         );
 
         const currentArray =
@@ -16,7 +18,7 @@ export default {
 
         const rentability = await dataSources.FinanceController.rentability(
           currentArray,
-          args.sort,
+          args.sort
         );
 
         return rentability;

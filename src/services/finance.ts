@@ -1,13 +1,13 @@
-import { api, apiSummary } from './axios';
-import apiDollar from './apiDollar';
-import { formatTicketByFraction, getTranslateSector } from '../utils/shareFunc';
-import { isCripto } from '../utils/classSymbols';
 import type {
   IFetchConvertDollarApiResponse,
   IFetchStockApiResponse,
   IFetchSummaryApiResponse,
   ITicketResponseProps,
 } from '../types';
+import { isCripto } from '../utils/classSymbols';
+import { formatTicketByFraction, getTranslateSector } from '../utils/shareFunc';
+import apiDollar from './apiDollar';
+import { api, apiSummary } from './axios';
 
 const getURLDollar1 = (olderDays = 1) => {
   try {
@@ -33,9 +33,8 @@ const getConvertDollar = async (amount: number) => {
 
     const { urlOne } = getURLDollar1();
 
-    const getDollar = await apiDollar.get<IFetchConvertDollarApiResponse>(
-      urlOne,
-    );
+    const getDollar =
+      await apiDollar.get<IFetchConvertDollarApiResponse>(urlOne);
 
     const hasDollarPrice = !!getDollar?.data?.value?.length;
 
@@ -54,7 +53,9 @@ const getConvertDollar = async (amount: number) => {
       }
     }
 
-    if (Number(dollarBid) <= 0) throw new Error('Failed Convert Dollar');
+    if (Number(dollarBid) <= 0) {
+      throw new Error('Failed Convert Dollar');
+    }
 
     const converted = Number(amount) * Number(dollarBid);
 
@@ -64,7 +65,7 @@ const getConvertDollar = async (amount: number) => {
   }
 };
 
-const fetchSummaryApi = async ticket => {
+const fetchSummaryApi = async (ticket) => {
   const formatedTicket = formatTicketByFraction(ticket);
 
   const profileStock = {
@@ -112,7 +113,9 @@ const fetchApi = async (ticket: string) => {
     const res = await api.get<IFetchStockApiResponse>(formatedTicket);
 
     const result = res?.data?.chart?.result?.[0]?.meta;
-    if (!result) throw new Error('Failed Stock API');
+    if (!result) {
+      throw new Error('Failed Stock API');
+    }
 
     const { regularMarketPrice, currency } = result;
 
@@ -179,8 +182,8 @@ export default {
               sector,
               classSymbol,
             };
-          },
-        ),
+          }
+        )
       );
     } catch (error: any) {
       throw new Error(error.message);

@@ -1,5 +1,5 @@
-import mjml2html from 'mjml';
 import Dirpath from 'node:path';
+import mjml2html from 'mjml';
 
 const options = {
   filePath: Dirpath.resolve(__dirname),
@@ -97,5 +97,5 @@ export const recoveryPasswordTemplate = async (email: string, code: string) =>
       </mj-body>
     </mjml>   
 `,
-    options,
+    options
   );

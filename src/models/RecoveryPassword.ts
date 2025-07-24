@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const RecoveryPasswordSchema = new Schema(
   {
@@ -16,7 +16,7 @@ const RecoveryPasswordSchema = new Schema(
       trim: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 RecoveryPasswordSchema.index({ createdAt: 1 }, { expireAfterSeconds: 300 });

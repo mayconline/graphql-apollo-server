@@ -1,10 +1,10 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 import { env } from '../services/env';
 
 const { RFT_EXPIRE } = env;
 
 const expireSeconds = new Date().setSeconds(
-  new Date().getSeconds() + Number(RFT_EXPIRE),
+  new Date().getSeconds() + Number(RFT_EXPIRE)
 );
 
 const RefreshTokenSchema = new Schema({
@@ -25,7 +25,7 @@ const RefreshTokenSchema = new Schema({
 
 RefreshTokenSchema.index(
   { rftoken: 1 },
-  { expireAfterSeconds: Number(RFT_EXPIRE) },
+  { expireAfterSeconds: Number(RFT_EXPIRE) }
 );
 
 export default model('RefreshToken', RefreshTokenSchema);

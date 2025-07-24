@@ -1,8 +1,8 @@
 import {
+  getPercentVariation,
   getSumAmountWallet,
   getSumCostWallet,
   getSumGradeWallet,
-  getPercentVariation,
 } from '../../../utils/shareFunc';
 
 export default {
@@ -18,7 +18,7 @@ export default {
       try {
         return await dataSources.TicketController.show(
           { walletID: wallets._id },
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);
@@ -30,7 +30,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken?.decoded,
+          hasToken?.decoded
         );
 
         return getSumGradeWallet(ticketArray);
@@ -45,7 +45,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken?.decoded,
+          hasToken?.decoded
         );
 
         return getSumCostWallet(ticketArray);
@@ -60,7 +60,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken?.decoded,
+          hasToken?.decoded
         );
 
         const currentArray =
@@ -74,14 +74,14 @@ export default {
     percentRentabilityWallet: async (
       wallets,
       __,
-      { dataSources, hasToken },
+      { dataSources, hasToken }
     ) => {
       try {
         const ticketArray = await dataSources.TicketController.show(
           {
             walletID: wallets._id,
           },
-          hasToken?.decoded,
+          hasToken?.decoded
         );
 
         const currentArray =
@@ -101,7 +101,7 @@ export default {
           {
             walletID: wallets._id,
           },
-          hasToken?.decoded,
+          hasToken?.decoded
         );
 
         const currentArray =
@@ -121,7 +121,9 @@ export default {
   Query: {
     wallets: async (_, __, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.WalletController.index(hasToken?.decoded);
       } catch (error: any) {
@@ -130,11 +132,13 @@ export default {
     },
     getWalletById: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.WalletController.showOne(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);
@@ -142,28 +146,30 @@ export default {
     },
     getWalletByUser: async (_, __, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         const AllWallets = await dataSources.WalletController.show(
-          hasToken?.decoded,
+          hasToken?.decoded
         );
 
-        const AllWalletsIDS = await AllWallets.map(wallets => wallets._id);
+        const AllWalletsIDS = await AllWallets.map((wallets) => wallets._id);
 
         const AllTickets = await Promise.all(
-          AllWalletsIDS.map(async walletID => {
+          AllWalletsIDS.map(async (walletID) => {
             const filteredTicket = await dataSources.TicketController.show(
               { walletID },
-              hasToken?.decoded,
+              hasToken?.decoded
             );
 
             return filteredTicket;
-          }),
+          })
         );
 
         const ticketArray = await AllTickets.reduce(
           (acc, cur) => acc.concat(cur),
-          [],
+          []
         );
 
         const currentArray =
@@ -171,7 +177,7 @@ export default {
 
         const SumAllAmount = getSumAmountWallet(currentArray);
 
-        const res = AllWallets.map(wallet => ({
+        const res = AllWallets.map((wallet) => ({
           ...wallet._doc,
           sumAmountAllWallet: SumAllAmount,
         }));
@@ -185,11 +191,13 @@ export default {
   Mutation: {
     createWallet: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.WalletController.store(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);
@@ -197,11 +205,13 @@ export default {
     },
     updateWallet: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.WalletController.update(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);
@@ -209,11 +219,13 @@ export default {
     },
     deleteWallet: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.WalletController.destroy(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);

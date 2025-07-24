@@ -2,12 +2,20 @@
   "javascript.updateImportsOnFileMove.enabled": "never",
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
   },
   "editor.tabSize": 2,
   "editor.rulers": [80, 120],
   "editor.renderLineHighlight": "all",
-  "prettier.singleQuote": true,
   "todo-tree.tree.showScanModeButton": false,
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript][typescript][javascriptreact][typescriptreact][json][jsonc][css][graphql]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.formatOnPaste": true,
+  "emmet.showExpandedAbbreviation": "never"
 }

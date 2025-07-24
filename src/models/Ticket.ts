@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const TicketSchema = new Schema(
   {
@@ -30,7 +30,7 @@ const TicketSchema = new Schema(
       default: 'Outros',
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default model('Ticket', TicketSchema);

@@ -11,8 +11,8 @@ import rentabilityResolvers from './modules/rentability/resolvers';
 import reportsResolvers from './modules/reports/resolvers';
 import ticketsResolvers from './modules/tickets/resolvers';
 import usersResolvers from './modules/users/resolvers';
-import walletsResolvers from './modules/wallets/resolvers';
 import validatePurchaseResolvers from './modules/validatePurchase/resolvers';
+import walletsResolvers from './modules/wallets/resolvers';
 
 const resolvers = mergeResolvers([
   authResolvers,

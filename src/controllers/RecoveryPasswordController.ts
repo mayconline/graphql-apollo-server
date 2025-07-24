@@ -1,9 +1,9 @@
 import { randomBytes } from 'node:crypto';
 import bcrypt from 'bcrypt';
-import User from '../models/User';
 import RecoveryPassword from '../models/RecoveryPassword';
-import { recoveryPasswordTemplate } from '../templates-email/RecoveryPasswordTemplate';
+import User from '../models/User';
 import SendGrid from '../services/sendgrid';
+import { recoveryPasswordTemplate } from '../templates-email/RecoveryPasswordTemplate';
 import type {
   IRecoveryPasswordResetControllerArgs,
   IRecoveryPasswordSendControllerArgs,
@@ -13,7 +13,9 @@ import type {
 export default {
   index: async (hasToken: ITokenProps) => {
     try {
-      if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+      if (hasToken.role !== 'ADM') {
+        throw new Error('User Unauthorized');
+      }
 
       const recoveryList = await RecoveryPassword.find().lean();
 
@@ -29,13 +31,17 @@ export default {
         email: args.input.email.toLowerCase(),
       }).lean();
 
-      if (!user) throw new Error('User Not Exists');
+      if (!user) {
+        throw new Error('User Not Exists');
+      }
 
       const isSameEmail = await RecoveryPassword.findOne({
         email: user.email,
       });
 
-      if (isSameEmail) throw new Error('Email Already Send');
+      if (isSameEmail) {
+        throw new Error('Email Already Send');
+      }
 
       const cryptoBytes = randomBytes(3).toString('hex');
 
@@ -44,10 +50,12 @@ export default {
       const hasSend = await SendGrid.send(
         user.email,
         'Código para redefinição de senha',
-        html,
+        html
       );
 
-      if (!hasSend) throw new Error('Failed SendGrid');
+      if (!hasSend) {
+        throw new Error('Failed SendGrid');
+      }
 
       const recovery = await RecoveryPassword.create({
         email: user.email,
@@ -67,13 +75,17 @@ export default {
         code: args.input.code.toLowerCase(),
       });
 
-      if (!recovery) throw new Error('Code Invalid or Expired');
+      if (!recovery) {
+        throw new Error('Code Invalid or Expired');
+      }
 
       const user = await User.findOne({
         email: args.input.email.toLowerCase(),
       });
 
-      if (!user) throw new Error('User Not Exists');
+      if (!user) {
+        throw new Error('User Not Exists');
+      }
 
       const updateUser = await user.updateOne({
         password: await bcrypt.hash(args.input.password, 10),

@@ -1,4 +1,4 @@
-import { gql, executeOperation } from '../../../mocks/serverMock';
+import { executeOperation, gql } from '../../../mocks/serverMock';
 
 describe('Finance', () => {
   const GET_API_FINANCE = gql`

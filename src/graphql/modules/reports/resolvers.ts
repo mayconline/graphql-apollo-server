@@ -2,13 +2,15 @@ export default {
   Query: {
     getReportsByType: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         const ticketArray = await dataSources.TicketController.show(
           {
             walletID: args.walletID,
           },
-          hasToken?.decoded,
+          hasToken?.decoded
         );
 
         const currentArray =
@@ -17,19 +19,19 @@ export default {
         switch (args.type) {
           case 'TICKET':
             return await dataSources.ReportsController.getEachTicketChart(
-              currentArray,
+              currentArray
             );
           case 'CLASS':
             return await dataSources.ReportsController.getEachClassChart(
-              currentArray,
+              currentArray
             );
           case 'SECTOR':
             return await dataSources.ReportsController.getEachSectorChart(
-              currentArray,
+              currentArray
             );
           case 'INDUSTRY':
             return await dataSources.ReportsController.getEachIndustryChart(
-              currentArray,
+              currentArray
             );
           default:
             return [];

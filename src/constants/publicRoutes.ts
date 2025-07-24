@@ -5,4 +5,4 @@ export const PUBLIC_ROUTES = [
   'sendRecovery',
   'resetPassword',
   'questions',
-]
+];

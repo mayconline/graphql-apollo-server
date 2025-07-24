@@ -259,7 +259,7 @@ export default {
       symbol: 'amzn',
       name: 'Amazon',
       quantity: 10,
-      averagePrice: 17515.0,
+      averagePrice: 17_515.0,
       grade: 5,
     },
     {

@@ -1,4 +1,4 @@
-import { gql, executeOperation } from '../../../mocks/serverMock';
+import { executeOperation, gql } from '../../../mocks/serverMock';
 
 describe('ValidatePurchase', () => {
   const VALIDATE_PURCHASE = gql`
@@ -63,7 +63,7 @@ describe('ValidatePurchase', () => {
 
       expect(res?.body?.singleResult?.errors).toBeDefined();
       expect(res?.body?.singleResult?.errors?.[0]?.message).toContain(
-        'Variable "$platform" of required type "Platform!" was not provided.',
+        'Variable "$platform" of required type "Platform!" was not provided.'
       );
     });
   });

@@ -6,22 +6,24 @@ import type {
   SORT_RENTABILITY,
 } from '../types';
 import {
+  getArraySortByParams,
+  getPercentVariation,
   getSumAmountWallet,
   getSumCostWallet,
   getSumGradeWallet,
-  getArraySortByParams,
-  getPercentVariation,
 } from '../utils/shareFunc';
 
-const getStatus = percent => {
-  if (percent === 0) return 'KEEP';
+const getStatus = (percent) => {
+  if (percent === 0) {
+    return 'KEEP';
+  }
   return percent > 0 ? 'BUY' : 'ANALYZE';
 };
 
 export default {
   rentability: (
     currentArray: IFinanceControllerArgs[],
-    sort: SORT_RENTABILITY,
+    sort: SORT_RENTABILITY
   ): IRentabilityResponseProps[] => {
     try {
       const sumAmountWallet = getSumAmountWallet(currentArray);
@@ -42,7 +44,7 @@ export default {
           const variationAmount = currentAmount - costAmount;
           const variationPercent = getPercentVariation(
             costAmount,
-            currentAmount,
+            currentAmount
           );
 
           return {
@@ -57,7 +59,7 @@ export default {
             variationPercent,
             financialCurrency,
           };
-        },
+        }
       );
       return getArraySortByParams(res, sort);
     } catch (error: any) {
@@ -67,7 +69,7 @@ export default {
 
   rebalance: (
     currentArray: IFinanceControllerArgs[],
-    sort: SORT_REBALANCE,
+    sort: SORT_REBALANCE
   ): IRebalanceResponseProps[] => {
     try {
       const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
@@ -102,7 +104,7 @@ export default {
             targetAmount,
             financialCurrency,
           };
-        },
+        }
       );
 
       return getArraySortByParams(rebalanced, sort);

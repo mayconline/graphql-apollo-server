@@ -12,15 +12,21 @@ export default {
         .select('+password')
         .lean();
 
-      if (!user) throw new Error('User or Password Invalid');
+      if (!user) {
+        throw new Error('User or Password Invalid');
+      }
 
       const isValidPassword = await bcrypt.compare(
         args.input.password,
-        user.password,
+        user.password
       );
-      if (!isValidPassword) throw new Error('User or Password Invalid');
+      if (!isValidPassword) {
+        throw new Error('User or Password Invalid');
+      }
 
-      if (user.active === false) throw new Error('User Inactive');
+      if (user.active === false) {
+        throw new Error('User Inactive');
+      }
 
       const tokens = await RefreshToken.store(user._id, user.role);
 
@@ -35,7 +41,9 @@ export default {
   update: async (args: IAuthControllerArgs, hasToken: ITokenProps) => {
     try {
       let user: any = await User.findById(hasToken._id);
-      if (!user) throw new Error('User Not Exists');
+      if (!user) {
+        throw new Error('User Not Exists');
+      }
 
       if (args.input.role === 'ADM' && hasToken.role !== 'ADM') {
         throw new Error('User Unauthorized');
@@ -57,10 +65,14 @@ export default {
   },
   reactivateUser: async (args: IAuthControllerArgs, hasToken: ITokenProps) => {
     try {
-      if (hasToken.role !== 'ADM') throw new Error('User Unauthorized');
+      if (hasToken.role !== 'ADM') {
+        throw new Error('User Unauthorized');
+      }
 
       const user = await User.findById(args.input._id);
-      if (!user) throw new Error('User Not Exists');
+      if (!user) {
+        throw new Error('User Not Exists');
+      }
 
       await user.updateOne({
         active: args.input.active,

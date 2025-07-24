@@ -2,7 +2,9 @@ export default {
   Query: {
     users: async (_, __, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.UserController.index(hasToken?.decoded);
       } catch (error: any) {
@@ -11,7 +13,9 @@ export default {
     },
     getUserByToken: async (_, __, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.UserController.show(hasToken?.decoded);
       } catch (error: any) {
@@ -29,7 +33,9 @@ export default {
     },
     updateUser: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.UserController.update(args, hasToken?.decoded);
       } catch (error: any) {
@@ -38,11 +44,13 @@ export default {
     },
     deleteUser: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.UserController.destroy(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);

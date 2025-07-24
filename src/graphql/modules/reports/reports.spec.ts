@@ -1,4 +1,4 @@
-import { gql, executeOperation } from '../../../mocks/serverMock';
+import { executeOperation, gql } from '../../../mocks/serverMock';
 
 describe('Reports', () => {
   const GET_REPORTS_BY_TYPE = gql`
@@ -84,7 +84,7 @@ describe('Reports', () => {
       const bodyData = res.body.singleResult?.errors?.[0];
 
       expect(bodyData?.message).toBe(
-        'Variable "$type" got invalid value "NOT_EXIST"; Value "NOT_EXIST" does not exist in "Type" enum.',
+        'Variable "$type" got invalid value "NOT_EXIST"; Value "NOT_EXIST" does not exist in "Type" enum.'
       );
 
       expect(bodyData?.extensions?.code).toBe('BAD_USER_INPUT');

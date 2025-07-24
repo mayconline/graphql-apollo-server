@@ -1,14 +1,14 @@
 import type { IFinanceControllerArgs, IReportsResponseProps } from '../types';
 import {
-  getSumAmountWallet,
-  getRandomDarkColor,
   getArraySortByParams,
+  getRandomDarkColor,
+  getSumAmountWallet,
   getSumByUnicProp,
 } from '../utils/shareFunc';
 
 export default {
   getEachTicketChart: (
-    currentArray: IFinanceControllerArgs[],
+    currentArray: IFinanceControllerArgs[]
   ): IReportsResponseProps[] => {
     try {
       const sumAmountWallet = getSumAmountWallet(currentArray) || 1;
@@ -24,7 +24,7 @@ export default {
             value: currentPercent,
             color: getRandomDarkColor(),
           };
-        },
+        }
       );
 
       const chartByClass = getSumByUnicProp(chart, 'key', 'value');
@@ -51,7 +51,7 @@ export default {
             value: currentPercent,
             color: getRandomDarkColor(),
           };
-        },
+        }
       );
 
       const chartByClass = getSumByUnicProp(chart, 'key', 'value');
@@ -78,7 +78,7 @@ export default {
             value: currentPercent,
             color: getRandomDarkColor(),
           };
-        },
+        }
       );
 
       const chartByClass = getSumByUnicProp(chart, 'key', 'value');
@@ -105,7 +105,7 @@ export default {
             value: currentPercent,
             color: getRandomDarkColor(),
           };
-        },
+        }
       );
 
       const chartByClass = getSumByUnicProp(chart, 'key', 'value');

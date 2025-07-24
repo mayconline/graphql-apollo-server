@@ -4,7 +4,7 @@ import type { IValidatePurchaseControllerArgs } from '../types';
 export default {
   validate: async (
     args: IValidatePurchaseControllerArgs,
-    authToken: string,
+    authToken: string
   ) => {
     try {
       const { data: response } = await validatePurchase(args.input, authToken);

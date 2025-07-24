@@ -1,4 +1,4 @@
-import { gql, executeOperation } from '../../../mocks/serverMock';
+import { executeOperation, gql } from '../../../mocks/serverMock';
 
 describe('Users', () => {
   const GET_USERS = gql`
@@ -109,13 +109,13 @@ describe('Users', () => {
       expect(bodyData.users[0].plan).toHaveProperty('localizedPrice');
       expect(bodyData.users[0].plan).toHaveProperty('productId');
       expect(bodyData.users[0].plan).toHaveProperty(
-        'subscriptionPeriodAndroid',
+        'subscriptionPeriodAndroid'
       );
       expect(bodyData.users[0].plan).toHaveProperty('packageName');
       expect(bodyData.users[0].plan).toHaveProperty('transactionId');
 
       expect(bodyData.users[0].plan).toHaveProperty(
-        'subscriptionPeriodAndroid',
+        'subscriptionPeriodAndroid'
       );
       expect(bodyData.users[0].plan).toHaveProperty('packageName');
       expect(bodyData.users[0].plan).toHaveProperty('transactionId');
@@ -142,7 +142,7 @@ describe('Users', () => {
       expect(bodyData.getUserByToken.plan).toHaveProperty('localizedPrice');
       expect(bodyData.getUserByToken.plan).toHaveProperty('productId');
       expect(bodyData.getUserByToken.plan).toHaveProperty(
-        'subscriptionPeriodAndroid',
+        'subscriptionPeriodAndroid'
       );
       expect(bodyData.getUserByToken.plan).toHaveProperty('packageName');
       expect(bodyData.getUserByToken.plan).toHaveProperty('transactionId');

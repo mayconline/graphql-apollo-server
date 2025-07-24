@@ -3,9 +3,8 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 
 import { initApolloServer } from './services/apollo';
-import { env } from './services/env';
-
 import { startCpuProfiling, stopCpuProfiling } from './services/cpuProfiling';
+import { env } from './services/env';
 
 const { MONGO_URL, NODE_ENV } = env;
 
@@ -17,7 +16,7 @@ if (MONGO_URL) {
 
       initApolloServer();
     })
-    .catch(err => console.log(`error on connect db${err}`));
+    .catch((err) => console.log(`error on connect db${err}`));
 }
 
 if (NODE_ENV === 'development') {

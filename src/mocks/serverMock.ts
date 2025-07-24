@@ -1,15 +1,13 @@
 import { ApolloServer } from '@apollo/server';
-import { makeExecutableSchema } from '@graphql-tools/schema';
 import { addMocksToSchema } from '@graphql-tools/mock';
-import { gql } from 'graphql-tag';
-
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import type { DocumentNode } from 'graphql';
-import dataMock from './dataMock';
-import SendGrid from '../services/sendgrid';
-
+import { gql } from 'graphql-tag';
 import { dataSources } from '../controllers';
-import typeDefs from '../graphql/typeDefs';
 import resolvers from '../graphql/resolvers';
+import typeDefs from '../graphql/typeDefs';
+import SendGrid from '../services/sendgrid';
+import dataMock from './dataMock';
 
 import type { SingleGraphQLResponse } from './type';
 
@@ -37,7 +35,7 @@ const server = createTestServer();
 
 const executeOperation = async (
   query: DocumentNode,
-  variables?: Record<string, any>,
+  variables?: Record<string, any>
 ): Promise<SingleGraphQLResponse<any>> =>
   (await server.executeOperation(
     {
@@ -48,11 +46,11 @@ const executeOperation = async (
       contextValue: {
         dataSources,
       },
-    },
+    }
   )) as SingleGraphQLResponse<any>;
 
 dataSources.finance.getCurrentFinanceByTickets = jest.fn(
-  () => dataMock.getCurrentFinanceByTickets,
+  () => dataMock.getCurrentFinanceByTickets
 ) as any;
 dataSources.finance.getFinance = jest.fn(() => dataMock.getFinance) as any;
 

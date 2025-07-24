@@ -1,5 +1,5 @@
-import { Session } from 'node:inspector/promises';
 import { writeFileSync } from 'node:fs';
+import { Session } from 'node:inspector/promises';
 import { join } from 'node:path';
 
 function cpuProfiling() {
@@ -20,11 +20,13 @@ function cpuProfiling() {
       console.log('Profiling stopped');
 
       const { profile } = await _session.post('Profiler.stop');
-      if (!profile) return;
+      if (!profile) {
+        return;
+      }
 
       const profileName = join(
         process.cwd(),
-        `cpu-profile-${Date.now()}.cpuprofile`,
+        `cpu-profile-${Date.now()}.cpuprofile`
       );
       const profileString = JSON.stringify(profile);
 

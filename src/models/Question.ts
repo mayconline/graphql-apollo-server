@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const QuestionSchema = new Schema(
   {
@@ -11,7 +11,7 @@ const QuestionSchema = new Schema(
       required: true,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default model('Question', QuestionSchema);

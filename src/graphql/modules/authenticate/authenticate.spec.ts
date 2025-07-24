@@ -1,4 +1,4 @@
-import { gql, executeOperation } from '../../../mocks/serverMock';
+import { executeOperation, gql } from '../../../mocks/serverMock';
 
 describe('Authenticate', () => {
   const LOGIN = gql`
@@ -89,7 +89,7 @@ describe('Authenticate', () => {
 
       expect(res?.body?.singleResult?.errors).toBeDefined();
       expect(res?.body?.singleResult?.errors?.[0]?.message).toContain(
-        'Variable "$email" of required type "String!" was not provided.',
+        'Variable "$email" of required type "String!" was not provided.'
       );
     });
 
@@ -100,7 +100,7 @@ describe('Authenticate', () => {
 
       expect(res?.body?.singleResult?.errors).toBeDefined();
       expect(res?.body?.singleResult?.errors?.[0]?.message).toContain(
-        'Variable "$role" of required type "Role!" was not provided.',
+        'Variable "$role" of required type "Role!" was not provided.'
       );
     });
   });

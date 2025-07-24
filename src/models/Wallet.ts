@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const WalletSchema = new Schema(
   {
@@ -23,7 +23,7 @@ const WalletSchema = new Schema(
       },
     ],
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default model('Wallet', WalletSchema);

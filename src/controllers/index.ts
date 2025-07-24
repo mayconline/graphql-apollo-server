@@ -8,8 +8,8 @@ import RefreshTokenController from './RefreshToken';
 import ReportsController from './ReportsController';
 import TicketController from './TicketController';
 import UserController from './UserController';
-import WalletController from './WalletController';
 import ValidatePurchaseController from './ValidatePurchaseController';
+import WalletController from './WalletController';
 
 export const dataSources = {
   finance,

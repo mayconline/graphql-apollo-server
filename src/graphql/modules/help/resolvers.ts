@@ -11,11 +11,13 @@ export default {
   Mutation: {
     createQuestion: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.QuestionController.store(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);

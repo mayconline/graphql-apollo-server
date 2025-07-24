@@ -6,7 +6,7 @@ import apiValidatePurchase from './apiValidatePurchase';
 
 export const validatePurchase = async (
   purchase: IValidatePurchaseRequest,
-  authToken: string,
+  authToken: string
 ) => {
   try {
     const response = await apiValidatePurchase.post<IValidatePurchaseResponse>(
@@ -16,13 +16,13 @@ export const validatePurchase = async (
         headers: {
           Authorization: `Bearer ${authToken}`,
         },
-      },
+      }
     );
 
     return response;
   } catch (error: any) {
     throw new Error(
-      error?.response?.data?.error || 'Error validating purchase',
+      error?.response?.data?.error || 'Error validating purchase'
     );
   }
 };

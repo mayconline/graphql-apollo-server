@@ -2,11 +2,13 @@ export default {
   Query: {
     getEarningAccByYear: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.EarningController.index(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);
@@ -14,11 +16,13 @@ export default {
     },
     getEarningByWallet: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.EarningController.show(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);
@@ -26,11 +30,13 @@ export default {
     },
     getSumEarning: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.EarningController.count(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);
@@ -41,11 +47,13 @@ export default {
   Mutation: {
     updateEarning: async (_, args, { dataSources, hasToken }) => {
       try {
-        if (!hasToken) throw new Error('Token Not Exists');
+        if (!hasToken) {
+          throw new Error('Token Not Exists');
+        }
 
         return await dataSources.EarningController.update(
           args,
-          hasToken?.decoded,
+          hasToken?.decoded
         );
       } catch (error: any) {
         throw new Error(error.message);

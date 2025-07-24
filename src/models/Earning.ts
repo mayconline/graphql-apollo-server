@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const EarningSchema = new Schema(
   {
@@ -18,7 +18,7 @@ const EarningSchema = new Schema(
       default: 0,
     },
   },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 export default model('Earning', EarningSchema);
