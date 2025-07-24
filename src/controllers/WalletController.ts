@@ -65,7 +65,7 @@ export default {
       const wallet = await Wallet.find({ user: hasToken._id });
       const walletLengthOnUser = wallet.length;
 
-      if (hasToken.role === 'USER' && walletLengthOnUser >= 1) {
+      if (hasToken.role === 'USER' && walletLengthOnUser >= 2) {
         throw new Error('Wallet limit Reached');
       }
 
