@@ -2,13 +2,11 @@ import { ApolloServer } from '@apollo/server';
 import { addMocksToSchema } from '@graphql-tools/mock';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import type { DocumentNode } from 'graphql';
-import { gql } from 'graphql-tag';
 import { dataSources } from '../controllers';
 import resolvers from '../graphql/resolvers';
 import typeDefs from '../graphql/typeDefs';
 import SendGrid from '../services/sendgrid';
 import dataMock from './dataMock';
-
 import type { SingleGraphQLResponse } from './type';
 
 const mockApolloServer = new ApolloServer({
@@ -56,4 +54,5 @@ dataSources.finance.getFinance = jest.fn(() => dataMock.getFinance) as any;
 
 SendGrid.send = jest.fn().mockResolvedValue(true);
 
-export { gql, executeOperation };
+export { gql } from 'graphql-tag';
+export { executeOperation };

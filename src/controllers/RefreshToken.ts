@@ -38,7 +38,7 @@ const store = async (userID: Types.ObjectId, role: string) => {
       rftoken: cryptoBytes,
     });
 
-    const newToken = await setToken(userID, role);
+    const newToken = setToken(userID, role);
 
     return {
       token: newToken,

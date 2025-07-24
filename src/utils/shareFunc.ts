@@ -61,7 +61,7 @@ export function getArraySortByParams(
     return 0;
   });
 }
-export async function setToken(_id: any, role: any) {
+export function setToken(_id: any, role: any) {
   return sign({ _id, role }, env.JWT_TOKEN, {
     expiresIn: env.JWT_EXPIRE as any,
   });

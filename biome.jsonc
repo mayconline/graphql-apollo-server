@@ -12,5 +12,17 @@
         "useFilenamingConvention": "off"
       }
     }
+  },
+  "javascript": {
+    "globals": [
+      "describe",
+      "it",
+      "expect",
+      "beforeEach",
+      "afterEach",
+      "beforeAll",
+      "afterAll",
+      "jest"
+    ]
   }
 }

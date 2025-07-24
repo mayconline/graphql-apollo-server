@@ -4,7 +4,7 @@
   "description": "graphql api",
   "main": "index.js",
   "scripts": {
-    "build": "npm run clean && tsc && npm run copy-mjml",
+    "build": "pnpm run clean && tsc && pnpm run copy-mjml",
     "copy-mjml": "cp -r ./src/templates-email/shared ./dist/templates-email",
     "clean": "rm -rf ./dist",
     "test": "jest --maxWorkers=50%",

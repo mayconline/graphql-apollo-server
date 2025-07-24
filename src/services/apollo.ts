@@ -7,7 +7,7 @@ import { getErrorMessage } from '../utils/errorHandler';
 import { getToken } from '../utils/shareFunc';
 import { env } from './env';
 
-export async function setApolloServer() {
+export function setApolloServer() {
   const server = new ApolloServer<BaseContext>({
     typeDefs,
     resolvers: customResolvers as any,
@@ -19,7 +19,7 @@ export async function setApolloServer() {
 }
 
 export async function initApolloServer() {
-  const { server } = await setApolloServer();
+  const { server } = setApolloServer();
 
   await startStandaloneServer(server, {
     context: async ({ req }) => ({

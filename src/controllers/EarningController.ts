@@ -67,10 +67,10 @@ const show = async (
     }
 
     if (!wallet.earning.length) {
-      const emptyArray = Array.from({ length: 12 }, (_, index) => ({
-        _id: index + 1,
+      const emptyArray = Array.from({ length: 12 }, (_, idx) => ({
+        _id: idx + 1,
         year: args.year,
-        month: index + 1,
+        month: idx + 1,
         amount: 0,
       }));
 
@@ -82,16 +82,16 @@ const show = async (
     );
 
     if (currentYearEarnings.length !== 12) {
-      const autoCompletedEarnings = Array.from({ length: 12 }, (_, index) => {
+      const autoCompletedEarnings = Array.from({ length: 12 }, (_, idx) => {
         const currentIndex = currentYearEarnings.find(
-          (current: any) => current.month === index + 1
+          (current: any) => current.month === idx + 1
         );
 
         return (
           currentIndex || {
-            _id: index + 1,
+            _id: idx + 1,
             year: args.year,
-            month: index + 1,
+            month: idx + 1,
             amount: 0,
           }
         );
@@ -130,16 +130,16 @@ const store = async (
       throw new Error('Earning Exists');
     }
 
-    const earning = await Earning.create({
+    const newEarning = await Earning.create({
       year: args.input.year,
       month: args.input.month,
       amount: args.input.amount,
     });
 
-    await wallet.earning.push(earning._id);
+    wallet.earning.push(newEarning._id);
     await wallet.save();
 
-    return earning;
+    return newEarning;
   } catch (error: any) {
     throw new Error(error.message);
   }

@@ -42,10 +42,10 @@ const getConvertDollar = async (amount: number) => {
       const cotacaoCompra = getDollar?.data?.value?.[0]?.cotacaoCompra;
       dollarBid = cotacaoCompra;
     } else {
-      const { urlOne } = getURLDollar1(3);
+      const { urlOne: urlTwo } = getURLDollar1(3);
 
       const getOlderDollar =
-        await apiDollar.get<IFetchConvertDollarApiResponse>(urlOne);
+        await apiDollar.get<IFetchConvertDollarApiResponse>(urlTwo);
 
       if (getOlderDollar?.data?.value?.length) {
         const cotacaoCompra = getOlderDollar?.data?.value?.[0]?.cotacaoCompra;
