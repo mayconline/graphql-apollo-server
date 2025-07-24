@@ -1,13 +1,13 @@
-import { ApolloServer, type BaseContext } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
+import { ApolloServer, type BaseContext } from '@apollo/server'
+import { startStandaloneServer } from '@apollo/server/standalone'
 
-import { getErrorMessage } from '../utils/errorHandler';
-import { getToken } from '../utils/shareFunc';
+import { getErrorMessage } from '../utils/errorHandler'
+import { getToken } from '../utils/shareFunc'
 
-import { dataSources } from '../controllers';
-import typeDefs from '../graphql/typeDefs';
-import customResolvers from '../graphql/resolvers';
-import { env } from './env';
+import { dataSources } from '../controllers'
+import typeDefs from '../graphql/typeDefs'
+import customResolvers from '../graphql/resolvers'
+import { env } from './env'
 
 export async function setApolloServer() {
   const server = new ApolloServer<BaseContext>({
@@ -15,19 +15,19 @@ export async function setApolloServer() {
     resolvers: customResolvers as any,
     formatError: err => getErrorMessage(err),
     cache: 'bounded',
-  });
+  })
 
-  return { server };
+  return { server }
 }
 
 export async function initApolloServer() {
-  const { server } = await setApolloServer();
+  const { server } = await setApolloServer()
 
   await startStandaloneServer(server, {
     context: async ({ req }) => ({
-      hasToken: getToken(req),
+      hasToken: getToken(req as any),
       dataSources,
     }),
     listen: { port: Number(env.PORT) },
-  });
+  })
 }

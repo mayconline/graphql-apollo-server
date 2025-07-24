@@ -1,99 +1,104 @@
-import { sign, verify } from 'jsonwebtoken';
-import { isUnit, isETF, isCripto } from './classSymbols';
-import { env } from '../services/env';
+import { sign, verify } from 'jsonwebtoken'
+import { isUnit, isETF, isCripto } from './classSymbols'
+import { env } from '../services/env'
+import type { GetTokenResponseProps } from '../types'
+import { PUBLIC_ROUTES } from '../constants'
 
 export function getSumGradeWallet(currentArray: any[]) {
-  return currentArray.reduce((acc, cur) => acc + cur.grade, 0);
+  return currentArray.reduce((acc, cur) => acc + cur.grade, 0)
 }
 export function getSumCostWallet(currentArray: any[]) {
   return currentArray.reduce(
     (acc, cur) => acc + cur.quantity * cur.averagePrice,
-    0,
-  );
+    0
+  )
 }
 export function getSumAmountWallet(currentArray: any[]) {
   return currentArray.reduce(
     (acc, cur) => acc + cur.quantity * cur.regularMarketPrice,
-    0,
-  );
+    0
+  )
 }
 export function getSumAmountEarning(currentArray: any[]) {
-  return currentArray.reduce((acc, cur) => acc + cur.amount, 0);
+  return currentArray.reduce((acc, cur) => acc + cur.amount, 0)
 }
 export function getPercentVariation(SumCost: number, SumAmount: number) {
-  const calcPercent = ((SumAmount - SumCost) / SumCost || 1) * 100;
+  const calcPercent = ((SumAmount - SumCost) / SumCost || 1) * 100
 
   const percentVariation =
     SumAmount === SumCost
       ? 0
       : SumCost < 0 && SumAmount === 0
-      ? 100
-      : SumCost === 0 && SumAmount < 0
-      ? -100
-      : SumCost === 0 && SumAmount > 0
-      ? 100
-      : SumCost > 0
-      ? calcPercent
-      : SumCost < 0 && calcPercent * -1;
+        ? 100
+        : SumCost === 0 && SumAmount < 0
+          ? -100
+          : SumCost === 0 && SumAmount > 0
+            ? 100
+            : SumCost > 0
+              ? calcPercent
+              : SumCost < 0 && calcPercent * -1
 
-  return percentVariation;
+  return percentVariation
 }
 export function getArraySortByParams(
   array: any[],
   params: string,
-  inverse = false,
+  inverse = false
 ) {
   return array.sort((a, b) => {
-    const itema = a[params];
-    const itemb = b[params];
+    const itema = a[params]
+    const itemb = b[params]
 
     if (typeof itema === 'number') {
-      return inverse ? itema - itemb : itemb - itema;
+      return inverse ? itema - itemb : itemb - itema
     }
-    if (itemb < itema) return 1;
-    if (itemb > itema) return -1;
-    return 0;
-  });
+    if (itemb < itema) return 1
+    if (itemb > itema) return -1
+    return 0
+  })
 }
 export async function setToken(_id: any, role: any) {
   return sign({ _id, role }, env.JWT_TOKEN, {
     expiresIn: env.JWT_EXPIRE as any,
-  });
+  })
 }
-export function getToken({ headers }: any) {
-  const { authorization } = headers;
-  if (!authorization) return null;
 
-  const token = authorization.replace('Bearer', '').trim();
+export function getToken({ headers, body }: GetTokenResponseProps) {
+  if (PUBLIC_ROUTES.includes(body?.operationName)) return null
+
+  const { authorization } = headers
+  if (!authorization) return null
+
+  const token = authorization.replace('Bearer', '').trim()
 
   try {
-    const decoded = verify(token, env.JWT_TOKEN);
+    const decoded = verify(token, env.JWT_TOKEN)
 
-    return { decoded, token };
+    return { decoded, token }
   } catch {
-    throw new Error('Token Invalid or Expired');
+    throw new Error('Token Invalid or Expired')
   }
 }
 export function formatSymbol(symbol: string) {
-  return symbol.toUpperCase().replace('.SA', '').trim();
+  return symbol.toUpperCase().replace('.SA', '').trim()
 }
 export function getRandomDarkColor() {
-  const lum = -0.25;
+  const lum = -0.25
   let hex = String(
-    `#${Math.random().toString(16).slice(2, 8).toUpperCase()}`,
-  ).replace(/[^0-9a-f]/gi, '');
+    `#${Math.random().toString(16).slice(2, 8).toUpperCase()}`
+  ).replace(/[^0-9a-f]/gi, '')
   if (hex.length < 6) {
-    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+    hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
   }
-  let rgb = '#';
-  let c: any;
-  let i: any;
+  let rgb = '#'
+  let c: any
+  let i: any
   for (i = 0; i < 3; i += 1) {
-    c = Number.parseInt(hex.substr(i * 2, 2), 16);
-    c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16);
-    rgb += `00${c}`.substr(c.length);
+    c = Number.parseInt(hex.substr(i * 2, 2), 16)
+    c = Math.round(Math.min(Math.max(0, c + c * lum), 255)).toString(16)
+    rgb += `00${c}`.substr(c.length)
   }
-  return rgb;
+  return rgb
 }
 export function getClassTicket(ticket: string) {
   return ticket.slice(-2) === '31' ||
@@ -103,28 +108,28 @@ export function getClassTicket(ticket: string) {
     ticket.slice(-2) === '39'
     ? 'BDR'
     : ticket.slice(-2) === '3F' ||
-      ticket.slice(-2) === '4F' ||
-      ticket.slice(-2) === '5F' ||
-      ticket.slice(-2) === '6F' ||
-      ticket.slice(-3) === '11F' ||
-      ticket.slice(-1) === '3' ||
-      ticket.slice(-1) === '4' ||
-      ticket.slice(-1) === '5' ||
-      ticket.slice(-1) === '6' ||
-      isUnit(ticket)
-    ? 'Ação'
-    : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)
-    ? 'FII'
-    : isETF(ticket)
-    ? 'ETF'
-    : isCripto(ticket)
-    ? 'Cripto'
-    : 'Outros';
+        ticket.slice(-2) === '4F' ||
+        ticket.slice(-2) === '5F' ||
+        ticket.slice(-2) === '6F' ||
+        ticket.slice(-3) === '11F' ||
+        ticket.slice(-1) === '3' ||
+        ticket.slice(-1) === '4' ||
+        ticket.slice(-1) === '5' ||
+        ticket.slice(-1) === '6' ||
+        isUnit(ticket)
+      ? 'Ação'
+      : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)
+        ? 'FII'
+        : isETF(ticket)
+          ? 'ETF'
+          : isCripto(ticket)
+            ? 'Cripto'
+            : 'Outros'
 }
 export function getSumByUnicProp(array: any[], key: string, value: string) {
   const unicKeysWithValue = [
     ...new Set(array.filter(item => !!item[value]).map(item => item[key])),
-  ];
+  ]
 
   const sumByProp = unicKeysWithValue.map((unic, index) => ({
     _id: unic,
@@ -133,9 +138,9 @@ export function getSumByUnicProp(array: any[], key: string, value: string) {
       .filter(item => item[key] === unic)
       .reduce((acc, cur) => acc + cur[value], 0),
     color: array[index].color,
-  }));
+  }))
 
-  return sumByProp;
+  return sumByProp
 }
 export function getTranslateSector(sector: string) {
   return {
@@ -246,10 +251,10 @@ export function getTranslateSector(sector: string) {
     'Utilities—Independent Power Producers': 'Elétrico',
     Conglomerates: 'Holding',
     'Electrical Equipment & Parts': 'Máquinas e Motores',
-  }[sector];
+  }[sector]
 }
 export function formatTicketByFraction(ticket: string) {
-  let formatedTicket = ticket;
+  let formatedTicket = ticket
 
   if (
     formatedTicket.slice(-5) === '3F.SA' ||
@@ -258,8 +263,8 @@ export function formatTicketByFraction(ticket: string) {
     formatedTicket.slice(-5) === '6F.SA' ||
     formatedTicket.slice(-6) === '11F.SA'
   ) {
-    formatedTicket = formatedTicket.replace('F.SA', '.SA').trim();
+    formatedTicket = formatedTicket.replace('F.SA', '.SA').trim()
   }
 
-  return formatedTicket;
+  return formatedTicket
 }
