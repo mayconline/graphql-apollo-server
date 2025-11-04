@@ -116,6 +116,42 @@ const etfTickets = [
   'LVOL11',
   'HIGH11',
 ];
+const etfRendaFixaTickets = [
+  'BDAP11',
+  'FIXA11',
+  'BOL511',
+  'BPRE11',
+  'BLFT11',
+  'PACC11',
+  'PACL11',
+  'PACG11',
+  'LTNB11',
+  'MARG11',
+  'AREA11',
+  'DEBB11',
+  'SFIX11',
+  'WEJR11',
+  'LFIN11',
+  'PACB11',
+  'LLFT11',
+  'IMBB11',
+  'B5MB11',
+  'GLFT11',
+  'GICP11',
+  'LFTB11',
+  'NTNS11',
+  'LFTS11',
+  'IMAB11',
+  'B5P211',
+  'IB5M11',
+  'IRFM11',
+  'IDKA11',
+  'T10R11',
+  'NCDI11',
+  'HYBR11',
+  'HGBR11',
+  'PHIP11',
+];
 const criptoTickets = [
   'BTC-USD',
   'ETH-USD',
@@ -141,6 +177,9 @@ export const isUnit = (symbol: string) =>
 
 export const isETF = (symbol: string) =>
   etfTickets.includes(symbol.toUpperCase());
+
+export const isETFRendaFixa = (symbol: string) =>
+  etfRendaFixaTickets.includes(symbol.toUpperCase());
 
 export const isCripto = (symbol: string) =>
   criptoTickets.includes(symbol.toUpperCase());

@@ -2,7 +2,7 @@ import { sign, verify } from 'jsonwebtoken';
 import { PUBLIC_ROUTES } from '../constants';
 import { env } from '../services/env';
 import type { GetTokenResponseProps } from '../types';
-import { isCripto, isETF, isUnit } from './classSymbols';
+import { isCripto, isETF, isETFRendaFixa, isUnit } from './classSymbols';
 
 export function getSumGradeWallet(currentArray: any[]) {
   return currentArray.reduce((acc, cur) => acc + cur.grade, 0);
@@ -122,13 +122,18 @@ export function getClassTicket(ticket: string) {
         ACAO_CLASS.integer.includes(ticket.slice(-1)) ||
         isUnit(ticket)
       ? 'Ação'
-      : ticket.slice(-2) === '11' && !isUnit(ticket) && !isETF(ticket)
+      : ticket.slice(-2) === '11' &&
+          !isUnit(ticket) &&
+          !isETF(ticket) &&
+          !isETFRendaFixa(ticket)
         ? 'FII'
         : isETF(ticket)
           ? 'ETF'
-          : isCripto(ticket)
-            ? 'Cripto'
-            : 'Outros';
+          : isETFRendaFixa(ticket)
+            ? 'ETF Renda Fixa'
+            : isCripto(ticket)
+              ? 'Cripto'
+              : 'Outros';
 }
 export function getSumByUnicProp(array: any[], key: string, value: string) {
   const unicKeysWithValue = [
