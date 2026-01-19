@@ -151,6 +151,7 @@ const etfRendaFixaTickets = [
   'HYBR11',
   'HGBR11',
   'PHIP11',
+  'AUPO11',
 ];
 const criptoTickets = [
   'BTC-USD',
