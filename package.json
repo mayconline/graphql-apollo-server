@@ -27,7 +27,7 @@
     "jsonwebtoken": "9.0.2",
     "mjml": "4.15.3",
     "mongoose": "8.16.0",
-    "zod": "3.25.67"
+    "zod": "4.3.6"
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.2",
